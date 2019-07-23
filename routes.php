@@ -3,6 +3,7 @@
 use FastRoute\RouteCollector;
 use Admin\Controllers;
 
+$route->addRoute('GET', '/', '/**/');
 $route->addRoute('GET', '/login', 'Admin\Controllers');
 
 $route->addGroup('/admin', function (RouteCollector $route) {

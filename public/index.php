@@ -1,5 +1,7 @@
 <?php
 
+use Common\Database;
+
 require '../vendor/autoload.php';
 
 // Use the Router library
@@ -29,3 +31,5 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
         break;
 }
+
+$db = new Database();
