@@ -3,10 +3,9 @@
 require '../vendor/autoload.php';
 
 // Use the Router library
-
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    require_once './Admin/Routes.php';
-    require_once './Client/Routes.php';
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
+    require_once '../client/Routes.php';
+    require_once '../admin/Routes.php';
 });
 
 // Fetch method and URI from somewhere
