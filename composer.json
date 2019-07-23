@@ -1,0 +1,14 @@
+{
+    "name": "florian/framework",
+    "description": "A test to try my PHP skills",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Stancioiu",
+            "email": "s.florian93@gmail.com"
+        }
+    ],
+    "require": {
+        "nikic/fast-route": "^1.3"
+    }
+}
