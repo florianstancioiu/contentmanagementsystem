@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Models;
+namespace Client\Models;
 
 use Common\Model;
 

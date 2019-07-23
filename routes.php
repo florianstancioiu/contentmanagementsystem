@@ -1,7 +1,9 @@
 <?php
 
-use Controllers;
 use FastRoute\RouteCollector;
+use Admin\Controllers;
+
+$route->addRoute('GET', '/login', 'Admin\Controllers');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '/users', 'get_all_users_handler');

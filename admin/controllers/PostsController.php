@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Controllers;
+namespace App\Controllers;
 
 use Common\Controller;
 
