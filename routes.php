@@ -1,6 +1,6 @@
 <?php
 
-use Admin\Controllers;
+use Controllers;
 use FastRoute\RouteCollector;
 
 $route->addGroup('/admin', function (RouteCollector $route) {
