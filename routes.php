@@ -1,7 +1,6 @@
 <?php
 
 use FastRoute\RouteCollector;
-use Common\Auth\Controllers\LoginController;
 
 $route->addRoute('GET', '/', 'Common\Auth\LoginController@showLogin');
 $route->addGroup('/auth', function (RouteCollector $route) {

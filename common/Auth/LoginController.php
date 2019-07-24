@@ -8,7 +8,7 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
-        return view('admin:auth:login.html');
+        return view('admin/auth/login.html');
     }
 
     public function login()

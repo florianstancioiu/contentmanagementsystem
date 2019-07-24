@@ -9,22 +9,22 @@ if (! defined('DS')) {
 
 if (! function_exists('view')) {
     /**
-     * @param string $template
+     * @param string $template_name
      * @param array $data
      * @return string
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    function view(string $template, array $data = []) : string {
+    function view(string $template_name, array $data = []) {
         $loader = new Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
         $twig = new Twig\Environment($loader, [
             'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
 
-        $template = $twig->load($template);
+        $template = ($twig->load($template_name));
 
-        echo $template->render($data);
+        echo $template->render(['a_variable' => 'some stuff']);
     }
 }
 
@@ -47,10 +47,15 @@ if (! function_exists('read_json_file')) {
 
 if (! function_exists('base_dir')) {
     /**
+     * @param string $path
      * @return string
      */
-    function base_dir() : string {
-        return dirname(getcwd());
+    function base_dir(string $path = '') : string {
+        if (strpos($path, '/') !== 0) {
+            $path = '/' . $path;
+        }
+        
+        return dirname(getcwd()) . $path;
     }
 }
 
