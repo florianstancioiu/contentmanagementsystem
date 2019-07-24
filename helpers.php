@@ -16,12 +16,10 @@ if (! function_exists('view')) {
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    function view(string $template, array $data) : string {
-        // Load Twig templates
-        $loader = new Twig\Loader\FilesystemLoader('./resources/views');
-
+    function view(string $template, array $data = []) : string {
+        $loader = new Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
         $twig = new Twig\Environment($loader, [
-            'cache' => './public/templatecache',
+            'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
 
         $template = $twig->load($template);

@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
 
 // Use the Router library
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
-    require_once '../routes.php';
+    require_once base_dir() . DS . 'routes.php';
 });
 
 // Fetch method and URI from somewhere
@@ -29,6 +29,16 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
+
+        // make the anonymous functions work
+        if (is_object($handler)) {
+            call_user_func($handler, $vars);
+        }
+
+        // make the classes work
+        list($class, $method) = explode("@", $handler, 2);
+        call_user_func_array(array(new $class, $method), $vars);
+
         break;
 }
 

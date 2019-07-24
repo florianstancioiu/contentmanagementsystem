@@ -6,9 +6,9 @@ use Common\Controller;
 
 class LoginController extends Controller
 {
-    public function show()
+    public function showLogin()
     {
-        return view('')
+        return view('admin:auth:login.html');
     }
 
     public function login()
@@ -16,7 +16,12 @@ class LoginController extends Controller
 
     }
 
-    public function resetPassword()
+    public function showRegister()
+    {
+
+    }
+
+    public function register()
     {
 
     }
