@@ -1,4 +1,9 @@
 /vendor/
 /.idea/
 /public/templatecache
+/public/css
+/public/js
+/node_modules
+/v8-compile-cache-0
 .env
+mix-manifest.json
