@@ -19,12 +19,15 @@ if (! function_exists('view')) {
     function view(string $template_name, array $data = []) {
         $loader = new Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
         $twig = new Twig\Environment($loader, [
-            'cache' => base_dir('public' . DS . 'templatecache'),
+            // dont use the cache
+            // 'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
 
         $template = ($twig->load($template_name));
 
-        echo $template->render(['a_variable' => 'some stuff']);
+        $data['base_url'] = url();
+
+        echo $template->render($data);
     }
 }
 
@@ -42,6 +45,18 @@ if (! function_exists('read_json_file')) {
         }
 
         return is_null($array) ? [] : $array;
+    }
+}
+
+if (! function_exists('url')) {
+    /**
+     * @param string $url_path
+     * @return string
+     */
+    function url(string $url_path = '') : string {
+        $data = read_json_file(base_dir() . DS . '.env');
+
+        return $data['base_url'] . $url_path;
     }
 }
 
