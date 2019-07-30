@@ -7,7 +7,7 @@ use \PDOException;
 
 class Database
 {
-    protected static $pdo = null;
+    public $pdo = null;
 
     protected $envData;
 
@@ -23,8 +23,8 @@ class Database
 
     public function createConnection()
     {
-        if (! is_null(self::$pdo)) {
-            return self::$pdo;
+        if (! is_null($this->pdo)) {
+            return $this->pdo;
         }
 
         $this->envData = read_json_file(base_dir() . DS . '.env');
@@ -38,9 +38,9 @@ class Database
         try {
             $pdo = new PDO("$db_connection:host=$db_host;port=$db_port;dbname=$db_database", $db_username, $db_password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$pdo = $pdo;
+            $this->pdo = $pdo;
 
-            return self::$pdo;
+            return $this->pdo;
         } catch (Exception $exception) {
             dd("Unable to connect: " . $exception->getMessage());
         }
@@ -56,7 +56,7 @@ class Database
             $statement->execute();
             $statement->execute($data);
         } catch (\PDOException $err) {
-            echo "Error: ejecutando consulta SQL.";
+            //
         }
     }
 
@@ -89,5 +89,4 @@ class Database
             $content = $row['content'];
         }
     }
-
 }
