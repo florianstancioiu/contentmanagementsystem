@@ -54,6 +54,11 @@ if (! function_exists('url')) {
      * @return string
      */
     function url(string $url_path = '') : string {
+        // trim the leading slash
+        if (strpos($url_path, '/') === 0) {
+            $url_path = substr($url_path, 1);
+        }
+
         $data = read_json_file(base_dir() . DS . '.env');
 
         return $data['base_url'] . $url_path;
@@ -86,5 +91,70 @@ if (! function_exists('dd')) {
         }
         echo '</pre>';
         exit();
+    }
+}
+
+if (! function_exists('redirect')) {
+    /**
+     * @param string $route
+     */
+    function redirect(string $route) {
+        // trim the leading slash
+        if (strpos($route, '/') === 0) {
+            $route = substr($route, 1);
+        }
+
+        if (! strpos($route, base_url()) === 0) {
+            $location = base_url() . '/' . $route;
+        }
+
+        header("Location: $location");
+    }
+}
+
+if (! function_exists('request')) {
+    /**
+     * @param string $name
+     * @param string|null $value
+     * @return mixed
+     */
+    function request(string $name, string $value = null) {
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
+        }
+
+        if (isset($_GET[$name])) {
+            return $_GET[$name];
+        }
+    }
+}
+
+if (! function_exists('post')) {
+    /**
+     * @param string $name
+     * @param $value
+     * @return mixed
+     */
+    function post(string $name, $value) {
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
+        } else {
+            $_POST[$name] = $value;
+        }
+    }
+}
+
+if (! function_exists('get')) {
+    /**
+     * @param string $name
+     * @param $value
+     * @return mixed
+     */
+    function get(string $name, $value) {
+        if (isset($_GET[$name])) {
+            return $_GET[$name];
+        } else {
+            $_GET[$name] = $value;
+        }
     }
 }
