@@ -59,9 +59,18 @@ if (! function_exists('url')) {
             $url_path = substr($url_path, 1);
         }
 
+        return base_url() . $url_path;
+    }
+}
+
+if (! function_exists('base_url')) {
+    /**
+     * @return string
+     */
+    function base_url() : string {
         $data = read_json_file(base_dir() . DS . '.env');
 
-        return $data['base_url'] . $url_path;
+        return $data['base_url'];
     }
 }
 
@@ -99,16 +108,19 @@ if (! function_exists('redirect')) {
      * @param string $route
      */
     function redirect(string $route) {
+        $base_url = base_url();
+
         // trim the leading slash
         if (strpos($route, '/') === 0) {
             $route = substr($route, 1);
         }
 
-        if (! strpos($route, base_url()) === 0) {
-            $location = base_url() . '/' . $route;
+        // create the full route
+        if (! strpos($route, $base_url) === 0) {
+            $route = $base_url . '/' . $route;
         }
 
-        header("Location: $location");
+        header("Location: $route");
     }
 }
 
@@ -135,10 +147,10 @@ if (! function_exists('post')) {
      * @param $value
      * @return mixed
      */
-    function post(string $name, $value) {
+    function post(string $name, $value = null) {
         if (isset($_POST[$name])) {
             return $_POST[$name];
-        } else {
+        } elseif (! is_null($value)) {
             $_POST[$name] = $value;
         }
     }
