@@ -2,7 +2,11 @@
 
 use Common\Database;
 
+// autoload composer classes and files
 require '../vendor/autoload.php';
+
+// start the session
+session_start();
 
 // Use the Router library
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
@@ -43,3 +47,4 @@ switch ($routeInfo[0]) {
 }
 
 $db = new Database();
+$pdo = $db->pdo;
