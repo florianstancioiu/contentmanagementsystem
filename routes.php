@@ -9,7 +9,7 @@ $route->addRoute('GET', '/register', 'Common\Auth@showRegister');
 $route->addRoute('POST', '/register', 'Common\Auth@register');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
-    $route->addRoute('GET', '/', 'Admin\Controllers\PagesController@index');
+    $route->addRoute('GET', '', 'Admin\Controllers\PagesController@index');
     $route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
     $route->addRoute('POST', '/pages', 'Admin\Controllers\PagesController@store');
     $route->addRoute('GET', '/pages/{slug}', 'Admin\Controllers\PagesController@edit');

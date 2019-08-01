@@ -8,30 +8,42 @@ class Auth extends Controller
 {
     public function showLogin()
     {
-        $login_url = url('/auth/login');
+        // redirect to admin if logged in
+        if (is_logged_in()) {
+            return redirect('/admin');
+        }
 
-        return view('admin/auth/login.html', compact('login_url'));
+        $login_url = url('/login');
+
+        return view('admin/auth/login', compact('login_url'));
     }
 
     public function loginUser()
     {
+        $statement = $this->pdo->prepare('SELECT first_name, last_name, email, password, created_at from users where email = :email');
+
         try {
-            $data = [
-                ':email' => $email,
-                ':password' => $password
-            ];
-            $pdo->prepare('SELECT first_name, last_name, email, password, created_at, updated_at, deleted_at from users where email =:email and :password');
-            $statement->execute($data);
-        } catch(\PDOException $error) {
-            echo 'shit\'s wack yo';
+            $statement->execute([
+                ':email' => post('email')
+            ]);
+        } catch (PDOException $error) {
+            dd($error->getMessage());
         }
 
-        while ($row = $statement->fetch()) {
-            // dd($row);
+        $data = $statement->fetchObject();
+
+        // check if the password hash matches your current password
+        if (password_verify(post('password'), $data->password)) {
+            $_SESSION['is_logged'] = 'true';
+
+            $_SESSION['user'] = $this->getUserData(post('email'));
         }
 
-        $_SESSION['is_logged'] = 'true';
-        $_SESSION['user'] = $this->getUserData($email);
+    }
+
+    public function getUserData(string $email)
+    {
+        //
     }
 
     public function login()
@@ -48,35 +60,33 @@ class Auth extends Controller
 
     public function showRegister()
     {
-        $register_url = url('/auth/register');
+        // redirect to admin if logged in
+        if (is_logged_in()) {
+            return redirect('/admin');
+        }
 
-        return view('admin/auth/register.html', compact('register_url'));
+        $register_url = url('/register');
+
+        return view('admin/auth/register', compact('register_url'));
     }
 
     public function register()
     {
         // validate the variables ffs
-        $first_name = post('first_name');
-        $last_name = post('last_name');
-        $email = post('email');
-        $password = post('password');
-        $created_at = post('created_at');
+        $data = [
+            ':first_name' => post('first_name'),
+            ':last_name' => post('last_name'),
+            ':email' => post('email'),
+            ':password' => password_hash(post('password'), PASSWORD_BCRYPT),
+            ':created_at' => post('created_at'),
+        ];
 
         try {
-            $data = [
-                ':first_name' => $first_name,
-                ':last_name' => $last_name,
-                ':email' => $email,
-                ':password' => $password,
-                ':created_at' => $created_at,
-            ];
-            $pdo->prepare('INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (:first_name, :last_name, :email, :password, :created_at)');
+            $statement = $this->pdo->prepare('INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (:first_name, :last_name, :email, :password, NOW())');
             $statement->execute($data);
-        } catch (\PDOException $error) {
-            echo 'shit\'s wack yo';
+        } catch (PDOException $error) {
+            dd($error->getMessage());
         }
-
-        $this->loginUser();
 
         redirect('/admin');
     }

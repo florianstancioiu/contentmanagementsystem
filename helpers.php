@@ -23,8 +23,10 @@ if (! function_exists('view')) {
             // 'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
 
-        $template = ($twig->load($template_name));
+        $template_name = str_replace('.html', '', $template_name);
+        $template_name = $template_name . '.html';
 
+        $template = ($twig->load($template_name));
         $data['base_url'] = url();
 
         echo $template->render($data);
@@ -106,8 +108,9 @@ if (! function_exists('dd')) {
 if (! function_exists('redirect')) {
     /**
      * @param string $route
+     * @param array $get_data
      */
-    function redirect(string $route) {
+    function redirect(string $route, array $get_data = []) {
         $base_url = base_url();
 
         // trim the leading slash
@@ -118,6 +121,11 @@ if (! function_exists('redirect')) {
         // create the full route
         if (! strpos($route, $base_url) === 0) {
             $route = $base_url . '/' . $route;
+        }
+
+        // pass get data
+        if (! empty($data)) {
+            $route = $route . '?' . http_build_query($data);
         }
 
         header("Location: $route");
@@ -168,5 +176,14 @@ if (! function_exists('get')) {
         } else {
             $_GET[$name] = $value;
         }
+    }
+}
+
+if (! function_exists('is_logged_in')) {
+    /**
+     * @return bool
+     */
+    function is_logged_in() : bool {
+        return (bool) isset($_SESSION['is_logged']) && ($_SESSION['is_logged']) === true;
     }
 }

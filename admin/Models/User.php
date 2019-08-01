@@ -6,5 +6,8 @@ use App\Common\Model;
 
 class User extends Model
 {
+    public function createUser()
+    {
 
+    }
 }
