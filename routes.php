@@ -2,11 +2,11 @@
 
 use FastRoute\RouteCollector;
 
-$route->addRoute('GET', '/login', 'Common\Auth@showLogin');
-$route->addRoute('POST', '/login', 'Common\Auth@login');
+$route->addRoute('GET', '/signin', 'Common\Auth@showSignin');
+$route->addRoute('POST', '/signin', 'Common\Auth@signin');
 
-$route->addRoute('GET', '/register', 'Common\Auth@showRegister');
-$route->addRoute('POST', '/register', 'Common\Auth@register');
+$route->addRoute('GET', '/signup', 'Common\Auth@showSignup');
+$route->addRoute('POST', '/signup', 'Common\Auth@signup');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '', 'Admin\Controllers\PagesController@index');

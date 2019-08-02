@@ -6,19 +6,16 @@ use \PDOException;
 
 class Auth extends Controller
 {
-    public function showLogin()
+    public function showSignin()
     {
-        // redirect to admin if logged in
-        if (is_logged_in()) {
-            return redirect('/admin');
-        }
+        $this->redirectAdmin();
 
-        $login_url = url('/login');
+        $signin_url = url('/signin');
 
-        return view('admin/auth/login', compact('login_url'));
+        return view('admin/auth/signin', compact('signin_url'));
     }
-
-    public function loginUser()
+    
+    public function signinUser()
     {
         $statement = $this->pdo->prepare('SELECT first_name, last_name, email, password, created_at from users where email = :email');
 
@@ -38,19 +35,18 @@ class Auth extends Controller
 
             $_SESSION['user'] = $this->getUserData(post('email'));
         }
-
     }
+
+    public function signin()
+    {
+        $this->signinUser();
+        $this->redirectAdmin();
+    }
+
 
     public function getUserData(string $email)
     {
         //
-    }
-
-    public function login()
-    {
-        $this->loginUser();
-
-        redirect('/admin');
     }
 
     public function userExists($email, $password) : bool
@@ -58,27 +54,24 @@ class Auth extends Controller
         //
     }
 
-    public function showRegister()
+    public function showSignup()
     {
-        // redirect to admin if logged in
-        if (is_logged_in()) {
-            return redirect('/admin');
-        }
+        $this->redirectAdmin();
 
-        $register_url = url('/register');
+        $signup_url = url('/signup');
 
-        return view('admin/auth/register', compact('register_url'));
+        return view('admin/auth/signup', compact('signup_url'));
     }
 
-    public function register()
+
+    public function signup()
     {
         // validate the variables ffs
         $data = [
             ':first_name' => post('first_name'),
             ':last_name' => post('last_name'),
             ':email' => post('email'),
-            ':password' => password_hash(post('password'), PASSWORD_BCRYPT),
-            ':created_at' => post('created_at'),
+            ':password' => password_hash(post('password'), PASSWORD_BCRYPT)
         ];
 
         try {

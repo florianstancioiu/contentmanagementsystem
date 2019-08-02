@@ -1,11 +1,11 @@
 {% extends "layouts/auth.html" %}
 
-{% block title %}Register Page{% endblock %}
+{% block title %}Signup Page{% endblock %}
 
 {% block content %}
     <div class="col-md-8 offset-md-2">
 
-        <form class="registration-form" action="{{ register_url }}" method="POST">
+        <form class="registration-form" action="{{ signup_url }}" method="POST">
 
             <div class="mb-3">
                 <label for="first-name">First name</label>
@@ -33,7 +33,7 @@
 
             <div class="mb-3">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" name="password" required="" />
+                <input type="password" class="form-control" id="password" name="password" required="" />
                 <div class="invalid-feedback">
                     Please enter your shipping address.
                 </div>

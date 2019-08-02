@@ -19,7 +19,14 @@ class Controller
         ];
 
         if (! is_logged_in()) {
-            redirect('/login', $data);
+            redirect('/signin', $data);
+        }
+    }
+
+    public function redirectAdmin()
+    {
+        if (is_logged_in()) {
+            return redirect('/admin');
         }
     }
 }

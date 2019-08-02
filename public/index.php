@@ -8,7 +8,7 @@ require '../vendor/autoload.php';
 // start the session
 session_start();
 
-// Use the Router library
+// use the fastroute library
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
     require_once base_dir() . DS . 'routes.php';
 });
@@ -45,6 +45,3 @@ switch ($routeInfo[0]) {
 
         break;
 }
-
-$db = new Database();
-$pdo = $db->pdo;
