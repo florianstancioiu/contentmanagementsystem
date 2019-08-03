@@ -28,18 +28,20 @@ class Auth extends Controller
         }
 
         $data = $statement->fetchObject();
+        $array_data = get_object_vars($data);
+        unset($array_data['password']);
 
         // check if the password hash matches your current password
         if (password_verify(post('password'), $data->password)) {
-            $_SESSION['is_logged'] = 'true';
-
-            $_SESSION['user'] = $this->getUserData(post('email'));
+            $_SESSION['is_logged'] = true;
+            $_SESSION['user'] = $array_data;
         }
     }
 
     public function signin()
     {
         $this->signinUser();
+
         $this->redirectAdmin();
     }
 

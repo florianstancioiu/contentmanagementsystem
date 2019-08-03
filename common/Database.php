@@ -42,10 +42,9 @@ class Database
 
             return $this->pdo;
         } catch (Exception $exception) {
-            dd("Unable to connect: " . $exception->getMessage());
+            dd("Unable to connect due to exception: " . $exception->getMessage());
         }
     }
-
 
     public function insertExample() 
     {

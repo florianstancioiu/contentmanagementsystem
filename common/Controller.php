@@ -26,7 +26,7 @@ class Controller
     public function redirectAdmin()
     {
         if (is_logged_in()) {
-            return redirect('/admin');
+            redirect('/admin');
         }
     }
 }
