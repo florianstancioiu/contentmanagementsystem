@@ -1,5 +1,5 @@
 /vendor/
-/.idea/
+/.idea
 /public/templatecache
 /public/css
 /public/js
