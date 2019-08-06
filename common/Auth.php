@@ -16,7 +16,7 @@ class Auth extends Controller
 
         return view('admin/auth/signin', compact('signin_url'));
     }
-    
+
     public function signinUser()
     {
         $statement = $this->pdo->prepare('SELECT first_name, last_name, email, password, created_at from users where email = :email');
@@ -111,5 +111,13 @@ class Auth extends Controller
         $data = $statement->fetchObject();
 
         return (bool) $data->email === post('email');
+    }
+
+    public function signout()
+    {
+        unset($_SESSION['is_logged']);
+        unset($_SESSION['user']);
+
+        redirect('/signin');
     }
 }
