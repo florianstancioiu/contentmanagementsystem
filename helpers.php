@@ -27,7 +27,21 @@ if (! function_exists('view')) {
         $template_name = $template_name . '.html';
 
         $template = ($twig->load($template_name));
-        $data['base_url'] = url();
+
+        // retrieve env data for blade views
+        $data = read_json_file(base_dir() . DS . '.env');
+
+        // remove sensitive env data keys
+        foreach ($data as $key => $value) {
+            if (strpos($key, "db") === 0) {
+                unset($data[$key]);
+            }
+        }
+
+        // retrieve current User data
+        if (isset($_SESSION['user'])) {
+            $data['user'] = $_SESSION['user'];
+        }
 
         echo $template->render($data);
     }
