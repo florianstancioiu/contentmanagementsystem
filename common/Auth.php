@@ -4,6 +4,8 @@ namespace Common;
 
 use \PDOException;
 
+// TODO: Refactor class
+// TODO: Move SQL queries to User model
 class Auth extends Controller
 {
     public function showSignin()
@@ -29,10 +31,11 @@ class Auth extends Controller
 
         $data = $statement->fetchObject();
         $array_data = get_object_vars($data);
-        unset($array_data['password']);
+        $raw_password = post('password');
+        $password_hash = $array_data['password'];
 
-        // check if the password hash matches your current password
-        if (password_verify(post('password'), $data->password)) {
+        // verify password hash
+        if (password_verify($raw_password, $password_hash)) {
             $_SESSION['is_logged'] = true;
             $_SESSION['user'] = $array_data;
         }
@@ -68,6 +71,12 @@ class Auth extends Controller
 
     public function signup()
     {
+        if ($this->emailExistsInDatabase()) {
+            redirect('/register', [
+                'message' => 'The email address you typed-in exists in database'
+            ]);
+        }
+
         // validate the variables ffs
         $data = [
             ':first_name' => post('first_name'),
@@ -84,5 +93,23 @@ class Auth extends Controller
         }
 
         redirect('/admin');
+    }
+
+    public function emailExistsInDatabase() : bool
+    {
+        // check email address existence in database
+        $statement = $this->pdo->prepare('SELECT first_name, email from users where email = :email');
+
+        try {
+            $statement->execute([
+                ':email' => post('email')
+            ]);
+        } catch (PDOException $error) {
+            dd($error->getMessage());
+        }
+
+        $data = $statement->fetchObject();
+
+        return (bool) $data->email === post('email');
     }
 }
