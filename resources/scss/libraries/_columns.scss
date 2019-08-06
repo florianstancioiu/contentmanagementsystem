@@ -1,0 +1,182 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+}
+
+.row {
+  display: inline-block;
+  clear: both;
+  width: 100%;
+  // margin: 0 -20px;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+  float: left;
+  // padding: 0 10px;
+}
+
+.col-offset-1,
+.col-offset-2,
+.col-offset-3,
+.col-offset-4,
+.col-offset-5,
+.col-offset-6,
+.col-offset-7,
+.col-offset-8,
+.col-offset-9,
+.col-offset-10,
+.col-offset-11,
+.col-offset-12 {
+  float: left;
+  display: inline-block;
+}
+
+.col-1 {
+  width: 8.333%;
+}
+
+.col-2 {
+  width: 16.666%;
+}
+
+.col-3 {
+  width: 25%;
+}
+
+.col-4 {
+  width: 33.333%;
+}
+
+.col-5 {
+  width: 41.666%;
+}
+
+.col-6 {
+  width: 50%;
+}
+
+.col-7 {
+  width: 58.333%;
+}
+
+.col-8 {
+  width: 66.666%;
+}
+
+.col-9 {
+  width: 75%;
+}
+
+.col-10 {
+  width: 83.333%;
+}
+
+.col-11 {
+  width: 91.666%;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.col-offset-1 {
+  padding-left: 8.333%;
+}
+
+.col-offset-2 {
+  padding-left: 16.666%;
+}
+
+.col-offset-3 {
+  padding-left: 16.666%;
+}
+
+.col-offset-4 {
+  padding-left: 33.333%;
+}
+
+.col-offset-5 {
+  padding-left: 41.666%;
+}
+
+.col-offset-6 {
+  padding-left: 50%;
+}
+
+.col-offset-7 {
+  padding-left: 58.333%;
+}
+
+.col-offset-8 {
+  padding-left: 66.666%;
+}
+
+.col-offset-9 {
+  padding-left: 75%;
+}
+
+.col-offset-10 {
+  padding-left: 83.333%;
+}
+
+.col-offset-11 {
+  padding-left: 91.666%;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 320px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .container {
+    width: 480px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1000px) {
+  .container {
+    width: 700px;
+  }
+}
+
+@media (min-width: 1001px) and (max-width: 1200px) {
+  .container {
+    width: 1000px;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1500px) {
+  .container {
+    width: 1200px;
+  }
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
