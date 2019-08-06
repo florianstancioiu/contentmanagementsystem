@@ -2,11 +2,35 @@
   background-color: rgba(0, 1, 46, 0.71);
 }
 
-.form-signin {
+.form-signin,
+.registration-form {
   width: 100%;
   max-width: 330px;
   padding: 15px;
-  margin: 250px auto;
+  margin: 100px auto;
+  h1,
+  p,
+  label {
+    color: white;
+  }
+  input {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    padding: 0 20px;
+    border: none;
+    margin-top: 10px;
+    width: 100%;
+  }
+  button[type=submit] {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    padding: 0 20px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+  }
 }
 
 .registration-form {

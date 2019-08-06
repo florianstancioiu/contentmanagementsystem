@@ -8,6 +8,8 @@ $route->addRoute('POST', '/signin', 'Common\Auth@signin');
 $route->addRoute('GET', '/signup', 'Common\Auth@showSignup');
 $route->addRoute('POST', '/signup', 'Common\Auth@signup');
 
+$route->addRoute('GET', '/signout', 'Common\Auth@signout');
+
 $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '', 'Admin\Controllers\PagesController@index');
     $route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
