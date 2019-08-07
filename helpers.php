@@ -19,6 +19,7 @@ if (! function_exists('view')) {
     function view(string $template_name, array $data = []) {
         $loader = new Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
         $twig = new Twig\Environment($loader, [
+            'debug' => true,
             // dont use the cache
             // 'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
@@ -29,14 +30,17 @@ if (! function_exists('view')) {
         $template = ($twig->load($template_name));
 
         // retrieve env data for blade views
-        $data = read_json_file(base_dir() . DS . '.env');
+        $env_data = read_json_file(base_dir() . DS . '.env');
 
         // remove sensitive env data keys
-        foreach ($data as $key => $value) {
+        foreach ($env_data as $key => $value) {
             if (strpos($key, "db") === 0) {
-                unset($data[$key]);
+                unset($env_data[$key]);
             }
         }
+
+        // merge env data with passed information
+        $data = array_merge($data, $env_data);
 
         // retrieve current User data
         if (isset($_SESSION['user'])) {
