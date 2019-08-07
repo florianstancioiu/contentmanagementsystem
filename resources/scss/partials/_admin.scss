@@ -62,8 +62,22 @@ body {
 }
 
 .admin-table {
-  background: white;
   width: 95%;
   margin: 0 auto;
   padding: 10px;
+  thead {
+    text-align: center;
+  }
+  thead,
+  tbody {
+    background: white;
+    text-align: center;
+  }
+}
+
+.admin-form {
+  width: 90%;
+  .row {
+    margin-bottom: 5px;
+  }
 }
