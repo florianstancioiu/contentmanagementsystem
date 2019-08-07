@@ -6,7 +6,7 @@ body {
   margin-top: 40px;
   min-height: 40px;
   line-height: 40px;
-  background-color: #19d019;
+  background-color: #d8e8d8;
   border-radius: 5px 5px 0 0;
 }
 
@@ -24,7 +24,7 @@ body {
 .sidebar {
   min-height: 700px;
   height: 100%;
-  background-color: #7171d8;
+  background-color: #4a4a4e;
 }
 
 .sidebar-link {
@@ -35,7 +35,6 @@ body {
   width: 100%;
   display: block;
   text-decoration: none;
-  text-transform: uppercase;
   color: white;
   font-size: 14px;
   &:hover,
@@ -48,14 +47,16 @@ body {
 .site-title {
   margin: 0;
   text-align: center;
-  text-transform: uppercase;
   font-size: 16px;
   line-height: 40px;
-  padding-left: 20px;
 }
 
 .content {
   min-height: 700px;
   height: 100%;
-  background-color: aqua;
+  background-color: #d8e8e8;
+}
+
+.page-title {
+  padding-left: 20px;
 }
