@@ -16,6 +16,7 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('POST', '/pages', 'Admin\Controllers\PagesController@store');
     $route->addRoute('GET', '/pages/create', 'Admin\Controllers\PagesController@create');
     $route->addRoute('GET', '/pages/edit/{id}', 'Admin\Controllers\PagesController@create');
+    $route->addRoute('GET', '/pages/destroy/{id}', 'Admin\Controllers\PagesController@destroy');
     $route->addRoute('GET', '/pages/{id}', 'Admin\Controllers\PagesController@edit');
     $route->addRoute('POST', '/pages/{id}', 'Admin\Controllers\PagesController@update');
 

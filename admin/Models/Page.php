@@ -51,20 +51,25 @@ class Page extends Model
     }
 
     // TODO: Simplify method (move functionality inside the pillon class)
-    public function destroy(int $id) : bool
+    public static function destroy(array $data) : bool
     {
+        self::initPDO();
+
         // retrieve admin pages
-        $statement = $this->pdo->prepare(<<<MORPHINE
-            SELECT id, title, slug, lang, content, description, user_id, created_at 
-            FROM pages
+        $statement = self::$pdo->prepare(<<<MORPHINE
+            DELETE FROM pages WHERE id =:id
         MORPHINE);
 
         try {
-            $statement->execute();
+            $statement->execute($data);
+
+            return true;
         } catch (\PDOException $error) {
             dd($error->getMessage());
+
+            return false;
         }
 
-        return $statement->fetch();
+        return false;
     }
 }

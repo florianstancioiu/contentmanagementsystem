@@ -51,4 +51,22 @@ class PagesController extends Controller
 
         redirect('/admin/pages');
     }
+
+    // TODO: Check auth automatically
+    public function destroy($id)
+    {
+        $this->checkAuth();
+
+        $data = [
+            ':id' => (int) $id,
+        ];
+
+        try {
+            Page::destroy($data);
+        } catch (\Exception $exception) {
+            dd('we has problems: ' . $exception->getMessage());
+        }
+
+        redirect('/admin/pages');
+    }
 }
