@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Admin\Models;
 
-use App\Common\Model;
+use Admin\Common\Model;
 
 class Comment extends Model
 {

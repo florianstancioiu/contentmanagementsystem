@@ -2,30 +2,14 @@
 
 namespace Common;
 
-use Database;
+use Common\Database;
 
 class Model
 {
-    public $pdo = null;
+    protected static $pdo = null;
 
-    public function __construct()
+    protected static function initPDO()
     {
-        // initialize the database
-        $this->pdo = (new Database())->pdo;
-    }
-
-    public function store()
-    {
-
-    }
-
-    public function update()
-    {
-
-    }
-
-    public function destroy()
-    {
-
+        self::$pdo = (new Database())->pdo;
     }
 }
