@@ -136,14 +136,14 @@ if (! function_exists('redirect')) {
             $route = substr($route, 1);
         }
 
-        // create the full route
-        if (! strpos($route, $base_url) === 0) {
-            $route = $base_url . '/' . $route;
+        // pass get data
+        if (! empty($get_data)) {
+            $route = $route . '?' . http_build_query($get_data);
         }
 
-        // pass get data
-        if (! empty($data)) {
-            $route = $route . '?' . http_build_query($data);
+        // create the full route
+        if ((int) strpos($route, $base_url) === 0) {
+            $route = $base_url . $route;
         }
 
         header("Location: $route");
