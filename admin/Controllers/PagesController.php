@@ -11,10 +11,23 @@ class PagesController extends Controller
     public function index()
     {
         $this->checkAuth();
+
         $base_url = base_url();
         $pages = Page::get();
         $page = $pages[0];
 
         return view('admin/pages/index', compact('base_url', 'pages', 'page'));
+    }
+
+    // TODO: Check auth automatically
+    public function create()
+    {
+        $this->checkAuth();
+
+        $base_url = base_url();
+        $pages = Page::get();
+        $page = $pages[0];
+
+        return view('admin/pages/create', compact('base_url', 'pages', 'page'));
     }
 }

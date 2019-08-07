@@ -1,6 +1,6 @@
 {% extends "layouts/admin.html" %}
 
-{% block title %} Pages {% endblock %}
+{% block title %} List Pages {% endblock %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
         <a href="{{ base_url }}admin/pages/create" class="new-page-link"> + New</a>
     </h1>
 
-    <table class="table-rows">
+    <table class="admin-table">
         <thead>
             <tr>
                 <td>Id</td>
@@ -19,7 +19,6 @@
             </tr>
         </thead>
         <tbody>
-
             {% for page in pages %}
                 <tr>
                     <td>{{ page.id }}</td>
@@ -32,7 +31,6 @@
                     </td>
                 </tr>
             {% endfor %}
-
         </tbody>
     </table>
 
