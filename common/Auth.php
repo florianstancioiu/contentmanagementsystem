@@ -19,7 +19,7 @@ class Auth extends Controller
 
     public function signinUser()
     {
-        $statement = $this->pdo->prepare('SELECT first_name, last_name, email, password, created_at from users where email = :email');
+        $statement = $this->pdo->prepare('SELECT id, first_name, last_name, email, password, created_at from users where email = :email');
 
         try {
             $statement->execute([

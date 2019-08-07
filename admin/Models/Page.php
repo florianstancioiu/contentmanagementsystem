@@ -29,31 +29,25 @@ class Page extends Model
     }
 
     // TODO: Simplify method (move functionality inside the pillon class)
-    public function store(array $data) : bool
+    public static function store(array $data) : bool
     {
-        // validate the variables ffs
-        $data = [
-            ':first_name' => post('first_name'),
-            ':last_name' => post('last_name'),
-            ':email' => post('email'),
-            ':password' => password_hash(post('password'), PASSWORD_BCRYPT)
-        ];
+        self::initPDO();
 
         try {
-            $statement = $this->pdo->prepare('INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (:first_name, :last_name, :email, :password, NOW())');
+            $statement = self::$pdo->prepare(<<<MORPHINE
+                INSERT INTO pages (title, slug, lang, content, description, user_id, created_at) 
+                VALUES (:title, :slug, :lang, :content, :description, :user_id, NOW())
+            MORPHINE);
             $statement->execute($data);
+
+            return true;
         } catch (\PDOException $error) {
             dd($error->getMessage());
+
+            return false;
         }
 
-
-        try {
-            $statement->execute();
-        } catch (\PDOException $error) {
-            dd($error->getMessage());
-        }
-
-        return $statement->fetch();
+        return false;
     }
 
     // TODO: Simplify method (move functionality inside the pillon class)
