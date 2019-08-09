@@ -10,6 +10,17 @@ class Model
 
     protected static function initPDO()
     {
-        self::$pdo = (new Database())->pdo;
+        if (is_null(self::$pdo)) {
+            self::$pdo = (new \Common\Database())->pdo;
+        }
+    }
+
+    public static function __callStatic(string $title, $params)
+    {
+        self::initPDO();
+
+        if (method_exists(__CLASS__, $title)) {
+            static::$title(... $params);
+        }
     }
 }
