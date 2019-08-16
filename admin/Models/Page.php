@@ -4,29 +4,14 @@ namespace Admin\Models;
 
 use Common\Model;
 
-// TODO: Figure out a way to initialize PDO without looking like a retard
 class Page extends Model
 {
-    // TODO: Add optional id parameter to retrieve a single row
-    // TODO: Simplify method (move functionality inside the pillon class)
-    public static function get() : array
-    {
-        self::initPDO();
+    public static $table = 'pages';
 
-        // retrieve admin pages
-        $statement = self::$pdo->prepare(<<<MORPHINE
-            SELECT id, title, slug, lang, content, description, user_id, created_at 
-            FROM pages
-        MORPHINE);
+    public static $columns = [
+        'id', 'title', 'slug', 'lang', 'content', 'description', 'user_id', 'created_at'
+    ];
 
-        try {
-            $statement->execute();
-        } catch (\PDOException $error) {
-            dd($error->getMessage());
-        }
-
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
-    }
 
     // TODO: Simplify method (move functionality inside the pillon class)
     public static function store(array $data) : bool
