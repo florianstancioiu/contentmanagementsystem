@@ -7,9 +7,9 @@ use Admin\Models\Page;
 
 class PagesController extends Controller
 {
-    // TODO: Check auth automatically
     public function index()
     {
+        // TODO: Check auth automatically
         $this->checkAuth();
 
         $base_url = base_url();
@@ -19,9 +19,10 @@ class PagesController extends Controller
         return view('admin/pages/index', compact('base_url', 'pages', 'page'));
     }
 
-    // TODO: Check auth automatically
+
     public function create()
     {
+        // TODO: Check auth automatically
         $this->checkAuth();
 
         $base_url = base_url();
@@ -29,9 +30,20 @@ class PagesController extends Controller
         return view('admin/pages/create', compact('base_url'));
     }
 
-    // TODO: Check auth automatically
+    public function edit(int $id)
+    {
+        // TODO: Check auth automatically
+        $this->checkAuth();
+
+        $base_url = base_url();
+        $page = Page::find($id);
+
+        return view('admin/pages/edit', compact('base_url', 'page'));
+    }
+
     public function store()
     {
+        // TODO: Check auth automatically
         $this->checkAuth();
 
         $data = [
@@ -46,25 +58,24 @@ class PagesController extends Controller
         try {
             Page::store($data);
         } catch (\Exception $exception) {
-            dd('we has problems: ' . $exception->getMessage());
+            dd('Exception message:' . $exception->getMessage());
         }
 
         redirect('/admin/pages');
     }
 
-    // TODO: Check auth automatically
+
     public function destroy($id)
     {
+        // TODO: Check auth automatically
         $this->checkAuth();
 
-        $data = [
-            ':id' => (int) $id,
-        ];
-
         try {
-            Page::destroy($data);
+            Page::destroy([
+                ':id' => (int) $id,
+            ]);
         } catch (\Exception $exception) {
-            dd('we has problems: ' . $exception->getMessage());
+            dd('Exception message:' . $exception->getMessage());
         }
 
         redirect('/admin/pages');

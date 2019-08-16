@@ -4,10 +4,8 @@ use FastRoute\RouteCollector;
 
 $route->addRoute('GET', '/signin', 'Common\Auth@showSignin');
 $route->addRoute('POST', '/signin', 'Common\Auth@signin');
-
 $route->addRoute('GET', '/signup', 'Common\Auth@showSignup');
 $route->addRoute('POST', '/signup', 'Common\Auth@signup');
-
 $route->addRoute('GET', '/signout', 'Common\Auth@signout');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
@@ -15,7 +13,7 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
     $route->addRoute('POST', '/pages', 'Admin\Controllers\PagesController@store');
     $route->addRoute('GET', '/pages/create', 'Admin\Controllers\PagesController@create');
-    $route->addRoute('GET', '/pages/edit/{id}', 'Admin\Controllers\PagesController@create');
+    $route->addRoute('GET', '/pages/edit/{id}', 'Admin\Controllers\PagesController@edit');
     $route->addRoute('GET', '/pages/destroy/{id}', 'Admin\Controllers\PagesController@destroy');
     $route->addRoute('GET', '/pages/{id}', 'Admin\Controllers\PagesController@edit');
     $route->addRoute('POST', '/pages/{id}', 'Admin\Controllers\PagesController@update');
