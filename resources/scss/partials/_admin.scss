@@ -47,7 +47,7 @@ body {
 .site-title {
   margin: 0;
   text-align: center;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 40px;
 }
 
@@ -59,6 +59,24 @@ body {
 
 .page-title {
   padding-left: 20px;
+  color: #6b5555;
+  margin-bottom: 4px;
+  .new-record-anchor {
+    color: grey;
+    text-decoration: none;
+    font-size: 30px;
+  }
+}
+
+.table-cta {
+  padding: 6px;
+  background-color: grey;
+  text-decoration: none;
+  color: white;
+  border-radius: 22px;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin: 10px;
 }
 
 .admin-table {
@@ -77,7 +95,9 @@ body {
 
 .admin-form {
   width: 90%;
+  margin: 0 auto;
   .row {
     margin-bottom: 5px;
   }
 }
+
