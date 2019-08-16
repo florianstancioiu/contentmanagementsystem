@@ -4,14 +4,6 @@ namespace Common;
 
 class Controller
 {
-    public $pdo = null;
-
-    public function __construct()
-    {
-        // initialize the database
-        $this->pdo = (new Database())->pdo;
-    }
-
     public function checkAuth()
     {
         $data = [
