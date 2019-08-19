@@ -56,28 +56,74 @@ class Model
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    protected static function store(array $data) : bool
+    {
+        $processed_data = self::processData($data);
+        $keys_string = $processed_data['keys_string'];
+        $values_string = $processed_data['values_string'];
+        $table = static::$table;
+
+        try {
+            $statement = self::$pdo->prepare(<<<MORPHINE
+                INSERT INTO $table ($keys_string) VALUES ($values_string)
+            MORPHINE);
+
+            $statement->execute($data);
+
+            return true;
+        } catch (PDOException $error) {
+            dd($error->getMessage());
+
+            return false;
+        }
+
+        return false;
+    }
+
+    protected static function getUpdateString(array $data)
+    {
+        $processed_data = self::processData($data);
+        $array_keys = $processed_data['keys'];
+        $array_values = $processed_data['values'];
+
+        $update_string = '';
+        $array_length = sizeof($array_keys);
+
+        for ($i = 0; $i < $array_length; $i++) {
+            $array_key = $array_keys[$i];
+
+            $update_string .= $array_key . " = '" . $array_values[$i] . "'";
+
+            if ($i !== $array_length - 1) {
+                $update_string .= ', ';
+            }
+        }
+
+        return $update_string;
+    }
+
     protected static function update(int $id, array $data = []) : bool
     {
-        $array_keys = array_keys($data);
-        $array_values = array_values($data);
-
-        $array_keys_string = implode(', ', $array_keys);
-        $array_values_string = implode(', ', $array_values);
-
+        $update_string = self::getUpdateString($data);
         $table = static::$table;
-        $data[':id'] = $data[$id];
 
         $statement = self::$pdo->prepare(<<<MORPHINE
-            UPDATE ($array_keys_string) VALUES ($array_values_string)
-            FROM $table
-            WHERE id=:id
+            UPDATE $table
+            SET $update_string
+            WHERE id= :id
         MORPHINE);
 
         try {
-            $statement->execute();
+            $statement->execute([
+                ':id' => $id
+            ]);
+
+            return true;
         } catch (PDOException $error) {
             dd($error->getMessage());
         }
+
+        return false;
     }
 
     // TODO: Simplify method
@@ -108,34 +154,44 @@ class Model
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function store(array $data) : bool
+    protected static function processData(array $data)
     {
-        try {
-            $statement = self::$pdo->prepare(<<<MORPHINE
-                INSERT INTO pages (title, slug, lang, content, description, user_id, created_at) 
-                VALUES (:title, :slug, :lang, :content, :description, :user_id, NOW())
-            MORPHINE);
-            $statement->execute($data);
+        $array_values = array_values($data);
+        $array_keys_string = '';
+        $array_length = sizeof($data);
+        $array_keys = [];
 
-            return true;
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        for ($i = 0; $i < $array_length; $i++) {
+            $array_key = array_keys($data)[$i];
+            $key_string = str_replace(':', '', $array_key);
+            $array_keys[] = $key_string;
+            $array_keys_string .= $key_string;
 
-            return false;
+            if ($i !== $array_length - 1) {
+                $array_keys_string .= ', ';
+            }
         }
 
-        return false;
+        return [
+            'keys' => $array_keys,
+            'values' => $array_values,
+            'keys_string' => $array_keys_string,
+            'values_string' => "'" . implode("', '", $array_values) . "'"
+        ];
     }
 
-    // TODO: Simplify method (move functionality inside the pylon class)
-    public static function destroy(array $data) : bool
+    protected static function destroy(int $id) : bool
     {
+        $table = static::$table;
+
         $statement = self::$pdo->prepare(<<<MORPHINE
-            DELETE FROM pages WHERE id = :id
+            DELETE FROM $table WHERE id = :id
         MORPHINE);
 
         try {
-            $statement->execute($data);
+            $statement->execute([
+                ':id' => $id
+            ]);
 
             return true;
         } catch (PDOException $error) {
