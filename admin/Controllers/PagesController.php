@@ -4,6 +4,7 @@ namespace Admin\Controllers;
 
 use Common\Controller;
 use Admin\Models\Page;
+use \Exception;
 
 class PagesController extends Controller
 {
@@ -18,7 +19,6 @@ class PagesController extends Controller
 
         return view('admin/pages/index', compact('base_url', 'pages', 'page'));
     }
-
 
     public function create()
     {
@@ -57,13 +57,35 @@ class PagesController extends Controller
 
         try {
             Page::store($data);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
         redirect('/admin/pages');
     }
 
+    public function update()
+    {
+        // TODO: Check auth automatically
+        $this->checkAuth();
+
+        $data = [
+            ':title' => request('title'),
+            ':slug' => request('slug'),
+            ':lang' => request('lang'),
+            ':content' => request('content'),
+            ':description' => request('description'),
+            ':user_id' => $_SESSION['user']['id']
+        ];
+
+        try {
+            Page::update((int) request('page_id'), $data);
+        } catch (Exception $exception) {
+            dd('Exception message:' . $exception->getMessage());
+        }
+
+        redirect('/admin/pages');
+    }
 
     public function destroy($id)
     {
@@ -71,10 +93,8 @@ class PagesController extends Controller
         $this->checkAuth();
 
         try {
-            Page::destroy([
-                ':id' => (int) $id,
-            ]);
-        } catch (\Exception $exception) {
+            Page::destroy((int) $id);
+        } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
