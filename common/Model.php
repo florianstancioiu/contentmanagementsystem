@@ -49,8 +49,8 @@ class Model
 
         try {
             $statement->execute();
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        } catch (PDOException $exception) {
+            dd($exception->getMessage());
         }
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -71,8 +71,8 @@ class Model
             $statement->execute($data);
 
             return true;
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        } catch (PDOException $exception) {
+            dd('Exception message: ' . $exception->getMessage());;
 
             return false;
         }
@@ -119,8 +119,8 @@ class Model
             ]);
 
             return true;
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        } catch (PDOException $exception) {
+            dd('Exception message: ' . $exception->getMessage());
         }
 
         return false;
@@ -147,8 +147,8 @@ class Model
             $statement->execute([
                 ':id' => $id
             ]);
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        } catch (PDOException $exception) {
+            dd('Exception message: ' . $exception->getMessage());
         }
 
         return $statement->fetch(PDO::FETCH_ASSOC);
@@ -194,8 +194,8 @@ class Model
             ]);
 
             return true;
-        } catch (PDOException $error) {
-            dd($error->getMessage());
+        } catch (PDOException $exception) {
+            dd('Exception message: ' . $exception->getMessage());
 
             return false;
         }
