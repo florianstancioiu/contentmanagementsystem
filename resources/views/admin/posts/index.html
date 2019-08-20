@@ -1,12 +1,12 @@
 {% extends "layouts/admin.html" %}
 
-{% block title %} List Pages {% endblock %}
+{% block title %} List Posts {% endblock %}
 
 {% block content %}
 
     <h1 class="page-title">
         <span>Posts</span>
-        <a href="{{ base_url }}admin/posts/create" class="new-record-anchor"> + New</a>
+        <a href="{{ base_url }}admin/posts/create" class="new-entry-cta"> + New</a>
     </h1>
 
     <table class="admin-table">
@@ -25,9 +25,15 @@
                     <td>{{ post.title }}</td>
                     <td>{{ post.slug }}</td>
                     <td>
-                        <a href="{{ base_url }}posts/{{ posts.id }}" target="_blank">View</a>
-                        <a href="{{ base_url }}admin/posts/edit/{{ posts.id }}">Edit</a>
-                        <a href="{{ base_url }}admin/posts/destroy/{{ posts.id }}">Delete</a>
+                        <a href="{{ base_url }}posts/{{ post.id }}" class="table-cta" target="_blank">
+                            View
+                        </a>
+                        <a href="{{ base_url }}admin/posts/edit/{{ post.id }}" class="table-cta">
+                            Edit
+                        </a>
+                        <a href="{{ base_url }}admin/posts/destroy/{{ post.id }}" class="table-cta">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
