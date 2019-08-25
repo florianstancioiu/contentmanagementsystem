@@ -9,7 +9,9 @@ class User extends Model
 {
     public static $table = 'users';
 
-    public static $columns = [];
+    public static $columns = [
+        'id', 'first_name', 'last_name', 'email', 'created_at', 'updated_at', 'deleted_at'
+    ];
 
     protected static function signin()
     {
