@@ -5,46 +5,72 @@
 {% block content %}
     <div class="col-md-8 offset-md-2">
 
-        <h1 class="page-title align-center">
+        <h1 class="page-title text-center">
             <span>Edit User</span>
         </h1>
 
-        <form class="admin-form" action="{{ base_url }}admin/users/{{ user.id }}" method="POST">
+        <form class="admin-form" action="{{ base_url }}admin/users" method="POST">
 
-            <input type="hidden" name="user_id" value="{{ user.id }}" />
+            <input type="hidden" name="user_id" value="{{ user.user_id }}" />
 
             <div class="row">
-                <label class="col-2 col-offset-2" for="title">Title</label>
-                <input type="text" class="form-control col-6" id="title" name="title" value="{{ user.title }}" required="" />
+                <label class="col-2 col-offset-2" for="first_name">First Name</label>
+                <input type="text" class="form-control col-6" id="first_name" name="first_name" value="{{ user.first_name }}" required="" />
             </div>
 
             <div class="row">
-                <label for="slug" class="col-2 col-offset-2">Slug</label>
-                <input type="text" class="form-control col-6" id="slug" name="slug" value="{{ user.slug }}" required="" />
+                <label class="col-2 col-offset-2" for="last_name">
+                    Last Name
+                </label>
+                <input type="text" class="form-control col-6" id="last_name" name="last_name" value="{{ user.last_name }}" required="" />
             </div>
 
             <div class="row">
-                <label for="lang" class="col-2 col-offset-2">Lang</label>
-                <select name="lang" id="lang">
+                <label class="col-2 col-offset-2" for="email">
+                    Email
+                </label>
+                <input type="text" class="form-control col-6" id="email" name="email" value="{{ user.email }}" required="" />
+            </div>
+
+            <div class="row">
+                <label for="password" class="col-2 col-offset-2">
+                    Current Password
+                </label>
+                <input type="password" class="form-control col-6" id="password" name="current_password" value="" />
+            </div>
+
+            <div class="row">
+                <label for="new_password" class="col-2 col-offset-2">
+                    New Password
+                </label>
+                <input type="password" class="form-control col-6" id="new_password" name="new_password" value="" />
+            </div>
+
+            <div class="row">
+                <label for="confirm_password" class="col-2 col-offset-2">
+                    Confirm Password
+                </label>
+                <input type="password" class="form-control col-6" id="confirm_password" name="confirm_password" value="" />
+            </div>
+
+            <div class="row">
+                <label for="lang" class="col-2 col-offset-2">
+                    Language
+                </label>
+                <select name="lang" id="language">
                     <option value="en" selected>English</option>
                     <option value="ro">Romanian</option>
                 </select>
             </div>
 
             <div class="row">
-                <label for="content" class="col-2 col-offset-2">Content</label>
-                <textarea name="content" id="content" cols="30" rows="5">{{ user.content }}</textarea>
-            </div>
-
-            <div class="row">
-                <label for="description" class="col-2 col-offset-2">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10">{{ user.description }}</textarea>
-            </div>
-
-            <div class="row">
                 <div class="col-2 col-offset-2">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Update</button>
-                    <a href="{{ base_url }}admin/users" class="back">Back</a>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">
+                        Create
+                    </button>
+                    <a href="{{ base_url }}admin/users" class="btn btn-primary btn-lg btn-block" type="submit">
+                        Back
+                    </a>
                 </div>
             </div>
 

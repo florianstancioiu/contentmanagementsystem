@@ -43,7 +43,7 @@ class Model
         $table = static::$table;
 
         $statement = self::$pdo->prepare(<<<MORPHINE
-            SELECT $columns_string 
+            SELECT $columns_string
             FROM $table
         MORPHINE);
 
@@ -112,6 +112,8 @@ class Model
             SET $update_string
             WHERE id= :id
         MORPHINE);
+
+        // dd($statement->queryString);
 
         try {
             $statement->execute([

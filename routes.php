@@ -9,7 +9,6 @@ $route->addRoute('POST', '/signup', 'Common\Auth@signup');
 $route->addRoute('GET', '/signout', 'Common\Auth@signout');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
-
     $route->addRoute('GET', '', 'Admin\Controllers\PagesController@index');
     $route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
     $route->addRoute('POST', '/pages', 'Admin\Controllers\PagesController@store');
@@ -34,6 +33,9 @@ $route->addGroup('/admin', function (RouteCollector $route) {
 
     $route->addRoute('GET', '/users', 'Admin\Controllers\UsersController@index');
     $route->addRoute('POST', '/users', 'Admin\Controllers\UsersController@store');
+    $route->addRoute('GET', '/users/create', 'Admin\Controllers\UsersController@create');
+    $route->addRoute('GET', '/users/edit/{id}', 'Admin\Controllers\UsersController@edit');
+    $route->addRoute('GET', '/users/destroy/{id}', 'Admin\Controllers\UsersController@destroy');
     $route->addRoute('GET', '/users/{id}', 'Admin\Controllers\UsersController@edit');
     $route->addRoute('POST', '/users/{id}', 'Admin\Controllers\UsersController@update');
 });
