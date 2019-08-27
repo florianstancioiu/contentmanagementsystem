@@ -16,7 +16,7 @@ class User extends Model
     protected static function signin()
     {
         $statement = self::$pdo->prepare('SELECT id, first_name, last_name, email, password, created_at from users where email = :email');
-
+        
         try {
             $statement->execute([
                 ':email' => post('email')
@@ -33,8 +33,6 @@ class User extends Model
             $_SESSION['is_logged'] = true;
             $_SESSION['user'] = $array_data;
         }
-
-        // dd($_SESSION);
 
         // redirect to admin area
         if (is_logged_in()) {

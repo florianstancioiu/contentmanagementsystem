@@ -31,9 +31,7 @@ class UsersController extends Controller
     {
         // TODO: Check auth automatically
         $this->checkAuth();
-
         $base_url = base_url();
-
         $user = User::find($id);
 
         return view('admin/users/edit', compact('base_url', 'user'));
