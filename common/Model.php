@@ -42,12 +42,8 @@ class Model
         $columns_string = implode(', ', $columns);
         $table = static::$table;
 
-        $statement = self::$pdo->prepare(<<<MORPHINE
-            SELECT $columns_string
-            FROM $table
-MORPHINE);
-
         try {
+            $statement = self::$pdo->prepare("SELECT $columns_string FROM $table");
             $statement->execute();
         } catch (PDOException $exception) {
             dd($exception->getMessage());
@@ -56,7 +52,7 @@ MORPHINE);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    protected static function store(array $data) : bool
+    protected static function store(array $data = []) : bool
     {
         $processed_data = self::processData($data);
         $keys_string = $processed_data['keys_string'];
@@ -64,15 +60,12 @@ MORPHINE);
         $table = static::$table;
 
         try {
-            $statement = self::$pdo->prepare(<<<MORPHINE
-                INSERT INTO $table ($keys_string) VALUES ($values_string)
-            MORPHINE);
-
+            $statement = self::$pdo->prepare("INSERT INTO $table ($keys_string) VALUES ($values_string)");
             $statement->execute($data);
 
             return true;
         } catch (PDOException $exception) {
-            dd('Exception message: ' . $exception->getMessage());;
+            dd('Exception message: ' . $exception->getMessage());
 
             return false;
         }
@@ -107,11 +100,11 @@ MORPHINE);
         $update_string = self::getUpdateString($data);
         $table = static::$table;
 
-        $statement = self::$pdo->prepare(<<<MORPHINE
+        $statement = self::$pdo->prepare("
             UPDATE $table
             SET $update_string
             WHERE id= :id
-        MORPHINE);
+        ");
 
         try {
             $statement->execute([
@@ -137,11 +130,11 @@ MORPHINE);
         $columns_string = implode(', ', $columns);
         $table = static::$table;
 
-        $statement = self::$pdo->prepare(<<<MORPHINE
+        $statement = self::$pdo->prepare("
             SELECT $columns_string 
             FROM $table
             WHERE id = :id
-        MORPHINE);
+        ");
 
         try {
             $statement->execute([
@@ -154,7 +147,7 @@ MORPHINE);
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    protected static function processData(array $data)
+    protected static function processData(array $data) : array
     {
         $array_values = array_values($data);
         $array_keys_string = '';
@@ -182,13 +175,9 @@ MORPHINE);
 
     protected static function destroy(int $id) : bool
     {
-        $table = static::$table;
-
-        $statement = self::$pdo->prepare(<<<MORPHINE
-            DELETE FROM $table WHERE id = :id
-        MORPHINE);
-
         try {
+            $table = static::$table;
+            $statement = self::$pdo->prepare("DELETE FROM $table WHERE id = :id");
             $statement->execute([
                 ':id' => $id
             ]);

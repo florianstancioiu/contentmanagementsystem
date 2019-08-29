@@ -9,11 +9,6 @@ use Admin\Models\User;
 // TODO: Move SQL queries to User model
 class Auth extends Controller
 {
-    public function signin()
-    {
-        User::signin();
-    }
-
     public function showSignin()
     {
         $this->redirectAdmin();
@@ -23,14 +18,9 @@ class Auth extends Controller
         return view('admin/auth/signin', compact('signin_url'));
     }
 
-    public function getUserData(string $email)
+    public function signin()
     {
-        //
-    }
-
-    public function userExists($email, $password) : bool
-    {
-        //
+        User::signin();
     }
 
     public function showSignup()

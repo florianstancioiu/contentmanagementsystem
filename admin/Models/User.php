@@ -46,10 +46,8 @@ class User extends Model
 
     public static function emailExistsInDatabase() : bool
     {
-        // check email address existence in database
-        $statement = self::$pdo->prepare('SELECT first_name, email from users where email = :email');
-
         try {
+            $statement = self::$pdo->prepare('SELECT first_name, email from users where email = :email');
             $statement->execute([
                 ':email' => post('email')
             ]);
@@ -59,12 +57,12 @@ class User extends Model
 
         $data = $statement->fetchObject();
 
-        return (bool) $data->email === post('email');
+        return (bool) is_object($data) && $data->email === post('email');
     }
 
     protected static function signup()
     {
-        if (self::$pdo->emailExistsInDatabase()) {
+        if (self::emailExistsInDatabase()) {
             redirect('/register', [
                 'message' => 'The email address you typed-in exists in database'
             ]);
