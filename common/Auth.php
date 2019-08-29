@@ -44,7 +44,7 @@ class Auth extends Controller
 
     public function signup()
     {
-
+        User::signup();
     }
 
     public function signout()

@@ -62,7 +62,7 @@ class User extends Model
         return (bool) $data->email === post('email');
     }
 
-    public static function signup()
+    protected static function signup()
     {
         if (self::$pdo->emailExistsInDatabase()) {
             redirect('/register', [
