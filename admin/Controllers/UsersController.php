@@ -9,6 +9,7 @@ class UsersController extends Controller
 {
 	public function index()
     {
+				// TODO: Check auth automatically
         $this->checkAuth();
 
         $base_url = base_url();
@@ -20,6 +21,7 @@ class UsersController extends Controller
 
     public function create()
     {
+				// TODO: Check auth automatically
         $this->checkAuth();
 
         $base_url = base_url();

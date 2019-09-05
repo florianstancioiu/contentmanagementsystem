@@ -3,10 +3,10 @@
 namespace Admin\Controllers;
 
 use Common\Controller;
-use Admin\Models\Page;
-use \Exception;
+use Admin\Models\Vegetable;
+use Exception;
 
-class PagesController extends Controller
+class VegetablesController extends Controller
 {
     public function index()
     {
@@ -14,10 +14,10 @@ class PagesController extends Controller
         $this->checkAuth();
 
         $base_url = base_url();
-        $pages = Page::get();
-        $page = isset($pages[0]) ? $pages[0] : [];
+        $vegetables = Vegetable::get();
+        $vegetable = isset($vegetables[0]) ? $vegetables[0] : [];
 
-        return view('admin/pages/index', compact('base_url', 'pages', 'page'));
+        return view('admin/vegetables/index', compact('base_url', 'vegetables', 'vegetable'));
     }
 
     public function create()
@@ -27,18 +27,18 @@ class PagesController extends Controller
 
         $base_url = base_url();
 
-        return view('admin/pages/create', compact('base_url'));
+        return view('admin/vegetables/create', compact('base_url'));
     }
 
-    public function edit(int $id)
+    public function edit($id)
     {
         // TODO: Check auth automatically
         $this->checkAuth();
 
         $base_url = base_url();
-        $page = Page::find($id);
+        $vegetable = Vegetable::find($id);
 
-        return view('admin/pages/edit', compact('base_url', 'page'));
+        return view('admin/vegetables/edit', compact('base_url', 'vegetable'));
     }
 
     public function store()
@@ -56,12 +56,12 @@ class PagesController extends Controller
         ];
 
         try {
-            Page::store($data);
+            Vegetable::store($data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/vegetables');
     }
 
     public function update()
@@ -79,12 +79,12 @@ class PagesController extends Controller
         ];
 
         try {
-            Page::update((int) request('page_id'), $data);
+            Vegetable::update((int) request('vegetable_id'), $data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/vegetables');
     }
 
     public function destroy($id)
@@ -93,11 +93,11 @@ class PagesController extends Controller
         $this->checkAuth();
 
         try {
-            Page::destroy((int) $id);
+            Vegetable::destroy((int) $id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/vegetables');
     }
 }
