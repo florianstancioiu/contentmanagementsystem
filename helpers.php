@@ -4,12 +4,24 @@ if (! defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
+if (! defined('BASE_PATH')) {
+    define('BASE_PATH', __DIR__);
+}
+
+if (! defined('STORAGE_PATH')) {
+    define('STORAGE_PATH', __DIR__ . DS . 'storage');
+}
+
+if (! defined('PUBLIC_PATH')) {
+    define('PUBLIC_PATH', __DIR__ . DS . 'public');
+}
+
 if (! function_exists('route')) {
     function route() : string {
-      $request_uri = $_SERVER['REQUEST_URI'];
-      $route = explode('?', $request_uri)[0];
+        $request_uri = $_SERVER['REQUEST_URI'];
+        $route = explode('?', $request_uri)[0];
 
-      return strpos($route, '/') === 0 ? substr($route, 1) : $route;
+        return strpos($route, '/') === 0 ? substr($route, 1) : $route;
     }
 }
 
