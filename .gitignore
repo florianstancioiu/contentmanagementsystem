@@ -3,6 +3,7 @@
 /public/templatecache
 /public/css
 /public/js
+/public/storage
 /node_modules
 /v8-compile-cache-0
 .env
