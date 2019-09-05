@@ -38,7 +38,7 @@ body {
   color: white;
   font-size: 14px;
   &:hover,
-  &.active {
+  &.active-route {
     background-color: white;
     color: black;
   }
@@ -99,4 +99,3 @@ body {
     margin-bottom: 5px;
   }
 }
-

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{ base_url }}css/admin.css" />
+    <script src="{{ base_url }}js/admin.js"></script>
+</head>
+<body class="admin-page">
+
+	<div class="container">
+
+		<div class="row nav-bar">
+			<div class="col-3 align-center">
+				<a href="{{ base_url }}" target="_blank" class="site-title">
+					{{ site_name }}
+				</a>
+			</div>
+			<div class="col-2 col-offset-7">
+				{{ user.first_name }} |
+				<a href="{{ base_url }}signout" class="sign-out-btn">
+					Sign Out
+				</a>
+			</div>
+		</div>
+
+	</div>
+
+    <div class="container">
+        <div class="row main">
+            <div class="col-2 sidebar">
+                <a href="{{ base_url }}admin/pages" class="sidebar-link">Pages</a>
+                <a href="{{ base_url }}admin/posts" class="sidebar-link">Posts</a>
+                <a href="{{ base_url }}admin/users" class="sidebar-link">Users</a>
+            </div>
+            <div class="col-10 content">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+    </div>
+    
+</body>
+</html>
