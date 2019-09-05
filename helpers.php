@@ -1,10 +1,16 @@
 <?php
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 if (! defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
+}
+
+if (! function_exists('route')) {
+    function route() : string {
+      $request_uri = $_SERVER['REQUEST_URI'];
+      $route = explode('?', $request_uri)[0];
+
+      return strpos($route, '/') === 0 ? substr($route, 1) : $route;
+    }
 }
 
 if (! function_exists('view')) {
@@ -17,17 +23,11 @@ if (! function_exists('view')) {
      * @throws \Twig\Error\SyntaxError
      */
     function view(string $template_name, array $data = []) {
-        $loader = new Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
-        $twig = new Twig\Environment($loader, [
-            'debug' => true,
-            // dont use the cache
-            // 'cache' => base_dir('public' . DS . 'templatecache'),
-        ]);
-
+        $twig_environment = $GLOBALS['twig_environment'];
         $template_name = str_replace('.html', '', $template_name);
         $template_name = $template_name . '.html';
 
-        $template = ($twig->load($template_name));
+        $template = ($twig_environment->load($template_name));
 
         // retrieve env data for blade views
         $env_data = read_json_file(base_dir() . DS . '.env');
@@ -103,7 +103,7 @@ if (! function_exists('base_dir')) {
         if (strpos($path, '/') !== 0) {
             $path = '/' . $path;
         }
-        
+
         return dirname(getcwd()) . $path;
     }
 }

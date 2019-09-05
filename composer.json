@@ -19,9 +19,6 @@
             "Admin\\": "admin/",
             "Client\\": "client/",
             "Common\\": "common/"
-        },
-        "files": [
-            "helpers.php"
-        ]
+        }
     }
 }

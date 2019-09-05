@@ -2,13 +2,22 @@
 
 use Common\Database;
 
+error_reporting(E_ALL);
+error_log(-1);
+
 // autoload composer classes and files
 require '../vendor/autoload.php';
 
 // start the session
 session_start();
 
-// use the fastroute library
+// Enable Twig Extensions
+require '../common/Twig.php';
+
+// Require the helper functions
+require '../helpers.php';
+
+// Use the fastroute library
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
     require_once base_dir() . DS . 'routes.php';
 });
