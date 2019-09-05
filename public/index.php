@@ -17,6 +17,13 @@ require '../common/Twig.php';
 // Require the helper functions
 require '../helpers.php';
 
+// Create storage symlink
+$storage_symlink = PUBLIC_PATH . DS . 'storage';
+
+if (! file_exists($storage_symlink)) {
+  symlink(STORAGE_PATH, $storage_symlink);
+}
+
 // Use the fastroute library
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
     require_once base_dir() . DS . 'routes.php';
