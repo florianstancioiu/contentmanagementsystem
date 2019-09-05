@@ -10,13 +10,20 @@ class User extends Model
     public static $table = 'users';
 
     public static $columns = [
-        'id', 'first_name', 'last_name', 'email', 'password', 'created_at', 'updated_at', 'deleted_at'
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     protected static function signin()
     {
         $statement = self::$pdo->prepare('SELECT id, first_name, last_name, email, password, created_at from users where email = :email');
-        
+
         try {
             $statement->execute([
                 ':email' => post('email')

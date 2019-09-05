@@ -32,6 +32,22 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '/posts/{id}', 'Admin\Controllers\PostsController@edit');
     $route->addRoute('POST', '/posts/{id}', 'Admin\Controllers\PostsController@update');
 
+    $route->addRoute('GET', '/trees', 'Admin\Controllers\TreesController@index');
+    $route->addRoute('POST', '/trees', 'Admin\Controllers\TreesController@store');
+    $route->addRoute('GET', '/trees/create', 'Admin\Controllers\TreesController@create');
+    $route->addRoute('GET', '/trees/edit/{id}', 'Admin\Controllers\TreesController@edit');
+    $route->addRoute('GET', '/trees/destroy/{id}', 'Admin\Controllers\TreesController@destroy');
+    $route->addRoute('GET', '/trees/{id}', 'Admin\Controllers\TreesController@edit');
+    $route->addRoute('POST', '/trees/{id}', 'Admin\Controllers\TreesController@update');
+
+    $route->addRoute('GET', '/vegetables', 'Admin\Controllers\VegetablesController@index');
+    $route->addRoute('POST', '/vegetables', 'Admin\Controllers\VegetablesController@store');
+    $route->addRoute('GET', '/vegetables/create', 'Admin\Controllers\VegetablesController@create');
+    $route->addRoute('GET', '/vegetables/edit/{id}', 'Admin\Controllers\VegetablesController@edit');
+    $route->addRoute('GET', '/vegetables/destroy/{id}', 'Admin\Controllers\VegetablesController@destroy');
+    $route->addRoute('GET', '/vegetables/{id}', 'Admin\Controllers\VegetablesController@edit');
+    $route->addRoute('POST', '/vegetables/{id}', 'Admin\Controllers\VegetablesController@update');
+
     $route->addRoute('GET', '/comments', 'Admin\Controllers\CommentsController@index');
     $route->addRoute('POST', '/comments', 'Admin\Controllers\CommentsController@store');
     $route->addRoute('GET', '/comments/{id}', 'Admin\Controllers\CommentsController@edit');
