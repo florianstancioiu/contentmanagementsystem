@@ -14,7 +14,7 @@ class PostsController extends Controller
 
         $base_url = base_url();
         $posts = Post::get();
-        $post = $posts[0];
+        $post = isset($posts[0]) ? $posts[0] : [];
 
         return view('admin/posts/index', compact('base_url', 'posts', 'post'));
     }

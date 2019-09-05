@@ -15,7 +15,7 @@ class PagesController extends Controller
 
         $base_url = base_url();
         $pages = Page::get();
-        $page = $pages[0];
+        $page = isset($pages[0]) ? $pages[0] : [];
 
         return view('admin/pages/index', compact('base_url', 'pages', 'page'));
     }
