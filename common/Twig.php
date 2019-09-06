@@ -9,7 +9,7 @@ $twig_environment = new \Twig\Environment($loader, [
 ]);
 
 $function = new \Twig\TwigFunction('active_route', function ($value) {
-    return route() === $value ? 'active-route' : '';
+    return strpos(route(), $value) === 0 ? 'active-route' : '';
 }, $options = [
   // 'is_safe' => true,
   // 'is_variadic' => true,
