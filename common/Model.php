@@ -7,6 +7,11 @@ use \Exception;
 use \PDOException;
 use \PDO;
 
+// TODO: Generate slug automatically by title
+// TODO: Implement destroyed_at datetime column
+// TODO: Implement created_at datetime column
+// TODO: Mark and handle boolean fields
+// TODO: Add has_slug static property and generate it automatically given another field
 class Model
 {
     public static $table = '';
@@ -131,7 +136,7 @@ class Model
         $table = static::$table;
 
         $statement = self::$pdo->prepare("
-            SELECT $columns_string 
+            SELECT $columns_string
             FROM $table
             WHERE id = :id
         ");
