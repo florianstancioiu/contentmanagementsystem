@@ -9,42 +9,75 @@
             <span>Edit Vegetables</span>
         </h1>
 
-        <form class="admin-form" action="{{ base_url }}admin/vegetables/{{ page.id }}" method="POST">
 
-            <input type="hidden" name="page_id" value="{{ page.id }}" />
+        <form class="admin-form" action="{{ base_url }}admin/vegetables/{{ vegetable.id }}" method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" name="vegetable_id" value="{{ vegetable.id }}" />
 
             <div class="row">
                 <label class="col-2 col-offset-2" for="title">Title</label>
-                <input type="text" class="form-control col-6" id="title" name="title" value="{{ page.title }}" required="" />
+                <input type="text" class="form-control col-6" id="title" name="title" value="{{ vegetable.title }}" required="" />
             </div>
 
             <div class="row">
-                <label for="slug" class="col-2 col-offset-2">Slug</label>
-                <input type="text" class="form-control col-6" id="slug" name="slug" value="{{ page.slug }}" required="" />
+                <label class="col-2 col-offset-2" for="slug">Slug</label>
+                <input type="text" class="form-control col-6" id="slug" name="slug" value="{{ vegetable.slug }}" required="" />
             </div>
 
             <div class="row">
-                <label for="lang" class="col-2 col-offset-2">Lang</label>
-                <select name="lang" id="lang">
-                    <option value="en" selected>English</option>
-                    <option value="ro">Romanian</option>
-                </select>
+                <label for="picture" class="col-2 col-offset-2">Picture</label>
+                <input type="file" name="picture" value="{{ vegetable.picture }}" />
+            </div>
+
+            <div class="row">
+                <label for="has_flowers" class="col-2 col-offset-2">Has Flowers</label>
+                <input type="radio" name="has_flowers" value="1" checked /> Yes
+                <input type="radio" name="has_flowers" value="0"/> No
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="introduction">Introduction</label>
+                <textarea class="col-6" name="introduction" id="introduction" width="100%" rows="5">{{ vegetable.introduction }}</textarea>
             </div>
 
             <div class="row">
                 <label for="description" class="col-2 col-offset-2">Description</label>
-                <textarea name="description" id="description" cols="30" rows="5">{{ page.description }}</textarea>
+                <textarea class="col-6" name="description" id="description" width="100%" rows="5">{{ vegetable.description }}</textarea>
             </div>
 
             <div class="row">
-                <label for="content" class="col-2 col-offset-2">Content</label>
-                <textarea name="content" id="content" cols="30" rows="10">{{ page.content }}</textarea>
+                <label class="col-2 col-offset-2" for="colour">Colour</label>
+                <input type="text" class="form-control col-6" id="colour" name="colour" value="{{ vegetable.colour }}" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="growth_location">Growth Location</label>
+                <input type="text" class="form-control col-6" id="growth_location" name="growth_location" value="{{ vegetable.growth_location }}" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="ripe_season">Ripe Season</label>
+                <input type="text" class="form-control col-6" id="ripe_season" name="ripe_season" value="{{ vegetable.ripe_season }}" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_years">Average Years</label>
+                <input type="number" class="form-control col-2" id="average_years" name="average_years" value="{{ vegetable.average_years }}" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_height">Average Height</label>
+                <input type="number" class="form-control col-2" id="average_height" name="average_height" value="{{ vegetable.average_height }}" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_width">Average Width</label>
+                <input type="number" class="form-control col-2" id="average_width" name="average_width" value="{{ vegetable.average_width }}" required="" />
             </div>
 
             <div class="row">
                 <div class="col-2 col-offset-2">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Update</button>
-                    <a href="{{ base_url }}admin/vegetables" class="back">Back</a>
                 </div>
             </div>
 

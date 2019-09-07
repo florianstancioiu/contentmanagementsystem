@@ -1,6 +1,6 @@
 {% extends "layouts/admin.html" %}
 
-{% block title %} Create Vegetables {% endblock %}
+{% block title %} Create Vegetable {% endblock %}
 
 {% block content %}
     <div class="col-md-8 offset-md-2">
@@ -9,7 +9,7 @@
             <span>Create Vegetables</span>
         </h1>
 
-        <form class="admin-form" action="{{ base_url }}admin/vegetables" method="POST">
+        <form class="admin-form" action="{{ base_url }}admin/vegetables" method="POST" enctype="multipart/form-data">
 
             <div class="row">
                 <label class="col-2 col-offset-2" for="title">Title</label>
@@ -17,26 +17,70 @@
             </div>
 
             <div class="row">
-                <label for="slug" class="col-2 col-offset-2">Slug</label>
+                <label class="col-2 col-offset-2" for="slug">Slug</label>
                 <input type="text" class="form-control col-6" id="slug" name="slug" value="" required="" />
             </div>
 
             <div class="row">
-                <label for="lang" class="col-2 col-offset-2">Lang</label>
-                <select name="lang" id="lang">
-                    <option value="en" selected>English</option>
-                    <option value="ro">Romanian</option>
-                </select>
+                <label for="picture" class="col-2 col-offset-2">Picture</label>
+                <input type="file" name="picture" value="" />
+            </div>
+
+            <div class="row">
+                <label for="picture" class="col-2 col-offset-2">Has Fruits</label>
+                <input type="radio" name="has_fruits" value="1" checked /> Yes
+                <input type="radio" name="has_fruits" value="0"/> No
+            </div>
+
+            <div class="row">
+                <label for="has_flowers" class="col-2 col-offset-2">Has Flowers</label>
+                <input type="radio" name="has_flowers" value="1" checked /> Yes
+                <input type="radio" name="has_flowers" value="0"/> No
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="introduction">Introduction</label>
+                <textarea class="col-6" name="introduction" id="introduction" width="100%" rows="5"></textarea>
             </div>
 
             <div class="row">
                 <label for="description" class="col-2 col-offset-2">Description</label>
-                <textarea name="description" id="description" cols="30" rows="5"></textarea>
+                <textarea class="col-6" name="description" id="description" width="100%" rows="5"></textarea>
             </div>
 
             <div class="row">
-                <label for="content" class="col-2 col-offset-2">Content</label>
-                <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                <label class="col-2 col-offset-2" for="fruit_title">Fruit Title</label>
+                <input type="text" class="form-control col-6" id="fruit_title" name="fruit_title" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="colour">Colour</label>
+                <input type="text" class="form-control col-6" id="colour" name="colour" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="growth_location">Growth Location</label>
+                <input type="text" class="form-control col-6" id="growth_location" name="growth_location" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="ripe_season">Ripe Season</label>
+                <input type="text" class="form-control col-6" id="ripe_season" name="ripe_season" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_years">Average Years</label>
+                <input type="number" class="form-control col-2" id="average_years" name="average_years" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_height">Average Height</label>
+                <input type="number" class="form-control col-2" id="average_height" name="average_height" value="" required="" />
+            </div>
+
+            <div class="row">
+                <label class="col-2 col-offset-2" for="average_width">Average Width</label>
+                <input type="number" class="form-control col-2" id="average_width" name="average_width" value="" required="" />
             </div>
 
             <div class="row">
