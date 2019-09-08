@@ -46,8 +46,8 @@ class VegetablesController extends Controller
     {
         // TODO: Check auth automatically
         $this->checkAuth();
-        
-        $file_name = File::storeImage('picture');
+
+        $picture_location = File::storeImage('picture');
 
         $data = [
             ':title' => request('title'),
@@ -55,7 +55,6 @@ class VegetablesController extends Controller
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':picture' => $file_name,
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
             ':ripe_season' => request('ripe_season'),
@@ -64,6 +63,10 @@ class VegetablesController extends Controller
             ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        if (is_array($_FILES['picture'])) {
+            $data[':picture'] = $picture_location;
+        }
 
         try {
             Vegetable::store($data);
@@ -79,7 +82,7 @@ class VegetablesController extends Controller
         // TODO: Check auth automatically
         $this->checkAuth();
 
-        $file_name = File::storeImage('picture');
+        $picture_location = File::storeImage('picture');
 
         $data = [
             ':title' => request('title'),
@@ -87,7 +90,6 @@ class VegetablesController extends Controller
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':picture' => request('picture'),
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
             ':ripe_season' => request('ripe_season'),
@@ -97,7 +99,11 @@ class VegetablesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        dd($data);
+        if (file_error_ok('picture')) {
+            $data[':picture'] = $picture_location;
+        }
+
+        // TODO: unlink existing $picture file
 
         try {
             Vegetable::update((int) request('vegetable_id'), $data);
