@@ -11,6 +11,7 @@ class Tree extends Model
     public static $columns = [
         'id',
         'title',
+        'slug',
         'picture',
         'has_fruits',
         'fruit_title',
@@ -23,6 +24,7 @@ class Tree extends Model
         'has_flowers',
         'introduction',
         'description',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'

@@ -47,11 +47,23 @@ class TreesController extends Controller
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':lang' => request('lang'),
-            ':content' => request('content'),
+            ':has_fruits' => request('has_fruits'),
+            ':has_flowers' => request('has_flowers'),
+            ':introduction' => request('introduction'),
             ':description' => request('description'),
+            ':picture' => request('picture'),
+            ':fruit_title' => request('fruit_title'),
+            ':colour' => request('colour'),
+            ':growth_location' => request('growth_location'),
+            ':ripe_season' => request('ripe_season'),
+            ':average_years' => request('average_years'),
+            ':average_height' => request('average_height'),
+            ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        // TODO: store image file
+        // to be continued
 
         try {
             Tree::store($data);
@@ -70,11 +82,23 @@ class TreesController extends Controller
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':lang' => request('lang'),
-            ':content' => request('content'),
+            ':has_fruits' => request('has_fruits'),
+            ':has_flowers' => request('has_flowers'),
+            ':introduction' => request('introduction'),
             ':description' => request('description'),
+            ':picture' => request('picture'),
+            ':fruit_title' => request('fruit_title'),
+            ':colour' => request('colour'),
+            ':growth_location' => request('growth_location'),
+            ':ripe_season' => request('ripe_season'),
+            ':average_years' => request('average_years'),
+            ':average_height' => request('average_height'),
+            ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        // TODO: store image file
+        // to be continued
 
         try {
             Tree::update((int) request('tree_id'), $data);

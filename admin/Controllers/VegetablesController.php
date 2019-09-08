@@ -3,6 +3,7 @@
 namespace Admin\Controllers;
 
 use Common\Controller;
+use Common\File;
 use Admin\Models\Vegetable;
 use Exception;
 
@@ -45,13 +46,22 @@ class VegetablesController extends Controller
     {
         // TODO: Check auth automatically
         $this->checkAuth();
+        
+        $file_name = File::storeImage('picture');
 
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':lang' => request('lang'),
-            ':content' => request('content'),
+            ':has_flowers' => request('has_flowers'),
+            ':introduction' => request('introduction'),
             ':description' => request('description'),
+            ':picture' => $file_name,
+            ':colour' => request('colour'),
+            ':growth_location' => request('growth_location'),
+            ':ripe_season' => request('ripe_season'),
+            ':average_years' => request('average_years'),
+            ':average_height' => request('average_height'),
+            ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
 
@@ -69,14 +79,25 @@ class VegetablesController extends Controller
         // TODO: Check auth automatically
         $this->checkAuth();
 
+        $file_name = File::storeImage('picture');
+
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':lang' => request('lang'),
-            ':content' => request('content'),
+            ':has_flowers' => request('has_flowers'),
+            ':introduction' => request('introduction'),
             ':description' => request('description'),
+            ':picture' => request('picture'),
+            ':colour' => request('colour'),
+            ':growth_location' => request('growth_location'),
+            ':ripe_season' => request('ripe_season'),
+            ':average_years' => request('average_years'),
+            ':average_height' => request('average_height'),
+            ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        dd($data);
 
         try {
             Vegetable::update((int) request('vegetable_id'), $data);

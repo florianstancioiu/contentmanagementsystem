@@ -11,6 +11,7 @@ class Vegetable extends Model
     public static $columns = [
         'id',
         'title',
+        'slug',
         'picture',
         'colour',
         'growth_location',
