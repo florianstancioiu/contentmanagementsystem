@@ -6,31 +6,37 @@
 
     <h1 class="page-title">
         <span>Vegetables</span>
-        <a href="{{ base_url }}admin/vegetables/create" class="new-entry-cta"> + New</a>
+        <a href="{{ url('admin/vegetables/create') }}" class="new-entry-cta"> + New</a>
     </h1>
 
     <table class="admin-table">
         <thead>
             <tr>
                 <td>Id</td>
+                <td>Image</td>
                 <td>Title</td>
                 <td>Slug</td>
                 <td>Actions</td>
             </tr>
         </thead>
         <tbody>
-            {% for page in vegetables %}
+            {% for vegetable in vegetables %}
                 <tr>
-                    <td>{{ page.id }}</td>
-                    <td>{{ page.title }}</td>
-                    <td>{{ page.slug }}</td>
+                    <td>{{ vegetable.id }}</td>
                     <td>
-                        <a href="{{ base_url }}{{ page.slug }}" class="table-cta" target="_blank">    View
+                        {% if vegetable.picture != '' %}
+                            <img class="admin-img" src="{{ storage_url(vegetable.picture) }}" alt="" />
+                        {% endif %}
+                    </td>
+                    <td>{{ vegetable.title }}</td>
+                    <td>{{ vegetable.slug }}</td>
+                    <td>
+                        <a href="{{ url(vegetable.slug) }}" class="table-cta" target="_blank">    View
                         </a>
-                        <a href="{{ base_url }}admin/vegetables/edit/{{ page.id }}" class="table-cta">
+                        <a href="{{ url("admin/vegetables/edit/#{vegetable.id}") }}" class="table-cta">
                             Edit
                         </a>
-                        <a href="{{ base_url }}admin/vegetables/destroy/{{ page.id }}" class="table-cta">
+                        <a href="{{ url("admin/vegetables/destroy/#{vegetable.id}") }}" class="table-cta">
                             Delete
                         </a>
                     </td>
