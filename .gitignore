@@ -5,6 +5,7 @@
 /public/js
 /public/storage
 /node_modules
+/storage
 /v8-compile-cache-0
 .env
 mix-manifest.json
