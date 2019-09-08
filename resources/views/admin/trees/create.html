@@ -9,7 +9,7 @@
             <span>Create Tree</span>
         </h1>
 
-        <form class="admin-form" action="{{ base_url }}admin/trees" method="POST" enctype="multipart/form-data">
+        <form class="admin-form" action="{{ url('admin/trees') }}" method="POST" enctype="multipart/form-data">
 
             <div class="row">
                 <label class="col-2 col-offset-2" for="title">Title</label>
@@ -28,8 +28,12 @@
 
             <div class="row">
                 <label for="picture" class="col-2 col-offset-2">Has Fruits</label>
-                <input type="radio" name="has_fruits" value="1" checked /> Yes
-                <input type="radio" name="has_fruits" value="0"/> No
+                <label>
+                    <input type="radio" name="has_fruits" value="1" checked /> Yes
+                </label>
+                <label>
+                    <input type="radio" name="has_fruits" value="0"/> No
+                </label>
             </div>
 
             <div class="row">

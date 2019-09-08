@@ -4,6 +4,7 @@ namespace Admin\Controllers;
 
 use Common\Controller;
 use Admin\Models\Tree;
+use Common\File;
 use Exception;
 
 class TreesController extends Controller
@@ -44,6 +45,8 @@ class TreesController extends Controller
         // TODO: Check auth automatically
         $this->checkAuth();
 
+        $picture_location = File::storeImage('picture');
+
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -51,7 +54,6 @@ class TreesController extends Controller
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':picture' => request('picture'),
             ':fruit_title' => request('fruit_title'),
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
@@ -61,6 +63,10 @@ class TreesController extends Controller
             ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        if (file_error_ok('picture')) {
+            $data[':picture'] = $picture_location;
+        }
 
         // TODO: store image file
         // to be continued
@@ -79,6 +85,8 @@ class TreesController extends Controller
         // TODO: Check auth automatically
         $this->checkAuth();
 
+        $picture_location = File::storeImage('picture');
+
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -86,7 +94,6 @@ class TreesController extends Controller
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':picture' => request('picture'),
             ':fruit_title' => request('fruit_title'),
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
@@ -96,6 +103,10 @@ class TreesController extends Controller
             ':average_width' => request('average_width'),
             ':user_id' => $_SESSION['user']['id']
         ];
+
+        if (file_error_ok('picture')) {
+            $data[':picture'] = $picture_location;
+        }
 
         // TODO: store image file
         // to be continued
