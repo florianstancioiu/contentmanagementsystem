@@ -2,9 +2,9 @@
 
 namespace Admin\Controllers;
 
-use Common\Controller;
-use Admin\Models\Tree;
 use Common\File;
+use Common\Controller;
+use Common\Models\Tree;
 use Exception;
 
 class TreesController extends Controller

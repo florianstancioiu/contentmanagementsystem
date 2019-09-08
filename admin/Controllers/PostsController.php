@@ -3,7 +3,7 @@
 namespace Admin\Controllers;
 
 use Common\Controller;
-use Admin\Models\Post;
+use Common\Models\Post;
 use Exception;
 
 class PostsController extends Controller

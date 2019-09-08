@@ -3,11 +3,11 @@
 namespace Admin\Controllers;
 
 use Common\Controller;
-use Admin\Models\User;
+use Common\Models\User;
 
 class UsersController extends Controller
 {
-	public function index()
+		public function index()
     {
 				// TODO: Check auth automatically
         $this->checkAuth();

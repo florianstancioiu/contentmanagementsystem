@@ -2,9 +2,9 @@
 
 namespace Admin\Controllers;
 
-use Common\Controller;
 use Common\File;
-use Admin\Models\Vegetable;
+use Common\Controller;
+use Common\Models\Vegetable;
 use Exception;
 
 class VegetablesController extends Controller
