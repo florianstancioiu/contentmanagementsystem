@@ -6,9 +6,8 @@
     <div class="col-md-8 offset-md-2">
 
         <h1 class="page-title align-center">
-            <span>Edit Vegetables</span>
+            <span>Edit Vegetable</span>
         </h1>
-
 
         <form class="admin-form" action="{{ base_url }}admin/vegetables/{{ vegetable.id }}" method="POST" enctype="multipart/form-data">
 
@@ -26,7 +25,14 @@
 
             <div class="row">
                 <label for="picture" class="col-2 col-offset-2">Picture</label>
-                <input type="file" name="picture" value="{{ vegetable.picture }}" />
+
+                <div class="col-8">
+                    {% if vegetable.picture != '' %}
+                        <img class="admin-img" src="{{ storage_url(vegetable.picture) }}" alt="" />
+                    {% endif %}
+
+                    <input type="file" name="picture" value="{{ vegetable.picture }}" />
+                </div>
             </div>
 
             <div class="row">
