@@ -217,3 +217,16 @@ if (! function_exists('is_logged_in')) {
         return (bool) isset($_SESSION['is_logged']) && ($_SESSION['is_logged']) === true;
     }
 }
+
+if (! function_exists('str_slug')) {
+    /**
+    * @return string
+    */
+    function str_slug(string $string) {
+        $string = urlencode($string);
+        $string = htmlentities($string, ENT_QUOTES | ENT_XML1, 'UTF-8');
+        $search  = [ '.', '/', ',', ';', '?', '$', '%' ];
+
+        return str_replace($search, '', $string);
+    }
+}
