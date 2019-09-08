@@ -59,6 +59,9 @@ if (! function_exists('view')) {
             $data['user'] = $_SESSION['user'];
         }
 
+        // load base_url into $GLOBALS
+        $GLOBALS['base_url'] = $data['base_url'];
+
         echo $template->render($data);
     }
 }
@@ -228,5 +231,14 @@ if (! function_exists('str_slug')) {
         $search  = [ '.', '/', ',', ';', '?', '$', '%' ];
 
         return str_replace($search, '', $string);
+    }
+}
+
+if (! function_exists('file_error_ok')) {
+    /**
+    * @return boolean
+    */
+    function file_error_ok(string $file_name) : bool {
+        return (bool) is_array($_FILES[$file_name]) && $_FILES[$file_name]['error'] === UPLOAD_ERR_OK;
     }
 }

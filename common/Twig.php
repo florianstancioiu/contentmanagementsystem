@@ -8,11 +8,20 @@ $twig_environment = new \Twig\Environment($loader, [
     'cache' => base_dir('public' . DS . 'templatecache'),
 ]);
 
+// register active_route function
 $function = new \Twig\TwigFunction('active_route', function ($value) {
     return strpos(route(), $value) === 0 ? 'active-route' : '';
-}, $options = [
-  // 'is_safe' => true,
-  // 'is_variadic' => true,
-  // 'is_safe_callback' => true
-]);
+});
+$twig_environment->addFunction($function);
+
+// register url function
+$function = new \Twig\TwigFunction('url', function ($value) {
+    return $GLOBALS['base_url'] . $value;
+});
+$twig_environment->addFunction($function);
+
+// register storage_url function
+$function = new \Twig\TwigFunction('storage_url', function ($value) {
+    return $GLOBALS['base_url'] . 'storage/' . $value;
+});
 $twig_environment->addFunction($function);
