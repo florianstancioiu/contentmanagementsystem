@@ -1,12 +1,12 @@
 <?php
 
-namespace Admin\Models;
+namespace Common\Models;
 
 use Common\Model;
 
-class Post extends Model
+class Page extends Model
 {
-    public static $table = 'posts';
+    public static $table = 'pages';
 
     public static $columns = [
         'id',

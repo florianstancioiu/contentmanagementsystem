@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Models;
+namespace Common\Models;
 
 use Common\Model;
 use \PDOException;

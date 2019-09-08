@@ -1,10 +1,9 @@
 <?php
 
-namespace Client\Models;
+namespace Common\Models;
 
 use Common\Model;
 
 class Comment extends Model
 {
-
 }
