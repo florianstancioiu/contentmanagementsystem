@@ -10,3 +10,4 @@
 .env
 mix-manifest.json
 composer.lock
+npm-debug.log
