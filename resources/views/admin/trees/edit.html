@@ -27,7 +27,7 @@
                 <label for="picture" class="col-2 col-offset-2">Picture</label>
                 <div class="col-8">
                     {% if tree.picture != '' %}
-                        <img class="admin-img" src="{{ storage_url(tree.picture) }}" alt="" />
+                    <img class="admin-img" src="{{ storage_url(tree.picture) }}" alt="" />
                     {% endif %}
 
                     <input type="file" name="picture" value="{{ tree.picture }}" />

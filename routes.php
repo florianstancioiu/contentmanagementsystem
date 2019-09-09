@@ -2,16 +2,14 @@
 
 use FastRoute\RouteCollector;
 
-$route->addRoute('GET', '', 'Client\Controllers\HomeController@homepage');
+$route->addRoute('GET', '/', 'Client\Controllers\HomeController@homepage');
+// $route->addRoute('GET', '', 'Client\Controllers\HomeController@homepage');
 
 $route->addRoute('GET', '/signin', 'Common\Auth@showSignin');
 $route->addRoute('POST', '/signin', 'Common\Auth@signin');
-
 $route->addRoute('GET', '/signup', 'Common\Auth@showSignup');
 $route->addRoute('POST', '/signup', 'Common\Auth@signup');
-
 $route->addRoute('GET', '/signout', 'Common\Auth@signout');
-
 $route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
 
 $route->addGroup('/admin', function (RouteCollector $route) {

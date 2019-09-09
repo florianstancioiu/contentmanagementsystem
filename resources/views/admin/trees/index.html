@@ -21,27 +21,27 @@
         </thead>
         <tbody>
             {% for tree in trees %}
-                <tr>
-                    <td>{{ tree.id }}</td>
-                    <td>
-                        {% if tree.picture != '' %}
-                            <img class="admin-img" src="{{ storage_url(tree.picture) }}" alt="" />
-                        {% endif %}
-                    </td>
-                    <td>{{ tree.title }}</td>
-                    <td>{{ tree.slug }}</td>
-                    <td>
-                        <a href="{{ url(tree.slug) }}" class="table-cta" target="_blank">
-                            View
-                        </a>
-                        <a href="{{ url("admin/trees/edit/#{tree.id}") }}" class="table-cta">
-                            Edit
-                        </a>
-                        <a href="{{ url("admin/trees/destroy/#{tree.id}") }}" class="table-cta">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ tree.id }}</td>
+                <td>
+                    {% if tree.picture != '' %}
+                    <img class="admin-img" src="{{ storage_url(tree.picture) }}" alt="" />
+                    {% endif %}
+                </td>
+                <td>{{ tree.title }}</td>
+                <td>{{ tree.slug }}</td>
+                <td>
+                    <a href="{{ url(tree.slug) }}" class="table-cta" target="_blank">
+                        View
+                    </a>
+                    <a href="{{ url("admin/trees/edit/#{tree.id}") }}" class="table-cta">
+                        Edit
+                    </a>
+                    <a href="{{ url("admin/trees/destroy/#{tree.id}") }}" class="table-cta">
+                        Delete
+                    </a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

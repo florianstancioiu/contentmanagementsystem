@@ -20,21 +20,21 @@
         </thead>
         <tbody>
             {% for page in pages %}
-                <tr>
-                    <td>{{ page.id }}</td>
-                    <td>{{ page.title }}</td>
-                    <td>{{ page.slug }}</td>
-                    <td>
-                        <a href="{{ base_url }}{{ page.slug }}" class="table-cta" target="_blank">    View
-                        </a>
-                        <a href="{{ base_url }}admin/pages/edit/{{ page.id }}" class="table-cta">
-                            Edit
-                        </a>
-                        <a href="{{ base_url }}admin/pages/destroy/{{ page.id }}" class="table-cta">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ page.id }}</td>
+                <td>{{ page.title }}</td>
+                <td>{{ page.slug }}</td>
+                <td>
+                    <a href="{{ base_url }}{{ page.slug }}" class="table-cta" target="_blank">    View
+                    </a>
+                    <a href="{{ base_url }}admin/pages/edit/{{ page.id }}" class="table-cta">
+                        Edit
+                    </a>
+                    <a href="{{ base_url }}admin/pages/destroy/{{ page.id }}" class="table-cta">
+                        Delete
+                    </a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
