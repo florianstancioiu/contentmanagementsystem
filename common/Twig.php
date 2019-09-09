@@ -25,3 +25,5 @@ $function = new \Twig\TwigFunction('storage_url', function ($value) {
     return $GLOBALS['base_url'] . 'storage/' . $value;
 });
 $twig_environment->addFunction($function);
+
+// TODO: Create laravel-mix like function to handle timestamped files

@@ -14,6 +14,7 @@ class PagesController extends Controller
         $this->checkAuth();
 
         $base_url = base_url();
+        // TODO: Implement pagination function
         $pages = Page::get();
         $page = isset($pages[0]) ? $pages[0] : [];
 
