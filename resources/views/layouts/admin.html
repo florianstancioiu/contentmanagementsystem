@@ -15,14 +15,14 @@
 
         <div class="row nav-bar">
             <div class="col-2 align-center">
-                <a href="{{ base_url }}" target="_blank" class="site-title">
+                <a href="{{ url() }}" target="_blank" class="site-title">
                     {{ site_name }}
                 </a>
             </div>
             <div class="col-2 col-offset-8">
                 {{ user.first_name }} |
 
-                <a href="{{ base_url }}signout" class="sign-out-btn">
+                <a href="{{ url('/signout') }}" class="sign-out-btn">
                     Sign Out
                 </a>
             </div>
@@ -34,12 +34,12 @@
         <div class="row main">
             <div class="col-2 sidebar">
 
-                <a href="{{ base_url }}admin/drinks" class="sidebar-link {{ active_route('admin/drinks') }}">Drinks</a>
-                <a href="{{ base_url }}admin/vegetables" class="sidebar-link {{ active_route('admin/vegetables') }}">Vegetables</a>
-                <a href="{{ base_url }}admin/trees" class="sidebar-link {{ active_route('admin/trees') }}">Trees</a>
-                <a href="{{ base_url }}admin/pages" class="sidebar-link {{ active_route('admin/pages') }}">Pages</a>
-                <a href="{{ base_url }}admin/posts" class="sidebar-link {{ active_route('admin/posts') }}">Posts</a>
-                <a href="{{ base_url }}admin/users" class="sidebar-link {{ active_route('admin/users') }}">Users</a>
+                <a href="{{ url('admin/drinks') }}" class="sidebar-link {{ active_route('admin/drinks') }}">Drinks</a>
+                <a href="{{ url('admin/vegetables') }}" class="sidebar-link {{ active_route('admin/vegetables') }}">Vegetables</a>
+                <a href="{{ url('admin/trees') }}" class="sidebar-link {{ active_route('admin/trees') }}">Trees</a>
+                <a href="{{ url('admin/pages') }}" class="sidebar-link {{ active_route('admin/pages') }}">Pages</a>
+                <a href="{{ url('admin/posts') }}" class="sidebar-link {{ active_route('admin/posts') }}">Posts</a>
+                <a href="{{ url('admin/users') }}" class="sidebar-link {{ active_route('admin/users') }}">Users</a>
 
             </div>
             <div class="col-10 content">

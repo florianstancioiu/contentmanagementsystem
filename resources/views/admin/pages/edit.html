@@ -10,7 +10,7 @@
         </h1>
 
         <form class="admin-form" action="{{ base_url }}admin/pages/{{ page.id }}" method="POST">
-            
+
             <input type="hidden" name="page_id" value="{{ page.id }}" />
 
             <div class="row">
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-2 col-offset-2">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Update</button>
-                    <a href="{{ base_url }}admin/pages" class="back">Back</a>
+                    <a href="{{ url('admin/pages') }}" class="back">Back</a>
                 </div>
             </div>
 
