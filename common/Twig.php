@@ -15,8 +15,15 @@ $function = new \Twig\TwigFunction('active_route', function ($value) {
 $twig_environment->addFunction($function);
 
 // register url function
-$function = new \Twig\TwigFunction('url', function ($value) {
-    return $GLOBALS['base_url'] . $value;
+$function = new \Twig\TwigFunction('url', function ($value = '/') {
+    $base_url = $GLOBALS['base_url'];
+
+    // remove leading forward slash
+    if (strpos($value, '/') === 0) {
+        $value = substr($value, 1);
+    }
+
+    return $base_url . $value;
 });
 $twig_environment->addFunction($function);
 
