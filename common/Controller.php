@@ -2,6 +2,7 @@
 
 namespace Common;
 
+// TODO: Generate csrf_tokens to use in forms
 class Controller
 {
     public function checkAuth()

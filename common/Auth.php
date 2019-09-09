@@ -7,6 +7,7 @@ use Common\Models\User;
 
 // TODO: Refactor class
 // TODO: Move SQL queries to User model
+// TODO: Secure the authentication process
 class Auth extends Controller
 {
     public function showSignin()
