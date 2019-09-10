@@ -1,0 +1,44 @@
+.homepage-list {
+    background-color: #a2a282;
+    height: 180px;
+    position: relative;
+    border-bottom: 2px solid #808071;
+    .title {
+        text-transform: capitalize;
+        padding-top: 6px;
+        padding-left: 20px;
+        padding-bottom: 6px;
+    }
+    .item {
+        width: 85%;
+        margin: 0 auto;
+        border: 1px solid #6f6f6f;
+        padding: 10px 0;
+        height: 110px;
+        overflow: hidden;
+        &-img {
+            max-width: 80%;
+            max-height: 80px;
+            display: block;
+            margin: 0 auto;
+        }
+        &-title {
+            margin: 5px auto;
+            display: inline-block;
+            padding: 0 15px;
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+            word-break: break-word;
+        }
+    }
+    .view-more {
+        text-decoration: none;
+        padding: 2px 6px;
+        background-color: #808072;
+        color: white;
+        position: absolute;
+        top: 4px;
+        right: 22px;
+    }
+}

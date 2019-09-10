@@ -1,0 +1,42 @@
+.slideshow {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    .slideshow-images {
+        height: 300px;
+    }
+    .slideshow-image {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+    .arrow {
+        position: absolute;
+        cursor: pointer;
+        text-align: center;
+        height: 30px;
+        width: 30px;
+        background-color: white;
+        border-radius: 50%;
+        border: 1px solid #222;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 30px;
+        span {
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 8px;
+        }
+    }
+    .right-arrow {
+        left: auto;
+        right: 30px;
+        span {
+            left: 10px;
+        }
+    }
+}

@@ -1,5 +1,9 @@
 @import 'libraries/columns';
 @import 'client/common';
 
+// partials
+@import 'client/partials/homepage_list';
+@import 'client/partials/slideshow';
+
 // pages
 @import 'client/pages/home';
