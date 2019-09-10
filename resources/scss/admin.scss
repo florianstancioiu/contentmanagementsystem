@@ -1,3 +1,5 @@
 @import 'libraries/columns';
-@import 'partials/admin';
-@import 'pages/auth';
+@import 'admin/common';
+
+// pages
+@import 'admin/pages/auth';

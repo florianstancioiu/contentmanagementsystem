@@ -1,2 +1,5 @@
 @import 'libraries/columns';
-@import 'pages/auth';
+@import 'client/common';
+
+// pages
+@import 'client/pages/home';
