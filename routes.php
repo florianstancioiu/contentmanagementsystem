@@ -2,8 +2,8 @@
 
 use FastRoute\RouteCollector;
 
+// TODO: Handle multiple languages by using a slug prefix
 $route->addRoute('GET', '/', 'Client\Controllers\HomeController@homepage');
-// $route->addRoute('GET', '', 'Client\Controllers\HomeController@homepage');
 
 $route->addRoute('GET', '/signin', 'Common\Auth@showSignin');
 $route->addRoute('POST', '/signin', 'Common\Auth@signin');

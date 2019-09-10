@@ -34,3 +34,4 @@ $function = new \Twig\TwigFunction('storage_url', function ($value) {
 $twig_environment->addFunction($function);
 
 // TODO: Create laravel-mix like function to handle timestamped files
+// TODO: Create trans function to handle language translations
