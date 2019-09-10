@@ -1,0 +1,41 @@
+<div class="homepage-list">
+    <div class="title">
+        {{ list }}
+    </div>
+
+    <div class="items row">
+
+        <div class="col-3">
+            <div class="item">
+                <img src="{{ storage_url('php.png') }}" alt="" class="item-img" />
+                <a href="{{ url('/') }}" class="item-title">{{ default_title }}</a>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="item">
+                <img src="{{ storage_url('php.png') }}" alt="" class="item-img" />
+                <a href="{{ url('/') }}" class="item-title">{{ default_title }}</a>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="item">
+                <img src="{{ storage_url('php.png') }}" alt="" class="item-img" />
+                <a href="{{ url('/') }}" class="item-title">{{ default_title }}</a>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="item">
+                <img src="{{ storage_url('php.png') }}" alt="" class="item-img" />
+                <a href="{{ url('/') }}" class="item-title">{{ default_title }}</a>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="{{ url(list) }}" class="view-more">
+        View More
+    </a>
+</div>

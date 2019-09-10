@@ -3,8 +3,13 @@
 {% block title %} Homepage {% endblock %}
 
 {% block content %}
-    <h1 class="page-title">
-        <span>Pages</span>
-        <a href="{{ base_url }}admin/trees/create" class="new-entry-cta"> + New</a>
-    </h1>
+
+    {{ include('client/partials/slideshow.html') }}
+
+    {{ include('client/partials/homepage_list.html', { list: 'drinks', default_title: 'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet' }) }}
+
+    {{ include('client/partials/homepage_list.html', { list: 'vegetables', default_title: 'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet' }) }}
+
+    {{ include('client/partials/homepage_list.html', { list: 'trees', default_title: 'Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet' }) }}
+
 {% endblock %}
