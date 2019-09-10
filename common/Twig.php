@@ -29,7 +29,14 @@ $twig_environment->addFunction($function);
 
 // register storage_url function
 $function = new \Twig\TwigFunction('storage_url', function ($value) {
-    return $GLOBALS['base_url'] . 'storage/' . $value;
+    $base_url = $GLOBALS['base_url'];
+
+    // remove leading forward slash
+    if (strpos($value, '/') === 0) {
+        $value = substr($value, 1);
+    }
+
+    return $base_url . 'storage/' . $value;
 });
 $twig_environment->addFunction($function);
 
