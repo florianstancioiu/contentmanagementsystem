@@ -2,8 +2,10 @@
 @import 'client/common';
 
 // partials
-@import 'client/partials/homepage_list';
+@import 'client/partials/header';
 @import 'client/partials/slideshow';
+@import 'client/partials/homepage_list';
+@import 'client/partials/footer';
 
 // pages
 @import 'client/pages/home';

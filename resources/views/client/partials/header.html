@@ -1,16 +1,19 @@
 <div class="header">
     <div class="row">
         <div class="col-4">
-            <img src="" alt="logo" class="header-logo"/>
+            <img src="{{ storage_url('php.png') }}" alt="logo" class="header-logo" />
         </div>
-        <div class="header-user-area col-4 col-offset-4">
 
+        <div class="header-user-area col-2 col-offset-6">
+            <div class="header-avatar" style="background-image: url('{{ storage_url('php.png') }}')"></div>
+            <p class="user-name">John Doe</p>
+            {% if is_authenticated() %}
+                <a href="{{ url('/auth/sign-in') }}" class="sign-in auth-link">Sign In</a>
+            {% else %}
+                <a href="{{ url('/auth/sign-out') }}" class="sign-out auth-link">Sign Out</a>
+            {% endif %}
         </div>
     </div>
 
-    <!-- start .horizontal-menu -->
-    <div class="row horizontal-menu">
-        
-    </div>
-    <!-- stop .horizontal-menu -->
+    {{ include('client/partials/horizontal_menu.html') }}
 </div>

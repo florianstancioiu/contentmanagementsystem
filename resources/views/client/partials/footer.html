@@ -1,26 +1,35 @@
 <div class="footer">
     <div class="row">
-        <div class="col-6">
+        <div class="col-2 col-offset-3">
             <ul class="vertical-menu">
                 <li>
-                    <a href="">Link</a>
+                    <a href="{{ url('/') }}">Home</a>
                 </li>
                 <li>
-                    <a href="">Link</a>
+                    <a href="{{ url('/about') }}">About</a>
                 </li>
                 <li>
-                    <a href="">Link</a>
+                    <a href="{{ url('vegetables') }}">Vegetables</a>
+                </li>
+                <li>
+                    <a href="{{ url('drinks') }}">Drinks</a>
+                </li>
+                <li>
+                    <a href="{{ url('trees') }}">Trees</a>
+                </li>
+                <li>
+                    <a href="{{ url('contact') }}">Contact</a>
                 </li>
             </ul>
         </div>
-        <div class="col-6">
+        <div class="col-3 col-offset-3">
             <form class="footer-subscription" action="" method="POST">
-                <input type="email" name="subscription_email" />
-                <button type="submit">Subscribe</button>
+                <input class="email-input" type="email" name="subscription_email" />
+                <button class="submit-btn" type="submit">Subscribe</button>
             </form>
 
             <div class="footer-contact">
-                
+
             </div>
         </div>
     </div>

@@ -1,0 +1,44 @@
+.footer {
+    height: 250px;
+    background-color: #009048;
+    &-subscription {
+        margin-top: 38px;
+    }
+    .email-input {
+        border-left-width: 0;
+        border-right-width: 0;
+        width: 60%;
+        height: 25px;
+        float: left;
+        padding: 0px 12px;
+    }
+    .submit-btn {
+        cursor: pointer;
+        width: 30%;
+        display: block;
+        float: left;
+        height: 30px;
+        background-color: #000000;
+        border: none;
+        color: white;
+    }
+}
+
+.vertical-menu {
+    padding: 0;
+    margin-top: 38px;
+    li {
+        list-style: none;
+        border: 1px solid #a1a182;
+        border-bottom: none;
+        &:last-child {
+            border-bottom: 1px solid #a1a182;
+        }
+    }
+    a {
+        text-decoration: none;
+        color: white;
+        margin: 5px 10px;
+        display: inline-block;
+    }
+}
