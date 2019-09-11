@@ -46,7 +46,8 @@ class Database
         }
     }
 
-    public function insertExample() 
+    // TODO: Check function and remove it if needed
+    public function insertExample()
     {
         $data = array('hey, thats fucked up', '9 Dark and Twisty Road', 'Cardiff');
         $statement = $pdo->prepare("INSERT INTO db_table (name, addr, city) values (?, ?, ?)");
@@ -59,6 +60,7 @@ class Database
         }
     }
 
+    // TODO: Check function and remove it if needed
     public function selectExample()
     {
         try {

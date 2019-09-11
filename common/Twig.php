@@ -1,5 +1,8 @@
 <?php
 
+// TODO: Create laravel-mix like function to handle timestamped files
+// TODO: Create translation function to handle language translations
+
 $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
 $twig_environment = new \Twig\Environment($loader, [
     'debug' => true,
@@ -40,5 +43,9 @@ $function = new \Twig\TwigFunction('storage_url', function ($value) {
 });
 $twig_environment->addFunction($function);
 
-// TODO: Create laravel-mix like function to handle timestamped files
-// TODO: Create trans function to handle language translations
+// TODO: Create is_authenticated function to check if there is anybody logged in
+$function = new \Twig\TwigFunction('is_authenticated', function () {
+    // TODO: actually implement the darn thing
+    return (bool) rand(0, 1);
+});
+$twig_environment->addFunction($function);

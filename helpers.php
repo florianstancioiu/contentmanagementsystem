@@ -242,3 +242,5 @@ if (! function_exists('file_error_ok')) {
         return (bool) is_array($_FILES[$file_name]) && $_FILES[$file_name]['error'] === UPLOAD_ERR_OK;
     }
 }
+
+// TODO: Create function(s) to handle session data
