@@ -3,14 +3,20 @@
 use FastRoute\RouteCollector;
 
 // TODO: Handle multiple languages by using a slug prefix
-$route->addRoute('GET', '/', 'Client\Controllers\HomeController@homepage');
+$route->addRoute('GET', '/', 'Client\Controllers\FrontendController@home');
+$route->addRoute('GET', '/about', 'Client\Controllers\FrontendController@about');
+$route->addRoute('GET', '/contact', 'Client\Controllers\FrontendController@showContact');
+$route->addRoute('POST', '/contact', 'Client\Controllers\FrontendController@contact');
+$route->addRoute('GET', '/login', 'Client\Controllers\FrontendController@showLogin');
+$route->addRoute('POST', '/login', 'Client\Controllers\FrontendController@login');
+$route->addRoute('GET', '/register', 'Client\Controllers\FrontendController@showRegister');
+$route->addRoute('POST', '/register', 'Client\Controllers\FrontendController@register');
 
 $route->addRoute('GET', '/signin', 'Common\Auth@showSignin');
 $route->addRoute('POST', '/signin', 'Common\Auth@signin');
 $route->addRoute('GET', '/signup', 'Common\Auth@showSignup');
 $route->addRoute('POST', '/signup', 'Common\Auth@signup');
 $route->addRoute('GET', '/signout', 'Common\Auth@signout');
-$route->addRoute('GET', '/pages', 'Admin\Controllers\PagesController@index');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '', 'Admin\Controllers\PagesController@index');
@@ -59,3 +65,5 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('GET', '/users/{id}', 'Admin\Controllers\UsersController@edit');
     $route->addRoute('POST', '/users/{id}', 'Admin\Controllers\UsersController@update');
 });
+
+$route->addRoute('GET', '/{slug}', 'Client\Controllers\PagesController@show');
