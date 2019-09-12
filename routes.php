@@ -66,4 +66,16 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('POST', '/users/{id}', 'Admin\Controllers\UsersController@update');
 });
 
+$route->addRoute('GET', '/trees', 'Client\Controllers\TreesController@index');
+$route->addRoute('GET', '/trees/{slug}', 'Client\Controllers\TreesController@show');
+
+$route->addRoute('GET', '/fruits', 'Client\Controllers\FruitsController@index');
+$route->addRoute('GET', '/fruits/{slug}', 'Client\Controllers\FruitsController@show');
+
+$route->addRoute('GET', '/vegetables', 'Client\Controllers\VegetablesController@index');
+$route->addRoute('GET', '/vegetables/{slug}', 'Client\Controllers\VegetablesController@show');
+
+$route->addRoute('GET', '/drinks', 'Client\Controllers\DrinksController@index');
+$route->addRoute('GET', '/drinks/{slug}', 'Client\Controllers\DrinksController@show');
+
 $route->addRoute('GET', '/{slug}', 'Client\Controllers\PagesController@show');

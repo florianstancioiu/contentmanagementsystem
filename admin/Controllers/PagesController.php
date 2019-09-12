@@ -88,7 +88,7 @@ class PagesController extends Controller
         redirect('/admin/pages');
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         // TODO: Check auth automatically
         $this->checkAuth();
