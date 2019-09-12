@@ -74,13 +74,18 @@ class Model
                 LIMIT $start, $no_rows
             ");
 
-            // dd($statement->queryString);
             $statement->execute();
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($rows as &$row) {
+            $row['pagination_rows'] = $no_rows;
+        }
+
+        return $rows;
     }
 
     protected static function store(array $data = []) : bool
