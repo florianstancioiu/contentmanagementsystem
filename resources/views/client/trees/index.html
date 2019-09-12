@@ -4,8 +4,27 @@
 
 {% block content %}
 
-    <span>
-        TREES
-    </span>
+    <h1>Trees</h1>
+
+    <form action="{{ url('/trees') }}" method="GET">
+        <input type="text" name="search_keyword" value="" />
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="row pagination-list">
+        {% for tree in trees %}
+            <div class="col-3">
+                <div class="pagination-item">
+                    <img class="item-image" src="{{ storage_url(tree.picture) }}" alt="" />
+                    <p class="item-title">{{ tree.title }}</p>
+                    <h3 class="item-description">
+                        {{ tree.description }}
+                    </h3>
+                </div>
+            </div>
+         {% endfor %}
+    </div>
+
+    {{ include('client/partials/pagination.html', { items: trees , pagination_nr: pagination_nr }) }}
 
 {% endblock %}

@@ -2,6 +2,7 @@
 
 // TODO: Create laravel-mix like function to handle timestamped files
 // TODO: Create translation function to handle language translations
+// TODO: Create pagination function to display the pagination duhhh
 
 $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
 $twig_environment = new \Twig\Environment($loader, [

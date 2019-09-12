@@ -4,6 +4,8 @@
 
 {% block content %}
 
-    <span>VEGETABLES PAGE</span>
+    {{ include('client/partials/pagination_list.html', { items: trees }) }}
+
+    {{ include('client/partials/pagination.html', { items: trees }) }}
 
 {% endblock %}

@@ -9,7 +9,7 @@ class TreesController extends Controller
 {
     public function index()
     {
-        $trees = Tree::paginate();
+        $trees = Tree::paginate(5);
         $search_keyword = request('search_keyword');
 
         return view('client/trees/index', compact('trees'));
