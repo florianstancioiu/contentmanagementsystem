@@ -69,10 +69,12 @@ class Model
 
         try {
             $statement = self::$pdo->prepare("
-                SELECT $columns_string
+                SELECT $columns_string, (SELECT COUNT(*) FROM $table LIMIT 1) as total_rows
                 FROM $table
                 LIMIT $start, $no_rows
             ");
+
+            // dd($statement->queryString);
             $statement->execute();
         } catch (PDOException $exception) {
             dd($exception->getMessage());
