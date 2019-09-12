@@ -127,7 +127,7 @@ class Model
 
     // TODO: Simplify method
     // TODO: Make the method dynamic, so it can work with multiple tables
-    protected static function find(int $id, array $columns = []) : array
+    protected static function find($identifier, array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
             $columns = static::$columns;
@@ -136,21 +136,33 @@ class Model
         $columns_string = implode(', ', $columns);
         $table = static::$table;
 
+        // retrieve the row using the slug string
         $statement = self::$pdo->prepare("
             SELECT $columns_string
             FROM $table
-            WHERE id = :id
+            WHERE slug = :slug
         ");
+        $data = [ ':slug' => $identifier ];
+
+        if (is_numeric($identifier)) {
+            // retrieve the row using the id integer
+            $statement = self::$pdo->prepare("
+                SELECT $columns_string
+                FROM $table
+                WHERE id = :id
+            ");
+            $data = [ ':id' => $identifier ];
+        }
 
         try {
-            $statement->execute([
-                ':id' => $id
-            ]);
+            $statement->execute($data);
         } catch (PDOException $exception) {
             dd('Exception message: ' . $exception->getMessage());
         }
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return is_array($row) ? $row : [];
     }
 
     protected static function processData(array $data) : array
