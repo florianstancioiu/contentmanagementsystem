@@ -58,6 +58,29 @@ class Model
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    protected static function paginate(int $no_rows = 15, int $start = 0, array $columns = []) : array
+    {
+        if (sizeof($columns) === 0) {
+            $columns = static::$columns;
+        }
+
+        $columns_string = implode(', ', $columns);
+        $table = static::$table;
+
+        try {
+            $statement = self::$pdo->prepare("
+                SELECT $columns_string
+                FROM $table
+                LIMIT $start, $no_rows
+            ");
+            $statement->execute();
+        } catch (PDOException $exception) {
+            dd($exception->getMessage());
+        }
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     protected static function store(array $data = []) : bool
     {
         $processed_data = self::processData($data);
