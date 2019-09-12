@@ -13,7 +13,19 @@ $twig_environment = new \Twig\Environment($loader, [
 
 // register active_route function
 $function = new \Twig\TwigFunction('active_route', function ($value) {
-    return strpos(route(), $value) === 0 ? 'active-route' : '';
+    $route = route();
+
+    // remove leading forward slash
+    if (strpos($value, '/') === 0) {
+        $value = substr($value, 1);
+    }
+
+    // prevent strpos error
+    if (strlen($value) === 0) {
+        return $route === $value ? 'active-route' : '';
+    }
+
+    return strpos($route, $value) === 0 ? 'active-route' : '';
 });
 $twig_environment->addFunction($function);
 
