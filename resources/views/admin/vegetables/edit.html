@@ -24,14 +24,14 @@
             </div>
 
             <div class="row">
-                <label for="picture" class="col-2 col-offset-2">Picture</label>
+                <label for="image" class="col-2 col-offset-2">Picture</label>
 
                 <div class="col-8">
-                    {% if vegetable.picture != '' %}
-                        <img class="admin-img" src="{{ storage_url(vegetable.picture) }}" alt="" />
+                    {% if vegetable.image != '' %}
+                        <img class="admin-img" src="{{ storage_url(vegetable.image) }}" alt="" />
                     {% endif %}
 
-                    <input type="file" name="picture" value="{{ vegetable.picture }}" />
+                    <input type="file" name="image" value="{{ vegetable.image }}" />
                 </div>
             </div>
 

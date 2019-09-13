@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 12, 2019 at 02:59 PM
+-- Generation Time: Sep 13, 2019 at 04:48 PM
 -- Server version: 5.7.27-0ubuntu0.18.04.1
 -- PHP Version: 7.3.7-2+ubuntu18.04.1+deb.sury.org+1
 
@@ -173,7 +173,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `slug`, `lang`, `content`, `description`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Work1', 'work1', 'en', 'hope1', 'work1', 1, '2019-08-30 12:51:00', NULL, NULL);
+(1, 'Workhgdf4525', 'work1 adsw', 'en', 'hope1', 'work1', 1, '2019-08-30 12:51:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ CREATE TABLE `trees` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `introduction` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `has_fruits` int(11) NOT NULL,
   `has_flowers` int(11) NOT NULL,
   `fruit_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -222,18 +222,25 @@ CREATE TABLE `trees` (
 -- Dumping data for table `trees`
 --
 
-INSERT INTO `trees` (`id`, `title`, `slug`, `introduction`, `description`, `picture`, `has_fruits`, `has_flowers`, `fruit_title`, `colour`, `growth_location`, `ripe_season`, `average_years`, `average_height`, `average_width`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'aaa 111  aaa', '42432', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(3, 'aaa 111  aaa 465465', '424323', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(5, '46546', '42432234', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(6, '46546 aaa', '42434532', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(7, '46546 abdsf', '424324367647', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(8, '46asdgfd', '4243276657', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(9, '46as asdasdasd', '4243246546875', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+INSERT INTO `trees` (`id`, `title`, `slug`, `introduction`, `description`, `image`, `has_fruits`, `has_flowers`, `fruit_title`, `colour`, `growth_location`, `ripe_season`, `average_years`, `average_height`, `average_width`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'aaa 111  aaa', '42432a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(3, 'aaa 111  aaa 465465', '424323a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(5, '46546', '42432234a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(6, '46546 aaa', '42434532a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(7, '46546 abdsf', '424324367647a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(8, '46asdgfd', '4243276657a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(9, '46as asdasdasd', '4243246546875a', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
 (10, '46 asdasdasd', 'fghhg', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(11, 'asdasd', '42432ghrtyh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(11, 'asdasd', '42432ghrtyha', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
 (12, 'as asdasdasd', '42432hgfhgfh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(13, 'as asdasdasd', '42432fghfghfgh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL);
+(15, 'as asdasdasd', '42432hgfhgfh554', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(16, 'as asdasdasd', '42432hgfhgfh5435', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(23, '46asdgfd', '4243276657ggg', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(24, '46as asdasdasd', '4243246546875ggggsdf', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(25, '46 asdasdasd', 'fghhg45ggregre', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(26, 'as asdasdasd', '42432hgfhgfhsdfsdfds', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(27, 'as asdasdasd', '42432hgfhgfh554ghdgfdg', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(28, 'as asdasdasd', '42432hgfhgfh5435ghfghgfhfgh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -286,7 +293,7 @@ CREATE TABLE `vegetables` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `introduction` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `colour` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `growth_location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ripe_season` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -304,7 +311,7 @@ CREATE TABLE `vegetables` (
 -- Dumping data for table `vegetables`
 --
 
-INSERT INTO `vegetables` (`id`, `title`, `slug`, `introduction`, `description`, `picture`, `colour`, `growth_location`, `ripe_season`, `average_years`, `average_height`, `average_width`, `has_flowers`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `vegetables` (`id`, `title`, `slug`, `introduction`, `description`, `image`, `colour`, `growth_location`, `ripe_season`, `average_years`, `average_height`, `average_width`, `has_flowers`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'test 444 aa', '111 aaa', 'test11aa', 'test11aa', 'images/242y241024Bl2FyUUIuY7BHBAuohy5wkufKjKG38.png', 'testa', 'testa', 'testa', 1234, 1234, 1234, 0, 1, '2019-09-07 12:56:39', NULL, NULL);
 
 --
@@ -454,7 +461,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `trees`
 --
 ALTER TABLE `trees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -40,7 +40,7 @@ class TreesController extends Controller
 
     protected function store()
     {
-        $picture_location = File::storeImage('picture');
+        $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
@@ -59,8 +59,8 @@ class TreesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        if (file_error_ok('picture')) {
-            $data[':picture'] = $picture_location;
+        if (file_error_ok('image')) {
+            $data[':image'] = $image_location;
         }
 
         try {
@@ -74,7 +74,7 @@ class TreesController extends Controller
 
     protected function update()
     {
-        $picture_location = File::storeImage('picture');
+        $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
@@ -93,8 +93,8 @@ class TreesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        if (file_error_ok('picture')) {
-            $data[':picture'] = $picture_location;
+        if (file_error_ok('image')) {
+            $data[':image'] = $image_location;
         }
 
         try {

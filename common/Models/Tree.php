@@ -12,7 +12,7 @@ class Tree extends Model
         'id',
         'title',
         'slug',
-        'picture',
+        'image',
         'has_fruits',
         'fruit_title',
         'colour',

@@ -41,8 +41,8 @@ class VegetablesController extends Controller
     protected function store()
     {
         // TODO: update the $data array without having an ugly if statement
-        // TODO: unlink existing $picture file
-        $picture_location = File::storeImage('picture');
+        // TODO: unlink existing $image file
+        $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
@@ -59,8 +59,8 @@ class VegetablesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        if (is_array($_FILES['picture'])) {
-            $data[':picture'] = $picture_location;
+        if (is_array($_FILES['image'])) {
+            $data[':image'] = $image_location;
         }
 
         try {
@@ -75,8 +75,8 @@ class VegetablesController extends Controller
     protected function update()
     {
         // TODO: update the $data array without having an ugly if statement
-        // TODO: unlink existing $picture file
-        $picture_location = File::storeImage('picture');
+        // TODO: unlink existing $image file
+        $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
@@ -93,8 +93,8 @@ class VegetablesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        if (file_error_ok('picture')) {
-            $data[':picture'] = $picture_location;
+        if (file_error_ok('image')) {
+            $data[':image'] = $image_location;
         }
 
         try {

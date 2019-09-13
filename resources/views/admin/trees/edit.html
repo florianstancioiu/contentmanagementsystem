@@ -24,18 +24,18 @@
             </div>
 
             <div class="row">
-                <label for="picture" class="col-2 col-offset-2">Picture</label>
+                <label for="image" class="col-2 col-offset-2">Picture</label>
                 <div class="col-8">
-                    {% if tree.picture != '' %}
-                    <img class="admin-img" src="{{ storage_url(tree.picture) }}" alt="" />
+                    {% if tree.image != '' %}
+                    <img class="admin-img" src="{{ storage_url(tree.image) }}" alt="" />
                     {% endif %}
 
-                    <input type="file" name="picture" value="{{ tree.picture }}" />
+                    <input type="file" name="image" value="{{ tree.image }}" />
                 </div>
             </div>
 
             <div class="row">
-                <label for="picture" class="col-2 col-offset-2">Has Fruits</label>
+                <label for="image" class="col-2 col-offset-2">Has Fruits</label>
                 <label>
                     <input type="radio" name="has_fruits" value="1" {{ tree.has_fruits ? 'checked' : '' }} /> Yes
                 </label>

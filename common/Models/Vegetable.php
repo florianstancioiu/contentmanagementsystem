@@ -12,7 +12,7 @@ class Vegetable extends Model
         'id',
         'title',
         'slug',
-        'picture',
+        'image',
         'colour',
         'growth_location',
         'ripe_season',

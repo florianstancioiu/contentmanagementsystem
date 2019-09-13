@@ -24,8 +24,8 @@
                 <tr>
                     <td>{{ vegetable.id }}</td>
                     <td>
-                        {% if vegetable.picture != '' %}
-                            <img class="admin-img" src="{{ storage_url(vegetable.picture) }}" alt="" />
+                        {% if vegetable.image != '' %}
+                            <img class="admin-img" src="{{ storage_url(vegetable.image) }}" alt="" />
                         {% endif %}
                     </td>
                     <td>{{ vegetable.title }}</td>
