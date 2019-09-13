@@ -65,6 +65,8 @@ $twig_environment->addFunction($function);
 
 // TODO: Figure out a way to have a consistent number of links to show by
 // messing around with the $default_links_to_show and $links_to_show variables
+// TODO: Don't show the pagination if there is only one link to show
+// TODO: Don't show the link arrows if there are fewer links than the default of links to show
 $function = new \Twig\TwigFunction('pagination', function (array $items) {
     $first_item = $items[0];
 
