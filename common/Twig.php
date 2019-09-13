@@ -43,6 +43,12 @@ $function = new \Twig\TwigFunction('url', function ($value = '/') {
 });
 $twig_environment->addFunction($function);
 
+// register request function
+$function = new \Twig\TwigFunction('request', function ($value = "") {
+    return request($value);
+});
+$twig_environment->addFunction($function);
+
 // register storage_url function
 $function = new \Twig\TwigFunction('storage_url', function ($value) {
     $base_url = $GLOBALS['base_url'];
@@ -67,6 +73,7 @@ $twig_environment->addFunction($function);
 // messing around with the $default_links_to_show and $links_to_show variables
 // TODO: Don't show the pagination if there is only one link to show
 // TODO: Don't show the link arrows if there are fewer links than the default of links to show
+// TODO: Handle pagination when there is a filter or a search
 $function = new \Twig\TwigFunction('pagination', function (array $items) {
     $first_item = $items[0];
 
