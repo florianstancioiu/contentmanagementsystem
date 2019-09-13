@@ -74,7 +74,8 @@ $twig_environment->addFunction($function);
 // TODO: Don't show the pagination if there is only one link to show
 // TODO: Don't show the link arrows if there are fewer links than the default of links to show
 // TODO: Handle pagination when there is a filter or a search
-$function = new \Twig\TwigFunction('pagination', function (array $items) {
+// TODO: Handle $filters
+$function = new \Twig\TwigFunction('pagination', function (array $items, array $filters = []) {
     $first_item = $items[0];
 
     if (is_null($first_item)) {

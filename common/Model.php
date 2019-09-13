@@ -16,13 +16,18 @@ use \PDO;
 // TODO: Return objects instead of plain php arrays
 // TODO: Create an artificial array key for every row to generate the url automatically without giving me headaches (see accessors above)
 // TODO: Add filters (where statements)
+// TODO: 1 - Rewrite the whole effing thing because I need filters and I need to return objects for every single method (great)
+// TODO: 1.1 - Use the QueryBuilder class to generate the PDO strings
+// TODO: Force a default $identifier field (corelate it with has_slug TODO note)
 class Model
 {
-    public static $table = '';
+    protected static $table = '';
 
-    public static $columns = [];
+    protected static $columns = [];
 
-    public static $pdo = null;
+    protected static $pdo = null;
+
+    protected static $id_field = 'id';
 
     public static function __callStatic(string $title, $params)
     {
@@ -142,7 +147,7 @@ class Model
         $statement = self::$pdo->prepare("
             UPDATE $table
             SET $update_string
-            WHERE id= :id
+            WHERE id = :id
         ");
 
         try {
