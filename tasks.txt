@@ -1,0 +1,27 @@
+Tasks
+
+1 - Enable items (trees) search
+1.1 - Add where functionality to the base Model class
+2 - Pass filters to Twig pagination function
+3 - Create trees show html view
+4 - Client side login / register
+4.1 - Send welcome email
+5 - Create contact page
+5.1 - Send contact email
+6 - Change website title and logo image in the header section
+6.1 - Create admin settings page
+7 - Write the javascript code for the homepage slideshow
+
+8 - Create admin pagination function
+9 - Create admin user roles pages
+10 - Create admin contact messages Pages
+11 - Create admin languages pages
+12 - Create admin auth logs page
+13 - Create admin email logs page
+
+14 - Create admin subscrribers pages
+15 - Create admin subscription emails pages
+16 - Create admin files pages
+17 - Create admin menus pages
+18 - Create admin activity pages
+19 - Create admin dashboard page
