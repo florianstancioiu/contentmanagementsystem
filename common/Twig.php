@@ -62,3 +62,71 @@ $function = new \Twig\TwigFunction('is_authenticated', function () {
     return (bool) rand(0, 1);
 });
 $twig_environment->addFunction($function);
+
+// TODO: Figure out a way to have a consistent number of links to show by
+// messing around with the $default_links_to_show and $links_to_show variables
+$function = new \Twig\TwigFunction('pagination', function (array $items) {
+    $first_item = $items[0];
+
+    if (is_null($first_item)) {
+        return '';
+    }
+
+    $current_page = (int) request('page') ?: 1;
+    $route = route();
+    $total_rows = $first_item['total_rows'];
+    $pagination_rows = $first_item['pagination_rows'];
+    $total_links = round($total_rows / $pagination_rows);
+    $default_links_to_show = $links_to_show = 4;
+
+    $html = '<div class="row align-center"><ul class="frontend-pagination pagination">';
+
+    // generate previous link
+    if ($current_page > 1) {
+        $link_nr = $current_page - 1;
+        $prev_link = url("$route?page=$link_nr");
+
+        $html .= '<li class="prev-link">';
+            $html .= "<a href='$prev_link'><</a>";
+        $html .= '</li>';
+    }
+
+    for ($i = 1; $i <= $total_links; $i++) {
+        // change the number of links to show for init
+        // $links_to_show = $default_links_to_show * 2 : $links_to_show;
+
+        if ($i < $current_page - $links_to_show) {
+            continue;
+        }
+
+        if ($i > $current_page + $links_to_show) {
+            continue;
+        }
+
+        if ($i !== 1) {
+            $url = url("$route?page=$i");
+        } else {
+            $url = url($route);
+        }
+
+        $active_link = $current_page === $i ? "active-link" : "";
+        $html .= "<li class='$active_link'>";
+            $html .= "<a href='$url'>$i</a>";
+        $html .= "</li>";
+    }
+
+    // generate next link
+    if ($current_page < $total_links) {
+        $link_nr = $current_page + 1;
+        $next_link = url("$route?page=$link_nr");
+
+        $html .= '<li class="next-link">';
+            $html .= "<a href='$next_link'>></a>";
+        $html .= '</li>';
+    }
+
+    $html .= '</ul></div>';
+
+    return new \Twig\Markup($html, 'UTF-8');
+});
+$twig_environment->addFunction($function);
