@@ -7,7 +7,7 @@
     <h1>Trees</h1>
 
     <form action="{{ url('/trees') }}" method="GET">
-        <input type="text" name="search_keyword" value="" />
+        <input type="text" name="search_keyword" value="{{ request('search_keyword') }}" />
         <button type="submit">Search</button>
     </form>
 
@@ -20,6 +20,7 @@
                     <h3 class="item-description">
                         {{ tree.description }}
                     </h3>
+                    <a href="{{ url("/trees/#{tree.slug}") }}" class="view-more-btn">View More</a>
                 </div>
             </div>
          {% endfor %}

@@ -4,8 +4,10 @@
 
 {% block content %}
 
-    <span>
-        TREE
-    </span>
+    <img src="{{ storage_url(tree.picture) }}" alt="">
+
+    <h1>
+        {{ tree.title }}
+    </h1>
 
 {% endblock %}

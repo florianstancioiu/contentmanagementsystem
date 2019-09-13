@@ -33,14 +33,20 @@
     <div class="container">
         <div class="row main">
             <div class="col-2 sidebar">
-
-                <a href="{{ url('admin/drinks') }}" class="sidebar-link {{ active_route('admin/drinks') }}">Drinks</a>
-                <a href="{{ url('admin/vegetables') }}" class="sidebar-link {{ active_route('admin/vegetables') }}">Vegetables</a>
                 <a href="{{ url('admin/trees') }}" class="sidebar-link {{ active_route('admin/trees') }}">Trees</a>
+                <a href="{{ url('admin/vegetables') }}" class="sidebar-link {{ active_route('admin/vegetables') }}">Vegetables</a>
+                <a href="{{ url('admin/drinks') }}" class="sidebar-link {{ active_route('admin/drinks') }}">Drinks (!)</a>
                 <a href="{{ url('admin/pages') }}" class="sidebar-link {{ active_route('admin/pages') }}">Pages</a>
                 <a href="{{ url('admin/posts') }}" class="sidebar-link {{ active_route('admin/posts') }}">Posts</a>
+                <a href="{{ url('admin/files') }}" class="sidebar-link {{ active_route('admin/files') }}">Files (!)</a>
+                <a href="{{ url('admin/menus') }}" class="sidebar-link {{ active_route('admin/menus') }}">Menus (!)</a>
+                <a href="{{ url('admin/languages') }}" class="sidebar-link {{ active_route('admin/languages') }}">Languages (!)</a>
+                <a href="{{ url('admin/settings') }}" class="sidebar-link {{ active_route('admin/settings') }}">Settings (!)</a>
                 <a href="{{ url('admin/users') }}" class="sidebar-link {{ active_route('admin/users') }}">Users</a>
-
+                <a href="{{ url('admin/user-roles') }}" class="sidebar-link {{ active_route('admin/user-roles') }}">User Roles (!)</a>
+                <a href="{{ url('admin/contact-messages') }}" class="sidebar-link {{ active_route('admin/contact-messages') }}">Contact Messages (!)</a>
+                <a href="{{ url('admin/auth-logs') }}" class="sidebar-link {{ active_route('admin/auth-logs') }}">Auth Logs (!)</a>
+                <a href="{{ url('admin/email-logs') }}" class="sidebar-link {{ active_route('admin/email-logs') }}">Email Logs (!)</a>
             </div>
             <div class="col-10 content">
                 {% block content %}
