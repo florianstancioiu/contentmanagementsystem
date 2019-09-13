@@ -5,48 +5,43 @@ namespace Admin\Controllers;
 use Common\File;
 use Common\Controller;
 use Common\Models\Vegetable;
-use Exception;
+use \Exception;
 
 class VegetablesController extends Controller
 {
-    public function index()
-    {
-        // TODO: Check auth automatically
-        $this->checkAuth();
+    protected static $auth_methods = [
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy'
+    ];
 
-        $base_url = base_url();
+    protected function index()
+    {
         $vegetables = Vegetable::get();
         $vegetable = isset($vegetables[0]) ? $vegetables[0] : [];
 
-        return view('admin/vegetables/index', compact('base_url', 'vegetables', 'vegetable'));
+        return view('admin/vegetables/index', compact('vegetables', 'vegetable'));
     }
 
-    public function create()
+    protected function create()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
-
-        return view('admin/vegetables/create', compact('base_url'));
+        return view('admin/vegetables/create');
     }
 
-    public function edit($id)
+    protected function edit(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
         $vegetable = Vegetable::find($id);
 
-        return view('admin/vegetables/edit', compact('base_url', 'vegetable'));
+        return view('admin/vegetables/edit', compact('vegetable'));
     }
 
-    public function store()
+    protected function store()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
+        // TODO: update the $data array without having an ugly if statement
+        // TODO: unlink existing $picture file
         $picture_location = File::storeImage('picture');
 
         $data = [
@@ -77,11 +72,10 @@ class VegetablesController extends Controller
         redirect('/admin/vegetables');
     }
 
-    public function update()
+    protected function update()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
+        // TODO: update the $data array without having an ugly if statement
+        // TODO: unlink existing $picture file
         $picture_location = File::storeImage('picture');
 
         $data = [
@@ -103,8 +97,6 @@ class VegetablesController extends Controller
             $data[':picture'] = $picture_location;
         }
 
-        // TODO: unlink existing $picture file
-
         try {
             Vegetable::update((int) request('vegetable_id'), $data);
         } catch (Exception $exception) {
@@ -114,13 +106,10 @@ class VegetablesController extends Controller
         redirect('/admin/vegetables');
     }
 
-    public function destroy($id)
+    protected function destroy(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         try {
-            Vegetable::destroy((int) $id);
+            Vegetable::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }

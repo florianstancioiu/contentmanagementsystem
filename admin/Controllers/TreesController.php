@@ -5,46 +5,41 @@ namespace Admin\Controllers;
 use Common\File;
 use Common\Controller;
 use Common\Models\Tree;
-use Exception;
+use \Exception;
 
 class TreesController extends Controller
 {
-    public function index()
-    {
-        $this->checkAuth();
+    protected static $auth_methods = [
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy'
+    ];
 
-        $base_url = base_url();
+    protected function index()
+    {
         $trees = Tree::get();
         $tree = isset($trees[0]) ? $trees[0] : [];
 
-        return view('admin/trees/index', compact('base_url', 'trees', 'tree'));
+        return view('admin/trees/index', compact('trees', 'tree'));
     }
 
-    public function create()
+    protected function create()
     {
-        $this->checkAuth();
-
-        $base_url = base_url();
-
-        return view('admin/trees/create', compact('base_url'));
+        return view('admin/trees/create');
     }
 
-    public function edit($id)
+    protected function edit($id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
         $tree = Tree::find($id);
 
-        return view('admin/trees/edit', compact('base_url', 'tree'));
+        return view('admin/trees/edit', compact('tree'));
     }
 
-    public function store()
+    protected function store()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $picture_location = File::storeImage('picture');
 
         $data = [
@@ -67,9 +62,6 @@ class TreesController extends Controller
         if (file_error_ok('picture')) {
             $data[':picture'] = $picture_location;
         }
-
-        // TODO: store image file
-        // to be continued
 
         try {
             Tree::store($data);
@@ -80,11 +72,8 @@ class TreesController extends Controller
         redirect('/admin/trees');
     }
 
-    public function update()
+    protected function update()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $picture_location = File::storeImage('picture');
 
         $data = [
@@ -108,9 +97,6 @@ class TreesController extends Controller
             $data[':picture'] = $picture_location;
         }
 
-        // TODO: store image file
-        // to be continued
-
         try {
             Tree::update((int) request('tree_id'), $data);
         } catch (Exception $exception) {
@@ -120,13 +106,10 @@ class TreesController extends Controller
         redirect('/admin/trees');
     }
 
-    public function destroy($id)
+    protected function destroy(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         try {
-            Tree::destroy((int) $id);
+            Tree::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }

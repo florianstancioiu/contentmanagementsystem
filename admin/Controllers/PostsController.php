@@ -4,46 +4,41 @@ namespace Admin\Controllers;
 
 use Common\Controller;
 use Common\Models\Post;
-use Exception;
+use \Exception;
 
 class PostsController extends Controller
 {
-    public function index()
-    {
-        $this->checkAuth();
+    protected static $auth_methods = [
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy'
+    ];
 
-        $base_url = base_url();
+    protected function index()
+    {
         $posts = Post::get();
         $post = isset($posts[0]) ? $posts[0] : [];
 
-        return view('admin/posts/index', compact('base_url', 'posts', 'post'));
+        return view('admin/posts/index', compact('posts', 'post'));
     }
 
-    public function create()
+    protected function create()
     {
-        $this->checkAuth();
-
-        $base_url = base_url();
-
-        return view('admin/posts/create', compact('base_url'));
+        return view('admin/posts/create');
     }
 
-    public function edit($id)
+    protected function edit($id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
         $post = Post::find($id);
 
-        return view('admin/posts/edit', compact('base_url', 'post'));
+        return view('admin/posts/edit', compact('post'));
     }
 
-    public function store()
+    protected function store()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -62,11 +57,8 @@ class PostsController extends Controller
         redirect('/admin/posts');
     }
 
-    public function update()
+    protected function update()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -85,13 +77,10 @@ class PostsController extends Controller
         redirect('/admin/posts');
     }
 
-    public function destroy($id)
+    protected function destroy(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         try {
-            Post::destroy((int) $id);
+            Post::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }

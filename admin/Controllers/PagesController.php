@@ -8,45 +8,37 @@ use \Exception;
 
 class PagesController extends Controller
 {
-    public function index()
-    {
-        // TODO: Check auth automatically
-        $this->checkAuth();
+    protected static $auth_methods = [
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy'
+    ];
 
-        $base_url = base_url();
-        // TODO: Implement pagination function
+    protected function index()
+    {
         $pages = Page::get();
         $page = isset($pages[0]) ? $pages[0] : [];
 
-        return view('admin/pages/index', compact('base_url', 'pages', 'page'));
+        return view('admin/pages/index', compact('pages', 'page'));
     }
 
-    public function create()
+    protected function create()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
-
-        return view('admin/pages/create', compact('base_url'));
+        return view('admin/pages/create');
     }
 
-    public function edit(int $id)
+    protected function edit(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
         $page = Page::find($id);
 
-        return view('admin/pages/edit', compact('base_url', 'page'));
+        return view('admin/pages/edit', compact('page'));
     }
 
-    public function store()
+    protected function store()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -65,11 +57,8 @@ class PagesController extends Controller
         redirect('/admin/pages');
     }
 
-    public function update()
+    protected function update()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
@@ -88,13 +77,10 @@ class PagesController extends Controller
         redirect('/admin/pages');
     }
 
-    public function destroy(int $id)
+    protected function destroy(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         try {
-            Page::destroy((int) $id);
+            Page::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }

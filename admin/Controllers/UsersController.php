@@ -4,46 +4,41 @@ namespace Admin\Controllers;
 
 use Common\Controller;
 use Common\Models\User;
+use \Exception;
 
 class UsersController extends Controller
 {
-		public function index()
-    {
-				// TODO: Check auth automatically
-        $this->checkAuth();
+    protected static $auth_methods = [
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy'
+    ];
 
-        $base_url = base_url();
+    protected function index()
+    {
         $users = User::get();
         $user = $users[0];
 
-        return view('admin/users/index', compact('base_url', 'users', 'user'));
+        return view('admin/users/index', compact('users', 'user'));
     }
 
-    public function create()
+    protected function create()
     {
-				// TODO: Check auth automatically
-        $this->checkAuth();
-
-        $base_url = base_url();
-
-        return view('admin/users/create', compact('base_url'));
+        return view('admin/users/create');
     }
 
-    public function edit($id)
+    protected function edit($id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-        $base_url = base_url();
         $user = User::find($id);
 
-        return view('admin/users/edit', compact('base_url', 'user'));
+        return view('admin/users/edit', compact('user'));
     }
 
-    public function store()
+    protected function store()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         if (! filter_var(request('email'), FILTER_VALIDATE_EMAIL)) {
             throw new Exception('The email input you provided must be valid');
         }
@@ -64,11 +59,8 @@ class UsersController extends Controller
         redirect('/admin/users');
     }
 
-    public function update()
+    protected function update()
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         if (! filter_var(request('email'), FILTER_VALIDATE_EMAIL)) {
             throw new Exception('The email input you provided must be valid');
         }
@@ -93,13 +85,10 @@ class UsersController extends Controller
         redirect('/admin/users');
     }
 
-    public function destroy($id)
+    protected function destroy(int $id)
     {
-        // TODO: Check auth automatically
-        $this->checkAuth();
-
         try {
-            User::destroy((int) $id);
+            User::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
