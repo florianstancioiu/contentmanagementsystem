@@ -12,6 +12,10 @@ use \PDO;
 // TODO: Implement destroyed_at datetime column
 // TODO: Implement created_at datetime column
 // TODO: Mark and handle boolean fields
+// TODO: Add accessors and mutators methods
+// TODO: Return objects instead of plain php arrays
+// TODO: Create an artificial array key for every row to generate the url automatically without giving me headaches (see accessors above)
+// TODO: Add filters (where statements)
 class Model
 {
     public static $table = '';

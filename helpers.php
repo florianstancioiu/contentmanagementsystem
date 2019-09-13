@@ -165,6 +165,7 @@ if (! function_exists('redirect')) {
     }
 }
 
+// TODO: handle $value parameter
 if (! function_exists('request')) {
     /**
      * @param string $name
