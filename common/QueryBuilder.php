@@ -29,7 +29,11 @@ class QueryBuilder
 
     protected $orderBy = [];
 
-    protected $limit = [0, 0];
+    protected $limit = [
+        // 'start' => 0,
+        // TODO: Create a settings function to retrieve the default pagination number
+        // 'no_rows' => 15
+    ];
 
     protected $fetchType = 'object';
 
@@ -41,14 +45,38 @@ class QueryBuilder
         return $this;
     }
 
+    // generate the SQL string
     public function __toString() : string
     {
-           return 'whaaaa';
+        $select_stmnt = "SELECT " . implode(', ', $this->columns) . "\n";
+        $from_stmnt = "FROM " . $this->table . "\n";
+        $limit_stmnt = "";
+
+        if (sizeof($this->limit) !== 0) {
+            if (isset($this->limit['start']) && isset($this->limit['no_rows'])) {
+                $limit_stmnt = "LIMIT " . $this->limit['start'] . ', ' . $this->limit['no_rows'];
+            }
+        }
+
+        $sql_statement = $select_stmnt . $from_stmnt . $limit_stmnt;
+
+        return $sql_statement;
     }
 
     public function select(array $columns) : QueryBuilder
     {
         $this->columns = array_merge($this->columns, $columns);
+
+        return $this;
+    }
+
+    public function paginate(int $no_rows = 15, int $start = 0) : QueryBuilder
+    {
+        $table = $this->table;
+        // TODO: Implement selectRaw method
+        // TODO: Use selectRaw method
+        $this->columns[] = "(SELECT COUNT(*) FROM $table LIMIT 1) as total_rows";
+        $this->limit($no_rows, $start);
 
         return $this;
     }
@@ -119,6 +147,16 @@ class QueryBuilder
                 $valid_columns[] = $column;
             }
         }
+
+        return $this;
+    }
+
+    public function limit(int $no_rows, int $start) : QueryBuilder
+    {
+        $this->limit = [
+            'start' => $start,
+            'no_rows' => $no_rows
+        ];
 
         return $this;
     }
