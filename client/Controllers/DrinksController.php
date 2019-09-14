@@ -9,7 +9,7 @@ class DrinksController extends Controller
 {
     public function index()
     {
-        $drinks = Drink::paginate();
+        $drinks = Drink::select('title', 'slug')::paginate();
         $search_keyword = request('search_keyword');
 
         return view('client/drinks/index', compact('drinks'));

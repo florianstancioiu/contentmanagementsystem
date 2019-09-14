@@ -1,7 +1,8 @@
 Tasks
 
 1 - Enable items (trees) search
-1.1 - Add where functionality to the base Model class
+1.1 - Create the QueryBuilder class to generate SQL strings for the base Model class (WIP)
+1.2 - Add where functionality to the base Model class
 2 - Pass filters to Twig pagination function
 3 - Create trees show html view
 4 - Client side login / register
