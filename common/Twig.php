@@ -76,7 +76,7 @@ $twig_environment->addFunction($function);
 // TODO: Handle pagination when there is a filter or a search
 // TODO: Handle $filters
 $function = new \Twig\TwigFunction('pagination', function (array $items, array $filters = []) {
-    $first_item = $items[0];
+    $first_item = isset($items[0]) ? $items[0] : null;
 
     if (is_null($first_item)) {
         return '';
