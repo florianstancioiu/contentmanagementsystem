@@ -3,6 +3,7 @@
 namespace Common;
 
 use Common\Database;
+use Common\QueryBuilder;
 use \Exception;
 use \PDOException;
 use \PDO;
@@ -19,6 +20,7 @@ use \PDO;
 // TODO: 1 - Rewrite the whole effing thing because I need filters and I need to return objects for every single method (great)
 // TODO: 1.1 - Use the QueryBuilder class to generate the PDO strings
 // TODO: Force a default $identifier field (corelate it with has_slug TODO note)
+// TODO: Write unit tests for this class
 class Model
 {
     protected static $table = '';
@@ -27,10 +29,21 @@ class Model
 
     protected static $pdo = null;
 
-    protected static $id_field = 'id';
+    protected static $idField = 'id';
+
+    protected static $queryBuilder = null;
+
+    public function __construct()
+    {
+        // initialize the QueryBuilder object
+        self::$queryBuilder = new QueryBuilder(static::$table, static::class);
+    }
 
     public static function __callStatic(string $title, $params)
     {
+        // initialize the QueryBuilder object
+        self::$queryBuilder = new QueryBuilder(static::$table, static::class);
+
         // initialize PDO object
         if (is_null(self::$pdo)) {
             self::$pdo = (new Database())->pdo;
@@ -45,6 +58,11 @@ class Model
         if (method_exists(static::class, $title)) {
             return static::$title(... $params);
         }
+    }
+
+    public static function getColumns() : array
+    {
+        return static::$columns;
     }
 
     protected static function get(array $columns = []) : array
@@ -64,6 +82,22 @@ class Model
         }
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected static function select()
+    {
+        $existing_columns = static::getColumns();
+        $valid_columns = [];
+
+        foreach (func_get_args() as $column) {
+            if (in_array($column, $existing_columns)) {
+                $valid_columns[] = $column;
+            }
+        }
+
+        dd(self::$queryBuilder->select($valid_columns));
+
+        return $existing_columns;
     }
 
     protected static function paginate(int $no_rows = 15, int $start = 0, array $columns = []) : array
