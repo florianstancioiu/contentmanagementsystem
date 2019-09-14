@@ -23,6 +23,10 @@ use \PDO;
 // TODO: Write unit tests for this class
 class Model
 {
+    protected static $modelObject = null;
+
+    protected static $queryBuilder = null;
+
     protected static $table = '';
 
     protected static $columns = [];
@@ -31,22 +35,25 @@ class Model
 
     protected static $idField = 'id';
 
-    protected static $queryBuilder = null;
-
     public function __construct()
     {
         // initialize the QueryBuilder object
-        self::$queryBuilder = new QueryBuilder(static::$table, static::class);
-    }
-
-    public static function __callStatic(string $title, $params)
-    {
-        // initialize the QueryBuilder object
-        self::$queryBuilder = new QueryBuilder(static::$table, static::class);
+        if (is_null(self::$queryBuilder)) {
+            self::$queryBuilder = new QueryBuilder(static::$table, static::class);
+        }
 
         // initialize PDO object
         if (is_null(self::$pdo)) {
             self::$pdo = (new Database())->pdo;
+        }
+    }
+
+    public static function __callStatic(string $title, $params)
+    {
+        if (is_null(self::$modelObject)) {
+            $class = static::class;
+            self::$modelObject = new $class;
+            self::$columns = self::$modelObject::$columns;
         }
 
         // check existence of $table property
@@ -95,27 +102,18 @@ class Model
             }
         }
 
-        dd(self::$queryBuilder->select($valid_columns));
+        self::$columns = $valid_columns;
 
-        return $existing_columns;
+        return self::$modelObject;
     }
 
-    protected static function paginate(int $no_rows = 15, int $start = 0, array $columns = []) : array
+    protected static function paginate(int $no_rows = 15, int $start = 0) : array
     {
-        if (sizeof($columns) === 0) {
-            $columns = static::$columns;
-        }
-
-        $columns_string = implode(', ', $columns);
-        $table = static::$table;
+        self::$queryBuilder->select(self::$columns);
+        self::$queryBuilder->paginate($no_rows, $start);
 
         try {
-            $statement = self::$pdo->prepare("
-                SELECT $columns_string, (SELECT COUNT(*) FROM $table LIMIT 1) as total_rows
-                FROM $table
-                LIMIT $start, $no_rows
-            ");
-
+            $statement = self::$pdo->prepare(self::$queryBuilder);
             $statement->execute();
         } catch (PDOException $exception) {
             dd($exception->getMessage());
