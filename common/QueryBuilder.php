@@ -17,7 +17,15 @@ class QueryBuilder
 
     protected $updateData = [];
 
-    protected $whereClauses = [];
+    protected $whereClauses = [
+        /*
+        [
+            'column' => $column,
+            'value' => $value,
+            'operator' => $operator,
+        ]
+        */
+    ];
 
     protected $joins = [];
 
@@ -50,7 +58,40 @@ class QueryBuilder
     {
         $select_stmnt = "SELECT " . implode(', ', $this->columns) . "\n";
         $from_stmnt = "FROM " . $this->table . "\n";
+        $where_stmnt = "";
+        $like_stmnt = "";
         $limit_stmnt = "";
+
+        // TODO: Group the where statements to allow the use of AND and OR operators
+        if (sizeof($this->whereClauses) > 0) {
+            $where_stmnt = "WHERE ";
+            foreach ($this->$whereClauses as $clause) {
+                // check the $clause array
+                if (! is_array($clause)) {
+                    throw new Exception("The $clause is not a valid where clause: [ 'column', 'value', 'operator' ]");
+                }
+
+                $column = $clause['column'];
+                $operator = $clause['operator'];
+                $value = $clause['value'];
+                $connect_operator = $clause['connect_operator'];
+                $like_structure = isset($clause['like_structure']) ? $clause['like_structure'] : "";
+
+                // validate the $operator variable
+                $valid_operators = [
+                    '=', '!=', '<', '>', '=<', '>=', 'LIKE'
+                ];
+                if (! in_array($operator, $valid_operators)) {
+                    throw new Exception("The given $operator operator is not valid");
+                }
+
+                $where_stmnt .= "$column $operator :$column AND \n";
+
+                if ($operator === 'LIKE') {
+                    $where_stmnt .= "$column LIKE '$like_structure' \n";
+                }
+            }
+        }
 
         if (sizeof($this->limit) !== 0) {
             if (isset($this->limit['start']) && isset($this->limit['no_rows'])) {
@@ -58,9 +99,7 @@ class QueryBuilder
             }
         }
 
-        $sql_statement = $select_stmnt . $from_stmnt . $limit_stmnt;
-
-        return $sql_statement;
+        return $select_stmnt . $from_stmnt . $where_stmnt . $limit_stmnt;
     }
 
     public function select(array $columns) : QueryBuilder
@@ -118,12 +157,18 @@ class QueryBuilder
         return $this;
     }
 
-    public function like(string $column, string $keyword, string $option = "%REPLACE%") : QueryBuilder
+    /*
+    public function like(string $column, string $like_keyword, string $option = "%:like_keyword%") : QueryBuilder
     {
-        // append the data don't rewrite it so that it can be reused
+        $this->$likeClauses[] = [
+            'column' => $column,
+            'like_keyword' => $like_keyword,
+            'option' => $option,
+        ];
 
         return $this;
     }
+    */
 
     public function where($filters) : QueryBuilder
     {
