@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 13, 2019 at 04:48 PM
+-- Generation Time: Sep 16, 2019 at 03:18 PM
 -- Server version: 5.7.27-0ubuntu0.18.04.1
 -- PHP Version: 7.3.7-2+ubuntu18.04.1+deb.sury.org+1
 
@@ -53,6 +53,34 @@ CREATE TABLE `contact_messages` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drinks`
+--
+
+CREATE TABLE `drinks` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `drinks`
+--
+
+INSERT INTO `drinks` (`id`, `title`, `slug`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'A title', 'a-title', '2019-09-16 07:15:28', NULL, NULL),
+(2, 'B title', 'b-title', '2019-09-16 07:15:28', NULL, NULL),
+(3, 'C title', 'c-title', '2019-09-16 07:15:28', NULL, NULL),
+(4, 'D title', 'd-title', '2019-09-16 07:15:28', NULL, NULL),
+(5, 'Testoase pe ski jet', 'testoase-la-munte', '2019-09-16 07:15:28', NULL, NULL),
+(6, 'Plumb', 'bacovia-e-mort-traiasca-bacovia', '2019-09-16 07:15:28', NULL, NULL),
+(7, 'Vreme trece, Vreme vine', 'e-bine-e-bine', '2019-09-16 07:15:28', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -331,6 +359,12 @@ ALTER TABLE `contact_messages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `drinks`
+--
+ALTER TABLE `drinks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `languages`
 --
 ALTER TABLE `languages`
@@ -414,6 +448,12 @@ ALTER TABLE `auth_logs`
 --
 ALTER TABLE `contact_messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `drinks`
+--
+ALTER TABLE `drinks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `languages`
