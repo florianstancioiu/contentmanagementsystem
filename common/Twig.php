@@ -75,6 +75,7 @@ $twig_environment->addFunction($function);
 // TODO: Don't show the link arrows if there are fewer links than the default of links to show
 // TODO: Handle pagination when there is a filter or a search
 // TODO: Handle $filters
+// TODO: Handle both GET and SESSION filters
 $function = new \Twig\TwigFunction('pagination', function (array $items, array $filters = []) {
     $first_item = isset($items[0]) ? $items[0] : null;
 
@@ -88,6 +89,10 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     $pagination_rows = $first_item['pagination_rows'];
     $total_links = round($total_rows / $pagination_rows);
     $default_links_to_show = $links_to_show = 4;
+
+    // TODO: GENERATE THE LINKS WITH A SINGLE DAMN FUNCTION
+    $search_keyword = request('search_keyword');
+    $search_filter = $search_keyword ? "search_keyword=$search_keyword" : "";
 
     $html = '<div class="row align-center"><ul class="frontend-pagination pagination">';
 

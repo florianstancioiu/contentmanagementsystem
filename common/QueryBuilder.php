@@ -140,6 +140,7 @@ class QueryBuilder
         $table = $this->table;
         // TODO: Implement selectRaw method
         // TODO: Use selectRaw method
+        // TODO: Use the WHERE SQL statement to count the total number of rows
         $this->columns[] = "(SELECT COUNT(*) FROM $table LIMIT 1) as total_rows";
         $this->limit($no_rows, $start);
 

@@ -180,6 +180,8 @@ if (! function_exists('request')) {
         if (isset($_GET[$name])) {
             return $_GET[$name];
         }
+
+        return null;
     }
 }
 
@@ -245,3 +247,4 @@ if (! function_exists('file_error_ok')) {
 }
 
 // TODO: Create function(s) to handle session data
+// TODO: Create function to handle GET and SESSION filters
