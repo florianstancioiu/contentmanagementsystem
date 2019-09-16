@@ -4,4 +4,17 @@
 
 {% block content %}
 
+    <div class="row pagination-list">
+        {% for drink in drinks %}
+            <div class="col-3">
+                <div class="pagination-item">
+                    <p class="item-title">{{ drink.title }}</p>
+                    <a href="{{ url("/drinks/#{drink.slug}") }}" class="view-more-btn">View More</a>
+                </div>
+            </div>
+         {% endfor %}
+    </div>
+
+    {{ pagination(drinks) }}
+
 {% endblock %}
