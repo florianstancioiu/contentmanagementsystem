@@ -17,14 +17,13 @@ class QueryBuilder
 
     protected $updateData = [];
 
-    protected $whereClauses = [
-        /*
-        [
-            'column' => $column,
-            'value' => $value,
-            'operator' => $operator,
-        ]
-        */
+    protected $whereClauses = [];
+
+    protected $validWhereClause = [
+        'column',
+        'operator',
+        'value',
+        'connect_operator'
     ];
 
     protected $joins = [];
@@ -37,11 +36,8 @@ class QueryBuilder
 
     protected $orderBy = [];
 
-    protected $limit = [
-        // 'start' => 0,
-        // TODO: Create a settings function to retrieve the default pagination number
-        // 'no_rows' => 15
-    ];
+    // TODO: Create a settings function to retrieve the default pagination number
+    protected $limit = [];
 
     protected $fetchType = 'object';
 
@@ -58,48 +54,78 @@ class QueryBuilder
     {
         $select_stmnt = "SELECT " . implode(', ', $this->columns) . "\n";
         $from_stmnt = "FROM " . $this->table . "\n";
+        $where_stmnt = $this->generateWhereStatement();
+        $limit_stmnt = $this->generateLimitStatement();
+        $order_stmnt = $this->generateOrderStatement();
+
+        return $select_stmnt . $from_stmnt . $where_stmnt . $limit_stmnt . $order_stmnt;
+    }
+
+    protected function generateWhereStatement() : string
+    {
         $where_stmnt = "";
-        $like_stmnt = "";
-        $limit_stmnt = "";
+        $no_where_clauses = sizeof($this->whereClauses);
 
         // TODO: Group the where statements to allow the use of AND and OR operators
-        if (sizeof($this->whereClauses) > 0) {
-            $where_stmnt = "WHERE ";
-            foreach ($this->$whereClauses as $clause) {
-                // check the $clause array
-                if (! is_array($clause)) {
-                    throw new Exception("The $clause is not a valid where clause: [ 'column', 'value', 'operator' ]");
-                }
-
-                $column = $clause['column'];
-                $operator = $clause['operator'];
-                $value = $clause['value'];
-                $connect_operator = $clause['connect_operator'];
-                $like_structure = isset($clause['like_structure']) ? $clause['like_structure'] : "";
-
-                // validate the $operator variable
-                $valid_operators = [
-                    '=', '!=', '<', '>', '=<', '>=', 'LIKE'
-                ];
-                if (! in_array($operator, $valid_operators)) {
-                    throw new Exception("The given $operator operator is not valid");
-                }
-
-                $where_stmnt .= "$column $operator :$column AND \n";
-
-                if ($operator === 'LIKE') {
-                    $where_stmnt .= "$column LIKE '$like_structure' \n";
-                }
-            }
+        if ($no_where_clauses === 0) {
+            return $where_stmnt;
         }
 
+        $where_stmnt = "WHERE \n";
+
+        foreach ($this->whereClauses as $key => $clause) {
+            // Shallow validation for the $clause array
+            if (! is_array($clause)) {
+                $valid_where_clause = $this->validWhereClause;
+                throw new Exception("The $clause is not a valid where clause: $valid_where_clause");
+            }
+
+            $column = $clause['column'];
+            $operator = $clause['operator'];
+            $value = $clause['value'];
+            $connect_operator = $clause['connect_operator'];
+            $column_title = $this->whereColumnTitle($column, (int) $key);
+            $where_stmnt .= "\t $column $operator $column_title";
+            $where_stmnt .= $key < $no_where_clauses - 1 ? " $connect_operator \n" : " \n";
+        }
+
+        return $where_stmnt;
+    }
+
+    public function whereColumnTitle(string $column, int $key = 0) : string
+    {
+        return $key > 0 ? ":$column" . "_" . $key : ":$column";
+    }
+
+    protected function generateLimitStatement() : string
+    {
+        $limit_stmnt = "";
         if (sizeof($this->limit) !== 0) {
             if (isset($this->limit['start']) && isset($this->limit['no_rows'])) {
                 $limit_stmnt = "LIMIT " . $this->limit['start'] . ', ' . $this->limit['no_rows'];
             }
         }
 
-        return $select_stmnt . $from_stmnt . $where_stmnt . $limit_stmnt;
+        return $limit_stmnt;
+    }
+
+    // TODO: Implement function
+    protected function generateOrderStatement() : string
+    {
+        return "";
+    }
+
+    // TODO: Take in account the table name of each column ...
+    public function buildParams() : array
+    {
+        $params = [];
+
+        foreach ($this->whereClauses as $key => $clause) {
+            $column_title = $this->whereColumnTitle($clause['column'], (int) $key);
+            $params[$column_title] = $clause['value'];
+        }
+
+        return $params;
     }
 
     public function select(array $columns) : QueryBuilder
@@ -170,13 +196,28 @@ class QueryBuilder
     }
     */
 
-    public function where($filters) : QueryBuilder
+    // TODO: Build all where statements through whereFilters to group the conditions easier
+    // TODO: Move $connect_operator to the whereFilter method
+    // TODO: Remove the $like_structure string, create a separate method for it
+    public function where(string $column, string $operator, $value, string $connect_operator) : QueryBuilder
     {
-        // append the data don't rewrite it so that it can be reused
+        $this->whereClauses[] = [
+            'column' => $column,
+            'operator' => $operator,
+            'value' => $value,
+            'connect_operator' => $connect_operator
+        ];
 
         return $this;
     }
 
+    // TODO: Implement whereFilter method
+    public function whereFilter()
+    {
+
+    }
+
+    // TODO: Implement whereRaw method
     public function whereRaw($filters) : QueryBuilder
     {
         // append the data don't rewrite it so that it can be reused
