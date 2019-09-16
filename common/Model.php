@@ -72,6 +72,16 @@ class Model
         return static::$columns;
     }
 
+    protected static function getSql() : string
+    {
+        return (string) self::$queryBuilder;
+    }
+
+    protected static function dd() : string
+    {
+        return dd(self::getSql());
+    }
+
     protected static function get(array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
@@ -91,7 +101,7 @@ class Model
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    protected static function select()
+    protected static function select() : Model
     {
         $existing_columns = static::getColumns();
         $valid_columns = [];
@@ -104,6 +114,28 @@ class Model
 
         self::$columns = $valid_columns;
 
+        self::$queryBuilder->select(self::$columns);
+
+        return self::$modelObject;
+    }
+
+    protected static function where(string $column, string $operator, $value, string $connect_operator = 'AND') : Model
+    {
+        // Validate the $operator variable
+        $valid_operators = [
+            '=', '!=', '<>', '<', '>', '=<', '>=', 'LIKE'
+        ];
+        if (! in_array($operator, $valid_operators)) {
+            throw new Exception("The given $operator operator is not valid");
+        }
+
+        // Validate the $connect_operator variable
+        $valid_connect_operators = ['AND', 'OR'];
+        $connect_operator = strtoupper($connect_operator);
+        $connect_operator = in_array($connect_operator, $valid_connect_operators) ? $connect_operator : "AND";
+
+        self::$queryBuilder->where($column, $operator, $value, $connect_operator);
+
         return self::$modelObject;
     }
 
@@ -112,9 +144,11 @@ class Model
         self::$queryBuilder->select(self::$columns);
         self::$queryBuilder->paginate($no_rows, $start);
 
+        $params = self::$queryBuilder->buildParams();
+
         try {
             $statement = self::$pdo->prepare(self::$queryBuilder);
-            $statement->execute();
+            $statement->execute($params);
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
