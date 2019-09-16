@@ -3,6 +3,10 @@
 {% block title %} Drinks {% endblock %}
 
 {% block content %}
+    <form action="{{ url('/drinks') }}" method="GET">
+        <input type="text" name="search_keyword" value="{{ request('search_keyword') }}" />
+        <button type="submit">Search</button>
+    </form>
 
     <div class="row pagination-list">
         {% for drink in drinks %}
@@ -15,6 +19,6 @@
          {% endfor %}
     </div>
 
-    {{ pagination(drinks) }}
+    {{ pagination(drinks, ['search_keyword']) }}
 
 {% endblock %}
