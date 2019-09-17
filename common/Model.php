@@ -35,6 +35,8 @@ class Model
 
     protected static $idField = 'id';
 
+    protected static $searchColumns = [];
+
     public function __construct()
     {
         // initialize the QueryBuilder object
@@ -147,6 +149,15 @@ class Model
         }
 
         self::$queryBuilder->select(self::$columns);
+
+        // Inject search columns automatically
+        $search_keyword = isset($_GET['search_keyword']) ? $_GET['search_keyword'] : null;
+        if ($search_keyword) {
+            foreach (static::$searchColumns as $column) {
+                self::$queryBuilder->where($column, 'LIKE', "%$search_keyword%", "OR");
+            }
+        }
+
         self::$queryBuilder->paginate($no_rows, (int) $start * $no_rows);
 
         try {
