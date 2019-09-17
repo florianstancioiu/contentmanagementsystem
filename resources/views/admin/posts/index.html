@@ -25,19 +25,15 @@
                 <td>{{ post.title }}</td>
                 <td>{{ post.slug }}</td>
                 <td>
-                    <a href="{{ base_url }}posts/{{ post.slug }}" class="table-cta" target="_blank">
-                        View
-                    </a>
-                    <a href="{{ base_url }}admin/posts/edit/{{ post.id }}" class="table-cta">
-                        Edit
-                    </a>
-                    <a href="{{ base_url }}admin/posts/destroy/{{ post.id }}" class="table-cta">
-                        Delete
-                    </a>
+                    <a href="{{ base_url }}posts/{{ post.slug }}" class="table-cta" target="_blank">View</a>
+                    <a href="{{ base_url }}admin/posts/edit/{{ post.id }}" class="table-cta">Edit</a>
+                    <a href="{{ base_url }}admin/posts/destroy/{{ post.id }}" class="table-cta">Delete</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    {{ pagination(posts) }}
 
 {% endblock %}

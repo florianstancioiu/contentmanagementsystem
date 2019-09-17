@@ -2,7 +2,7 @@
 
 // TODO: Create laravel-mix like function to handle timestamped files
 // TODO: Create translation function to handle language translations
-// TODO: Create pagination function to display the pagination duhhh
+// TODO: Create csrf_token function and check for it on POST routes
 
 $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
 $twig_environment = new \Twig\Environment($loader, [
@@ -87,7 +87,7 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     $route = route();
     $total_rows = $first_item['total_rows'];
     $pagination_rows = $first_item['pagination_rows'];
-    $total_links = (int) round($total_rows / $pagination_rows);
+    $total_links = (int) ceil($total_rows / $pagination_rows);
     $default_links_to_show = $links_to_show = 4;
 
     // Don't show the pagination if there is only one link
@@ -105,7 +105,7 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
         }
     }
 
-    $html = '<div class="row align-center"><ul class="frontend-pagination pagination">';
+    $html = '<div class="row align-center"><ul class="twig-pagination pagination">';
 
     // Generate previous link
     // TODO: Create a custom function to generate the next and previous html strings
