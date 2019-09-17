@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2019 at 03:18 PM
+-- Generation Time: Sep 17, 2019 at 11:15 AM
 -- Server version: 5.7.27-0ubuntu0.18.04.1
 -- PHP Version: 7.3.7-2+ubuntu18.04.1+deb.sury.org+1
 
@@ -81,6 +81,29 @@ INSERT INTO `drinks` (`id`, `title`, `slug`, `created_at`, `updated_at`, `delete
 (5, 'Testoase pe ski jet', 'testoase-la-munte', '2019-09-16 07:15:28', NULL, NULL),
 (6, 'Plumb', 'bacovia-e-mort-traiasca-bacovia', '2019-09-16 07:15:28', NULL, NULL),
 (7, 'Vreme trece, Vreme vine', 'e-bine-e-bine', '2019-09-16 07:15:28', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fish`
+--
+
+CREATE TABLE `fish` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `family` varchar(130) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'red',
+  `cost` int(11) NOT NULL DEFAULT '30',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `fish`
+--
+
+INSERT INTO `fish` (`id`, `title`, `family`, `cost`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Exclusiv', 'red', 30, '2019-09-17 07:45:54', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -365,6 +388,12 @@ ALTER TABLE `drinks`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `fish`
+--
+ALTER TABLE `fish`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `languages`
 --
 ALTER TABLE `languages`
@@ -454,6 +483,12 @@ ALTER TABLE `contact_messages`
 --
 ALTER TABLE `drinks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `fish`
+--
+ALTER TABLE `fish`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `languages`
