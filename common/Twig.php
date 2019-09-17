@@ -87,8 +87,13 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     $route = route();
     $total_rows = $first_item['total_rows'];
     $pagination_rows = $first_item['pagination_rows'];
-    $total_links = round($total_rows / $pagination_rows);
+    $total_links = (int) round($total_rows / $pagination_rows);
     $default_links_to_show = $links_to_show = 4;
+
+    // Don't show the pagination if there is only one link
+    if ($total_links === 1) {
+        return '';
+    }
 
     // Retrieve filters from $_GET
     $full_filters = [];
@@ -103,6 +108,7 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     $html = '<div class="row align-center"><ul class="frontend-pagination pagination">';
 
     // Generate previous link
+    // TODO: Create a custom function to generate the next and previous html strings
     if ($current_page > 0) {
         $link_nr = $current_page - 1;
         $prev_link = pagination_url($link_nr, $full_filters);
@@ -133,6 +139,7 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     }
 
     // Generate next link
+    // TODO: Create a custom function to generate the next and previous html strings
     if ($current_page < $total_links - 1) {
         $link_nr = $current_page + 1;
         $next_link = pagination_url($link_nr, $full_filters);
