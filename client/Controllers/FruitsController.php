@@ -10,7 +10,6 @@ class FruitsController extends Controller
     public function index()
     {
         $fruits = Fruit::paginate();
-        $search_keyword = request('search_keyword');
 
         return view('client/fruits/index', compact('fruits'));
     }

@@ -10,7 +10,6 @@ class VegetablesController extends Controller
     public function index()
     {
         $vegetables = Vegetable::paginate();
-        $search_keyword = request('search_keyword');
 
         return view('client/vegetables/index', compact('vegetables'));
     }

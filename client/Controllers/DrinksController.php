@@ -9,11 +9,8 @@ class DrinksController extends Controller
 {
     public function index()
     {
-        $search_keyword = request('search_keyword');
-        $drinks = Drink
-            ::select('title', 'slug')
-            ::where('title', 'LIKE', "%$search_keyword%")
-            ::paginate(2);
+        $drinks = Drink::select('title', 'slug')
+            ::paginate();
 
         return view('client/drinks/index', compact('drinks'));
     }
