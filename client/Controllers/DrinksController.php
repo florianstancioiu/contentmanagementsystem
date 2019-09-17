@@ -12,9 +12,8 @@ class DrinksController extends Controller
         $search_keyword = request('search_keyword');
         $drinks = Drink
             ::select('title', 'slug')
-            ::where('id', '>', 1)
             ::where('title', 'LIKE', "%$search_keyword%")
-            ::paginate(1);
+            ::paginate(2);
 
         return view('client/drinks/index', compact('drinks'));
     }

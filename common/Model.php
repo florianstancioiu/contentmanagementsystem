@@ -147,7 +147,7 @@ class Model
         }
 
         self::$queryBuilder->select(self::$columns);
-        self::$queryBuilder->paginate($no_rows, $start);
+        self::$queryBuilder->paginate($no_rows, (int) $start * $no_rows);
 
         try {
             $statement = self::$pdo->prepare(self::$queryBuilder);
