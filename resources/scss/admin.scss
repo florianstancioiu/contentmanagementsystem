@@ -1,6 +1,10 @@
-
 @import 'libraries/columns';
 @import 'admin/common';
+
+// partials
+@import 'admin/partials/header';
+@import 'admin/partials/pagination';
+@import 'admin/partials/footer';
 
 // pages
 @import 'admin/pages/auth';
