@@ -1,16 +1,19 @@
 Tasks
 
-* (works)   - 1 - Enable items (trees) search
-* (works)   - 1.1 - Create the QueryBuilder class to generate SQL strings for the base Model class (WIP)
-* (works)   - 1.2 - Add where functionality to the base Model class
-* (wip)     - 2 - Pass filters to Twig pagination function
-3 - Create trees show html view
+* (works)   - 1     - Enable items (trees) search
+* (works)   - 1.1   - Create the QueryBuilder class to generate SQL strings for the base Model class (WIP)
+* (works)   - 1.2   - Add where functionality to the base Model class
+* (works)   - 2     - Pass filters to Twig pagination function
+* (not now) - 3     - Create trees show html view
+
+* (wip)     - 6     - Change website title and logo image in the header section
+* (wip)     - 6.1   - Create admin settings page
+
 4 - Client side login / register
 4.1 - Send welcome email
 5 - Create contact page
 5.1 - Send contact email
-6 - Change website title and logo image in the header section
-6.1 - Create admin settings page
+
 7 - Write the javascript code for the homepage slideshow
 
 8 - Create admin pagination function
