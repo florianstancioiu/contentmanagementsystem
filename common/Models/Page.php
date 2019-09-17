@@ -6,9 +6,9 @@ use Common\Model;
 
 class Page extends Model
 {
-    public static $table = 'pages';
+    protected static $table = 'pages';
 
-    public static $columns = [
+    protected static $columns = [
         'id',
         'title',
         'slug',

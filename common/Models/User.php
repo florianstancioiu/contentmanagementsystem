@@ -7,9 +7,9 @@ use \PDOException;
 
 class User extends Model
 {
-    public static $table = 'users';
+    protected static $table = 'users';
 
-    public static $columns = [
+    protected static $columns = [
         'id',
         'first_name',
         'last_name',
@@ -20,6 +20,7 @@ class User extends Model
         'deleted_at'
     ];
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function signin()
     {
         $statement = self::$pdo->prepare('SELECT id, first_name, last_name, email, password, created_at from users where email = :email');
@@ -51,6 +52,7 @@ class User extends Model
         ]);
     }
 
+    // TODO: Update method to use the QueryBuilder class
     public static function emailExistsInDatabase() : bool
     {
         try {
@@ -67,6 +69,7 @@ class User extends Model
         return (bool) is_object($data) && $data->email === post('email');
     }
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function signup()
     {
         if (self::emailExistsInDatabase()) {

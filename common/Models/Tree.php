@@ -6,9 +6,14 @@ use Common\Model;
 
 class Tree extends Model
 {
-    public static $table = 'trees';
+    protected static $table = 'trees';
 
-    public static $columns = [
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
+    protected static $columns = [
         'id',
         'title',
         'slug',

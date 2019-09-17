@@ -6,9 +6,9 @@ use Common\Model;
 
 class Post extends Model
 {
-    public static $table = 'posts';
+    protected static $table = 'posts';
 
-    public static $columns = [
+    protected static $columns = [
         'id',
         'title',
         'slug',

@@ -6,9 +6,9 @@ use Common\Model;
 
 class Vegetable extends Model
 {
-    public static $table = 'vegetables';
+    protected static $table = 'vegetables';
 
-    public static $columns = [
+    protected static $columns = [
         'id',
         'title',
         'slug',
