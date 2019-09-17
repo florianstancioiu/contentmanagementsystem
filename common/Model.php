@@ -82,6 +82,7 @@ class Model
         return dd(self::getSql());
     }
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function get(array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
@@ -113,7 +114,6 @@ class Model
         }
 
         self::$columns = $valid_columns;
-
         self::$queryBuilder->select(self::$columns);
 
         return self::$modelObject;
@@ -141,27 +141,31 @@ class Model
 
     protected static function paginate(int $no_rows = 15, int $start = 0) : array
     {
+        // Move the start location using the page variable from $_GET
+        if ($start === 0 && isset($_GET['page'])) {
+            $start = (int) $_GET['page'];
+        }
+
         self::$queryBuilder->select(self::$columns);
         self::$queryBuilder->paginate($no_rows, $start);
 
-        $params = self::$queryBuilder->buildParams();
-
         try {
             $statement = self::$pdo->prepare(self::$queryBuilder);
-            $statement->execute($params);
+            $statement->execute(self::$queryBuilder->buildParams());
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
 
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach($rows as &$row) {
+        foreach ($rows as &$row) {
             $row['pagination_rows'] = $no_rows;
         }
 
         return $rows;
     }
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function store(array $data = []) : bool
     {
         $processed_data = self::processData($data);
@@ -205,6 +209,7 @@ class Model
         return $update_string;
     }
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function update(int $id, array $data = []) : bool
     {
         $update_string = self::getUpdateString($data);
@@ -231,6 +236,7 @@ class Model
 
     // TODO: Simplify method
     // TODO: Make the method dynamic, so it can work with multiple tables
+    // TODO: Update method to use the QueryBuilder class
     protected static function find($identifier, array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
@@ -295,6 +301,7 @@ class Model
         ];
     }
 
+    // TODO: Update method to use the QueryBuilder class
     protected static function destroy(int $id) : bool
     {
         try {
