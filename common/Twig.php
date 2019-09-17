@@ -83,23 +83,29 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
         return '';
     }
 
-    $current_page = (int) request('page') ?: 1;
+    $current_page = (int) request('page') ?: 0;
     $route = route();
     $total_rows = $first_item['total_rows'];
     $pagination_rows = $first_item['pagination_rows'];
     $total_links = round($total_rows / $pagination_rows);
     $default_links_to_show = $links_to_show = 4;
 
-    // TODO: GENERATE THE LINKS WITH A SINGLE DAMN FUNCTION
-    $search_keyword = request('search_keyword');
-    $search_filter = $search_keyword ? "search_keyword=$search_keyword" : "";
+    // Retrieve filters from $_GET
+    $full_filters = [];
+    foreach ($filters as $filter) {
+        $request = request($filter);
+
+        if ($request) {
+            $full_filters[$filter] = $request;
+        }
+    }
 
     $html = '<div class="row align-center"><ul class="frontend-pagination pagination">';
 
-    // generate previous link
-    if ($current_page > 1) {
+    // Generate previous link
+    if ($current_page > 0) {
         $link_nr = $current_page - 1;
-        $prev_link = url("$route?page=$link_nr");
+        $prev_link = pagination_url($link_nr, $full_filters);
 
         $html .= '<li class="prev-link">';
             $html .= "<a href='$prev_link'><</a>";
@@ -107,7 +113,7 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
     }
 
     for ($i = 1; $i <= $total_links; $i++) {
-        // change the number of links to show for init
+        // TODO: change the number of links to show for init
         // $links_to_show = $default_links_to_show * 2 : $links_to_show;
 
         if ($i < $current_page - $links_to_show) {
@@ -118,22 +124,18 @@ $function = new \Twig\TwigFunction('pagination', function (array $items, array $
             continue;
         }
 
-        if ($i !== 1) {
-            $url = url("$route?page=$i");
-        } else {
-            $url = url($route);
-        }
+        $url = pagination_url($i - 1, $full_filters);
 
-        $active_link = $current_page === $i ? "active-link" : "";
+        $active_link = $current_page === $i - 1 ? "active-link" : "";
         $html .= "<li class='$active_link'>";
             $html .= "<a href='$url'>$i</a>";
         $html .= "</li>";
     }
 
-    // generate next link
-    if ($current_page < $total_links) {
+    // Generate next link
+    if ($current_page < $total_links - 1) {
         $link_nr = $current_page + 1;
-        $next_link = url("$route?page=$link_nr");
+        $next_link = pagination_url($link_nr, $full_filters);
 
         $html .= '<li class="next-link">';
             $html .= "<a href='$next_link'>></a>";

@@ -246,5 +246,18 @@ if (! function_exists('file_error_ok')) {
     }
 }
 
+if (! function_exists('pagination_url')) {
+    /**
+    * @return string
+    */
+    function pagination_url(int $index, array $filters) : string {
+        if ($index !== 0) {
+            $filters['page'] = $index;
+        }
+
+        return url(route() . "?" . http_build_query($filters));
+    }
+}
+
 // TODO: Create function(s) to handle session data
 // TODO: Create function to handle GET and SESSION filters
