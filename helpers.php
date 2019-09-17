@@ -255,7 +255,9 @@ if (! function_exists('pagination_url')) {
             $filters['page'] = $index;
         }
 
-        return url(route() . "?" . http_build_query($filters));
+        $route = sizeof($filters) > 0 ? route() . "?" : route();
+
+        return url($route . http_build_query($filters));
     }
 }
 
