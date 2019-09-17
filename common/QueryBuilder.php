@@ -102,7 +102,7 @@ class QueryBuilder
         $limit_stmnt = "";
         if (sizeof($this->limit) !== 0) {
             if (isset($this->limit['start']) && isset($this->limit['no_rows'])) {
-                $limit_stmnt = "LIMIT " . $this->limit['start'] . ', ' . $this->limit['no_rows'];
+                $limit_stmnt = "LIMIT " . $this->limit['no_rows'] . ', ' . $this->limit['start'];
             }
         }
 
@@ -141,8 +141,9 @@ class QueryBuilder
         // TODO: Implement selectRaw method
         // TODO: Use selectRaw method
         // TODO: Use the WHERE SQL statement to count the total number of rows
-        $this->columns[] = "(SELECT COUNT(*) FROM $table LIMIT 1) as total_rows";
-        $this->limit($no_rows, $start);
+        $where_stmnt = $this->generateWhereStatement();
+        $this->columns[] = "(SELECT COUNT(*) FROM $table $where_stmnt LIMIT 1) as total_rows";
+        $this->limit($start, $no_rows);
 
         return $this;
     }
@@ -183,19 +184,6 @@ class QueryBuilder
 
         return $this;
     }
-
-    /*
-    public function like(string $column, string $like_keyword, string $option = "%:like_keyword%") : QueryBuilder
-    {
-        $this->$likeClauses[] = [
-            'column' => $column,
-            'like_keyword' => $like_keyword,
-            'option' => $option,
-        ];
-
-        return $this;
-    }
-    */
 
     // TODO: Build all where statements through whereFilters to group the conditions easier
     // TODO: Move $connect_operator to the whereFilter method
