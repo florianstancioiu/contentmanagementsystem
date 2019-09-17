@@ -8,6 +8,11 @@ class Post extends Model
 {
     protected static $table = 'posts';
 
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
     protected static $columns = [
         'id',
         'title',

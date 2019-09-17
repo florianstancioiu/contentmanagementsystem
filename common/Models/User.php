@@ -9,6 +9,11 @@ class User extends Model
 {
     protected static $table = 'users';
 
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
     protected static $columns = [
         'id',
         'first_name',

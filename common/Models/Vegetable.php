@@ -8,6 +8,11 @@ class Vegetable extends Model
 {
     protected static $table = 'vegetables';
 
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
     protected static $columns = [
         'id',
         'title',

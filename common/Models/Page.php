@@ -8,6 +8,11 @@ class Page extends Model
 {
     protected static $table = 'pages';
 
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
     protected static $columns = [
         'id',
         'title',

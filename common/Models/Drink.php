@@ -8,6 +8,11 @@ class Drink extends Model
 {
     protected static $table = 'drinks';
 
+    protected static $searchColumns = [
+        'title',
+        'slug'
+    ];
+
     protected static $columns = [
         'id',
         'title',
