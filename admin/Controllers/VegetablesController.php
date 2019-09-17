@@ -20,10 +20,9 @@ class VegetablesController extends Controller
 
     protected function index()
     {
-        $vegetables = Vegetable::get();
-        $vegetable = isset($vegetables[0]) ? $vegetables[0] : [];
+        $vegetables = Vegetable::paginate();
 
-        return view('admin/vegetables/index', compact('vegetables', 'vegetable'));
+        return view('admin/vegetables/index', compact('vegetables'));
     }
 
     protected function create()
@@ -38,6 +37,9 @@ class VegetablesController extends Controller
         return view('admin/vegetables/edit', compact('vegetable'));
     }
 
+    // TODO: Validate request either
+    // by creating a validate method in the base Controller class (quicker)
+    // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
         // TODO: update the $data array without having an ugly if statement

@@ -19,10 +19,9 @@ class UsersController extends Controller
 
     protected function index()
     {
-        $users = User::get();
-        $user = $users[0];
+        $users = User::paginate();
 
-        return view('admin/users/index', compact('users', 'user'));
+        return view('admin/users/index', compact('users'));
     }
 
     protected function create()
@@ -37,6 +36,9 @@ class UsersController extends Controller
         return view('admin/users/edit', compact('user'));
     }
 
+    // TODO: Validate request either
+    // by creating a validate method in the base Controller class (quicker)
+    // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
         if (! filter_var(request('email'), FILTER_VALIDATE_EMAIL)) {

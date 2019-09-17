@@ -19,10 +19,9 @@ class PostsController extends Controller
 
     protected function index()
     {
-        $posts = Post::get();
-        $post = isset($posts[0]) ? $posts[0] : [];
+        $posts = Post::paginate();
 
-        return view('admin/posts/index', compact('posts', 'post'));
+        return view('admin/posts/index', compact('posts'));
     }
 
     protected function create()
@@ -37,6 +36,9 @@ class PostsController extends Controller
         return view('admin/posts/edit', compact('post'));
     }
 
+    // TODO: Validate request either
+    // by creating a validate method in the base Controller class (quicker)
+    // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
         $data = [

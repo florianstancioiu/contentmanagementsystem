@@ -19,10 +19,9 @@ class PagesController extends Controller
 
     protected function index()
     {
-        $pages = Page::get();
-        $page = isset($pages[0]) ? $pages[0] : [];
+        $pages = Page::paginate();
 
-        return view('admin/pages/index', compact('pages', 'page'));
+        return view('admin/pages/index', compact('pages'));
     }
 
     protected function create()
@@ -37,6 +36,9 @@ class PagesController extends Controller
         return view('admin/pages/edit', compact('page'));
     }
 
+    // TODO: Validate request either
+    // by creating a validate method in the base Controller class (quicker)
+    // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
         $data = [

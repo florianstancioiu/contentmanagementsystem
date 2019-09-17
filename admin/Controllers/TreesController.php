@@ -20,10 +20,9 @@ class TreesController extends Controller
 
     protected function index()
     {
-        $trees = Tree::get();
-        $tree = isset($trees[0]) ? $trees[0] : [];
+        $trees = Tree::paginate();
 
-        return view('admin/trees/index', compact('trees', 'tree'));
+        return view('admin/trees/index', compact('trees'));
     }
 
     protected function create()
@@ -38,6 +37,9 @@ class TreesController extends Controller
         return view('admin/trees/edit', compact('tree'));
     }
 
+    // TODO: Validate request either
+    // by creating a validate method in the base Controller class (quicker)
+    // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
         $image_location = File::storeImage('image');
