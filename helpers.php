@@ -109,6 +109,18 @@ if (! function_exists('base_url')) {
     }
 }
 
+if (! function_exists('env')) {
+    /**
+    * @return string
+    */
+    function env(string $key) : ?string {
+        // TODO: figure a way to load the env data into $_SESSION
+        $data = read_json_file(base_dir() . DS . '.env');
+
+        return isset($data[$key]) ? $data[$key] : null;
+    }
+}
+
 if (! function_exists('base_dir')) {
     /**
      * @param string $path
@@ -162,6 +174,7 @@ if (! function_exists('redirect')) {
         }
 
         header("Location: $route");
+        exit();
     }
 }
 
