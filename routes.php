@@ -1,8 +1,6 @@
 <?php
 
 use FastRoute\RouteCollector;
-use App\Controllers\Client as ClientCtrl;
-use App\Controllers\Admin as AdminCtrl;
 
 // TODO: Handle multiple languages by using a slug prefix
 $route->addRoute('GET', '/', 'App\Controllers\Client\FrontendController@home');
@@ -68,6 +66,11 @@ $route->addGroup('/admin', function (RouteCollector $route) {
     $route->addRoute('POST', '/users/{id}', 'App\Controllers\Admin\UsersController@update');
 
     $route->addRoute('GET', '/settings', 'App\Controllers\Admin\SettingsController@index');
+    $route->addRoute('POST', '/settings', 'App\Controllers\Admin\SettingsController@update');
+
+    $route->addRoute('GET', '/settings/create', 'App\Controllers\Admin\SettingsController@createSetting');
+    $route->addRoute('POST', '/settings/create', 'App\Controllers\Admin\SettingsController@storeSetting');
+    $route->addRoute('POST', '/settings/destroy/{id}', 'App\Controllers\Admin\SettingsController@destroySetting');
 });
 
 $route->addRoute('GET', '/trees', 'App\Controllers\Client\TreesController@index');

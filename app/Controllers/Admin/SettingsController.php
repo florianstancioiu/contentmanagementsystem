@@ -19,6 +19,11 @@ class SettingsController extends Controller
 
     }
 
+    protected function createSetting()
+    {
+        return view('admin/settings/create');
+    }
+
     protected function storeSetting()
     {
 
