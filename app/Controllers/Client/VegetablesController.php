@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers\Client;
+namespace App\Controllers\Client;
 
 use Common\Controller;
-use Common\Models\Vegetable;
+use App\Models\Vegetable;
 
 class VegetablesController extends Controller
 {

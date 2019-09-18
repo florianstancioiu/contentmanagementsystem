@@ -1,12 +1,12 @@
 <?php
 
-namespace Controllers\Admin;
+namespace App\Controllers\Admin;
 
 use Common\Controller;
-use Common\Models\Page;
+use App\Models\Post;
 use \Exception;
 
-class PagesController extends Controller
+class PostsController extends Controller
 {
     protected static $auth_methods = [
         'index',
@@ -19,21 +19,21 @@ class PagesController extends Controller
 
     protected function index()
     {
-        $pages = Page::paginate();
+        $posts = Post::paginate();
 
-        return view('admin/pages/index', compact('pages'));
+        return view('admin/posts/index', compact('posts'));
     }
 
     protected function create()
     {
-        return view('admin/pages/create');
+        return view('admin/posts/create');
     }
 
-    protected function edit(int $id)
+    protected function edit($id)
     {
-        $page = Page::find($id);
+        $post = Post::find($id);
 
-        return view('admin/pages/edit', compact('page'));
+        return view('admin/posts/edit', compact('post'));
     }
 
     // TODO: Validate request either
@@ -51,12 +51,12 @@ class PagesController extends Controller
         ];
 
         try {
-            Page::store($data);
+            Post::store($data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/posts');
     }
 
     protected function update()
@@ -71,22 +71,22 @@ class PagesController extends Controller
         ];
 
         try {
-            Page::update((int) request('page_id'), $data);
+            Post::update((int) request('post_id'), $data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/posts');
     }
 
     protected function destroy(int $id)
     {
         try {
-            Page::destroy($id);
+            Post::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/pages');
+        redirect('/admin/posts');
     }
 }

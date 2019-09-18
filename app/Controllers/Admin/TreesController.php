@@ -1,10 +1,10 @@
 <?php
 
-namespace Controllers\Admin;
+namespace App\Controllers\Admin;
 
 use Common\File;
 use Common\Controller;
-use Common\Models\Tree;
+use App\Models\Tree;
 use \Exception;
 
 class TreesController extends Controller

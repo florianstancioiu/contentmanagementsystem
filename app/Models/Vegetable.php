@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Models;
+namespace App\Models;
 
 use Common\Model;
 
-class Tree extends Model
+class Vegetable extends Model
 {
-    protected static $table = 'trees';
+    protected static $table = 'vegetables';
 
     protected static $searchColumns = [
         'title',
@@ -18,8 +18,6 @@ class Tree extends Model
         'title',
         'slug',
         'image',
-        'has_fruits',
-        'fruit_title',
         'colour',
         'growth_location',
         'ripe_season',
@@ -29,7 +27,6 @@ class Tree extends Model
         'has_flowers',
         'introduction',
         'description',
-        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'

@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers\Admin;
+namespace App\Controllers\Admin;
 
 use Common\Controller;
-use Common\Models\User;
+use App\Models\User;
 use \Exception;
 
 class UsersController extends Controller

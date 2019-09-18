@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers\Client;
+namespace App\Controllers\Client;
 
 use Common\Controller;
-use Common\Models\Fruit;
+use App\Models\Fruit;
 
 class FruitsController extends Controller
 {

@@ -4,8 +4,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Florian Stancioiu",
-            "email": "s.florian93@gmail.com"
+            "name": "Florin Victor Stancioiu",
+            "email": "florinvictorstancioiu@gmail.com"
         }
     ],
     "require": {
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Controllers\\": "controllers/",
+            "App\\": "app/",
             "Common\\": "common/"
         }
     }

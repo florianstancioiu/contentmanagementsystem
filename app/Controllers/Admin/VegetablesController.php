@@ -1,10 +1,10 @@
 <?php
 
-namespace Controllers\Admin;
+namespace App\Controllers\Admin;
 
 use Common\File;
 use Common\Controller;
-use Common\Models\Vegetable;
+use App\Models\Vegetable;
 use \Exception;
 
 class VegetablesController extends Controller

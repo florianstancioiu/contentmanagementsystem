@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Models;
+namespace App\Models;
 
 use Common\Model;
 
-class Page extends Model
+class Drink extends Model
 {
-    protected static $table = 'pages';
+    protected static $table = 'drinks';
 
     protected static $searchColumns = [
         'title',
@@ -17,10 +17,6 @@ class Page extends Model
         'id',
         'title',
         'slug',
-        'lang',
-        'content',
-        'description',
-        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'

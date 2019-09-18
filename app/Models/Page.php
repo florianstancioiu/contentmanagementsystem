@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Models;
+namespace App\Models;
 
 use Common\Model;
 
-class Post extends Model
+class Page extends Model
 {
-    protected static $table = 'posts';
+    protected static $table = 'pages';
 
     protected static $searchColumns = [
         'title',

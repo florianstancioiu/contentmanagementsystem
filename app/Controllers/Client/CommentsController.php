@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\Client;
+namespace App\Controllers\Client;
 
 use Common\Controller;
 

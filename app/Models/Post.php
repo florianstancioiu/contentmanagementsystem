@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Models;
+namespace App\Models;
 
 use Common\Model;
 
-class Drink extends Model
+class Post extends Model
 {
-    protected static $table = 'drinks';
+    protected static $table = 'posts';
 
     protected static $searchColumns = [
         'title',
@@ -17,6 +17,10 @@ class Drink extends Model
         'id',
         'title',
         'slug',
+        'lang',
+        'content',
+        'description',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'
