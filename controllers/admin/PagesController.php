@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Controllers;
+namespace Controllers\Admin;
 
 use Common\Controller;
 use Common\Models\Page;

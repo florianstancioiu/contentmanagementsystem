@@ -1,13 +1,13 @@
 <?php
 
-namespace Admin\Controllers;
+namespace Controllers\Admin;
 
 use Common\File;
 use Common\Controller;
-use Common\Models\Tree;
+use Common\Models\Vegetable;
 use \Exception;
 
-class TreesController extends Controller
+class VegetablesController extends Controller
 {
     protected static $auth_methods = [
         'index',
@@ -20,21 +20,21 @@ class TreesController extends Controller
 
     protected function index()
     {
-        $trees = Tree::paginate();
+        $vegetables = Vegetable::paginate();
 
-        return view('admin/trees/index', compact('trees'));
+        return view('admin/vegetables/index', compact('vegetables'));
     }
 
     protected function create()
     {
-        return view('admin/trees/create');
+        return view('admin/vegetables/create');
     }
 
-    protected function edit($id)
+    protected function edit(int $id)
     {
-        $tree = Tree::find($id);
+        $vegetable = Vegetable::find($id);
 
-        return view('admin/trees/edit', compact('tree'));
+        return view('admin/vegetables/edit', compact('vegetable'));
     }
 
     // TODO: Validate request either
@@ -42,16 +42,16 @@ class TreesController extends Controller
     // or by doing the whole dependency container thingy (takes a lot of time)
     protected function store()
     {
+        // TODO: update the $data array without having an ugly if statement
+        // TODO: unlink existing $image file
         $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':has_fruits' => request('has_fruits'),
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':fruit_title' => request('fruit_title'),
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
             ':ripe_season' => request('ripe_season'),
@@ -61,31 +61,31 @@ class TreesController extends Controller
             ':user_id' => $_SESSION['user']['id']
         ];
 
-        if (file_error_ok('image')) {
+        if (is_array($_FILES['image'])) {
             $data[':image'] = $image_location;
         }
 
         try {
-            Tree::store($data);
+            Vegetable::store($data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/trees');
+        redirect('/admin/vegetables');
     }
 
     protected function update()
     {
+        // TODO: update the $data array without having an ugly if statement
+        // TODO: unlink existing $image file
         $image_location = File::storeImage('image');
 
         $data = [
             ':title' => request('title'),
             ':slug' => request('slug'),
-            ':has_fruits' => request('has_fruits'),
             ':has_flowers' => request('has_flowers'),
             ':introduction' => request('introduction'),
             ':description' => request('description'),
-            ':fruit_title' => request('fruit_title'),
             ':colour' => request('colour'),
             ':growth_location' => request('growth_location'),
             ':ripe_season' => request('ripe_season'),
@@ -100,22 +100,22 @@ class TreesController extends Controller
         }
 
         try {
-            Tree::update((int) request('tree_id'), $data);
+            Vegetable::update((int) request('vegetable_id'), $data);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/trees');
+        redirect('/admin/vegetables');
     }
 
     protected function destroy(int $id)
     {
         try {
-            Tree::destroy($id);
+            Vegetable::destroy($id);
         } catch (Exception $exception) {
             dd('Exception message:' . $exception->getMessage());
         }
 
-        redirect('/admin/trees');
+        redirect('/admin/vegetables');
     }
 }
