@@ -7,29 +7,44 @@
 
         <h1 class="page-title">
             <span>Settings</span>
-            <a href="{{ url('admin/settings/create') }}" class="new-entry-cta"> + New</a>
+            <a href="{{ url('/admin/settings/create') }}" class="new-entry-cta"> + New</a>
         </h1>
 
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <td>Setting</td>
-                    <td>Title</td>
-                    <td>Value</td>
-                </tr>
-            </thead>
-            <tbody>
-                {% for tree in trees %}
+        <form action="{{ url('/admin/settings') }}" method="POST" enctype="multipart/form-data">
+
+            <table class="admin-table">
+                <thead>
                     <tr>
-                        <td>{{ tree.title }}</td>
-                        <td>{{ tree.slug }}</td>
-                        <td>
-                            ///////**/*/
-                        </td>
+                        <td>Setting</td>
+                        <td>Title</td>
+                        <td>Value</td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for setting in settings %}
+                        <tr class="align-left">
+                            <td>{{ setting.display_title }}</td>
+                            <td>{{ setting.title }}</td>
+                            <td>
+                                {% if setting.type == 'text' %}
+                                    <input type="text" name="{{ setting.title }}" value="{{ setting.value }}" />
+                                {% elseif setting.type == 'textarea' %}
+                                    <textarea name="{{ setting.title }}" id="" cols="30" rows="10">{{ setting.value }}</textarea>
+                                {% elseif setting.type == 'image' %}
+                                    <img src="{{ storage_url(setting.value) }}" alt="" />
+                                    <input type="file" name="{{ setting.title }}" />
+                                {% elseif setting.type == 'checkbox' %}
+                                    <input type="checkbox" name="{{ setting.title }}" {{ setting.value == '1' ? 'checked' : '' }} />
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="submit">Update</button>
+
+        </form>
 
     </div>
 {% endblock %}
