@@ -49,7 +49,7 @@ class User extends Model
 
         // redirect to admin area
         if (is_logged_in()) {
-            redirect('/admin');
+            redirect(env('admin_redirect'));
         }
 
         redirect('/signin', [

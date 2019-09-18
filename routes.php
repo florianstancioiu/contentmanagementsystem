@@ -19,7 +19,9 @@ $route->addRoute('POST', '/signup', 'Common\Auth@signup');
 $route->addRoute('GET', '/signout', 'Common\Auth@signout');
 
 $route->addGroup('/admin', function (RouteCollector $route) {
-    $route->addRoute('GET', '', 'App\Controllers\Admin\PagesController@index');
+    $route->addRoute('GET', '', function () {
+        redirect(env('admin_redirect'));
+    });
     $route->addRoute('GET', '/pages', 'App\Controllers\Admin\PagesController@index');
     $route->addRoute('POST', '/pages', 'App\Controllers\Admin\PagesController@store');
     $route->addRoute('GET', '/pages/create', 'App\Controllers\Admin\PagesController@create');
