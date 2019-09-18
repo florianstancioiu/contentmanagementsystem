@@ -16,8 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Admin\\": "admin/",
-            "Client\\": "client/",
+            "Controllers\\": "controllers/",
             "Common\\": "common/"
         }
     }

@@ -11,11 +11,11 @@ require '../vendor/autoload.php';
 // start the session
 session_start();
 
-// Enable Twig Extensions
-require '../common/Twig.php';
-
 // Require the helper functions
 require '../helpers.php';
+
+// Enable Twig Extensions
+require '../common/Twig.php';
 
 // Create storage symlink
 $storage_symlink = PUBLIC_PATH . DS . 'storage';
