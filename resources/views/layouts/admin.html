@@ -33,24 +33,7 @@
     <div class="container">
         <div class="row main">
             <div class="col-2 sidebar">
-                <a href="{{ url('admin/trees') }}" class="sidebar-link {{ active_route('admin/trees') }}">Trees</a>
-                <a href="{{ url('admin/vegetables') }}" class="sidebar-link {{ active_route('admin/vegetables') }}">Vegetables</a>
-                <a href="{{ url('admin/pages') }}" class="sidebar-link {{ active_route('admin/pages') }}">Pages</a>
-                <a href="{{ url('admin/posts') }}" class="sidebar-link {{ active_route('admin/posts') }}">Posts</a>
-                <a href="{{ url('admin/drinks') }}" class="sidebar-link {{ active_route('admin/drinks') }}">Drinks (!) - 11</a>
-                <a href="{{ url('admin/files') }}" class="sidebar-link {{ active_route('admin/files') }}">Files (!) - 9</a>
-                <a href="{{ url('admin/menus') }}" class="sidebar-link {{ active_route('admin/menus') }}">Menus (!) - 10</a>
-                <a href="{{ url('admin/languages') }}" class="sidebar-link {{ active_route('admin/languages') }}">Languages (!) - 4</a>
-                <a href="{{ url('admin/settings') }}" class="sidebar-link {{ active_route('admin/settings') }}">Settings (!) - 1</a>
-                <a href="{{ url('admin/users') }}" class="sidebar-link {{ active_route('admin/users') }}">Users</a>
-                <a href="{{ url('admin/user-roles') }}" class="sidebar-link {{ active_route('admin/user-roles') }}">User Roles (!) - 2</a>
-                <a href="{{ url('admin/contact-messages') }}" class="sidebar-link {{ active_route('admin/contact-messages') }}">Contact Messages (!) - 3</a>
-                <a href="{{ url('admin/dashboard') }}" class="sidebar-link {{ active_route('admin/dashboard') }}">Dashboard (!) - 12</a>
-                <a href="{{ url('admin/activity') }}" class="sidebar-link {{ active_route('admin/activity') }}">Activity (!) - 11</a>
-                <a href="{{ url('admin/subscribers') }}" class="sidebar-link {{ active_route('admin/subscribers') }}">Subscribers (!) - 7</a>
-                <a href="{{ url('admin/subscription-emails') }}" class="sidebar-link {{ active_route('admin/subscription-emails') }}">Subscription Emails (!) - 8</a>
-                <a href="{{ url('admin/auth-logs') }}" class="sidebar-link {{ active_route('admin/auth-logs') }}">Auth Logs (!) - 5</a>
-                <a href="{{ url('admin/email-logs') }}" class="sidebar-link {{ active_route('admin/email-logs') }}">Email Logs (!) - 6</a>
+                {{ include('admin/partials/sidebar.html') }}
             </div>
             <div class="col-10 content">
                 {% block content %}

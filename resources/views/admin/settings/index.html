@@ -3,7 +3,7 @@
 {% block title %} Settings {% endblock %}
 
 {% block content %}
-    <div class="col-md-8 offset-md-2">
+    <div class="row">
 
         <h1 class="page-title">
             <span>Settings</span>
@@ -12,12 +12,13 @@
 
         <form action="{{ url('/admin/settings') }}" method="POST" enctype="multipart/form-data">
 
-            <table class="admin-table">
+            <table class="admin-table settings-table">
                 <thead>
                     <tr>
                         <td>Setting</td>
                         <td>Title</td>
                         <td>Value</td>
+                        <td>Actions</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,8 @@
                             <td>
                                 {% if setting.type == 'text' %}
                                     <input type="text" name="{{ setting.title }}" value="{{ setting.value }}" />
+                                {% elseif setting.type == 'number' %}
+                                    <input type="number" name="{{ setting.title }}" value="{{ setting.value }}" />
                                 {% elseif setting.type == 'textarea' %}
                                     <textarea name="{{ setting.title }}" id="" cols="30" rows="10">{{ setting.value }}</textarea>
                                 {% elseif setting.type == 'image' %}
@@ -37,12 +40,25 @@
                                     <input type="checkbox" name="{{ setting.title }}" {{ setting.value == '1' ? 'checked' : '' }} />
                                 {% endif %}
                             </td>
+                            <td>
+                                {% if setting.is_restricted %}
+                                    N/A
+                                {% else %}
+                                    <a href="{{ url("/edit/#{setting.title}") }}">Change</a>
+                                    <a href="{{ url("/destroy/#{setting.title}") }}">Remove</a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <button class="" type="submit">Update</button>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
-
-            <button type="submit">Update</button>
 
         </form>
 

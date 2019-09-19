@@ -1,0 +1,23 @@
+.settings-table {
+    tbody {
+        td {
+            padding: 5px 10px;
+        }
+    }
+    input[type=text],
+    input[type=number],
+    textarea {
+        width: 100%;
+        margin: 0 auto;
+    }
+    textarea {
+        height: 120px;
+    }
+    input[type=file] {
+        display: block;
+        float: left;
+    }
+    input[type=checkbox] {
+        margin: 0;
+    }
+}
