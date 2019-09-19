@@ -150,25 +150,24 @@ if (! function_exists('dd')) {
     }
 }
 
+// TODO: Add a third param to point out how you pass data ($_GET or $_SESSION)
 if (! function_exists('redirect')) {
     /**
      * @param string $route
-     * @param array $get_data
+     * @param array $data
      */
-    function redirect(string $route, array $get_data = []) {
+    function redirect(string $route, array $data = []) {
         $base_url = base_url();
 
-        // trim the leading slash
+        // Trim the leading slash
         if (strpos($route, '/') === 0) {
             $route = substr($route, 1);
         }
 
-        // pass get data
-        if (! empty($get_data)) {
-            $route = $route . '?' . http_build_query($get_data);
-        }
+        // Pass data
+        $route = ! empty($data) ? $route . '?' . http_build_query($data) : $route;
 
-        // create the full route
+        // Create the full route
         if ((int) strpos($route, $base_url) === 0) {
             $route = $base_url . $route;
         }
@@ -176,6 +175,20 @@ if (! function_exists('redirect')) {
         header("Location: $route");
         exit();
     }
+}
+
+if (! function_exists('redirect_with_errors')) {
+    /**
+     * @param string $route
+     * @param mixed $errors
+     */
+     function redirect_with_errors(string $route, $errors = []) {
+         if (is_array($errors)) {
+             return redirect($route, ['errors' => $errors]);
+         }
+
+         return redirect($route, ['error' => $errors]);
+     }
 }
 
 // TODO: handle $value parameter
