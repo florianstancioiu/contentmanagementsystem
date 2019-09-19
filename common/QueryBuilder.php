@@ -41,9 +41,19 @@ class QueryBuilder
 
     protected $fetchType = 'object';
 
-    public function __construct(string $table, string $modelClass)
+    protected $queryType = 'select';
+
+    protected $validQueryTypes = [
+        'select',
+        'insert',
+        'update',
+        'delete'
+    ];
+
+    public function __construct(string $table, array $columns, string $modelClass)
     {
         $this->table = $table;
+        $this->columns = $columns;
         $this->modelClass = $modelClass;
 
         return $this;
@@ -52,16 +62,47 @@ class QueryBuilder
     // generate the SQL string
     public function __toString() : string
     {
-        $select_stmnt = "SELECT " . implode(', ', $this->columns) . "\n";
-        $from_stmnt = "FROM " . $this->table . "\n";
-        $where_stmnt = $this->generateWhereStatement();
-        $limit_stmnt = $this->generateLimitStatement();
-        $order_stmnt = $this->generateOrderStatement();
-
-        return $select_stmnt . $from_stmnt . $where_stmnt . $limit_stmnt . $order_stmnt;
+        return $this->getMainStatement() .
+                $this->getFromStatement() .
+                $this->getWhereStatement() .
+                $this->getLimitStatement() .
+                $this->getOrderStatement();
     }
 
-    protected function generateWhereStatement() : string
+    protected function getMainStatement() : string
+    {
+        switch ($this->queryType) {
+            case 'select':
+                return $this->getSelectStatement();
+                break;
+            case 'insert':
+                return $this->getInsertStatement();
+                break;
+            case 'update':
+                return $this->getUpdateStatement();
+                break;
+            case 'delete':
+                return $this->getDeleteStatement();
+                break;
+            default:
+                return $this->getSelectStatement();
+                break;
+        }
+    }
+
+    protected function getSelectStatement() : string
+    {
+        return "SELECT " . implode(', ', $this->columns) . "\n";
+    }
+
+    protected function getFromStatement() : string
+    {
+        $show_from = ['select', 'delete'];
+
+        return in_array($this->queryType, $show_from) ? "FROM " . $this->table . "\n" : "";
+    }
+
+    protected function getWhereStatement() : string
     {
         $where_stmnt = "";
         $no_where_clauses = sizeof($this->whereClauses);
@@ -71,7 +112,7 @@ class QueryBuilder
             return $where_stmnt;
         }
 
-        $where_stmnt = "WHERE \n";
+        $where_stmnt = "WHERE ";
 
         foreach ($this->whereClauses as $key => $clause) {
             // Shallow validation for the $clause array
@@ -85,7 +126,8 @@ class QueryBuilder
             $value = $clause['value'];
             $connect_operator = $clause['connect_operator'];
             $column_title = $this->whereColumnTitle($column, (int) $key);
-            $where_stmnt .= "\t $column $operator $column_title";
+            $where_stmnt .= $key > 1 ? "\t " : "";
+            $where_stmnt .= "$column $operator $column_title";
             $where_stmnt .= $key < $no_where_clauses - 1 ? " $connect_operator \n" : " \n";
         }
 
@@ -97,7 +139,7 @@ class QueryBuilder
         return $key > 0 ? ":$column" . "_" . $key : ":$column";
     }
 
-    protected function generateLimitStatement() : string
+    protected function getLimitStatement() : string
     {
         $limit_stmnt = "";
         if (sizeof($this->limit) !== 0) {
@@ -110,7 +152,7 @@ class QueryBuilder
     }
 
     // TODO: Implement function
-    protected function generateOrderStatement() : string
+    protected function getOrderStatement() : string
     {
         return "";
     }
@@ -125,11 +167,21 @@ class QueryBuilder
             $params[$column_title] = $clause['value'];
         }
 
+        $update_data_keys = array_keys($this->updateData);
+
+        for ($i = 0; $i < sizeof($this->updateData); $i++) {
+            $key = $update_data_keys[$i];
+            $value = $this->updateData[$key];
+            $column_title = $this->whereColumnTitle($key, $i);
+            $params[$column_title] = $value;
+        }
+
         return $params;
     }
 
     public function select(array $columns) : QueryBuilder
     {
+        $this->queryType = 'select';
         $this->columns = array_merge($this->columns, $columns);
 
         return $this;
@@ -137,11 +189,12 @@ class QueryBuilder
 
     public function paginate(int $no_rows = 15, int $start = 0) : QueryBuilder
     {
+        $this->queryType = 'select';
         $table = $this->table;
         // TODO: Implement selectRaw method
         // TODO: Use selectRaw method
         // TODO: Use the WHERE SQL statement to count the total number of rows
-        $where_stmnt = $this->generateWhereStatement();
+        $where_stmnt = $this->getWhereStatement();
         $this->columns[] = "(SELECT COUNT(*) FROM $table $where_stmnt LIMIT 1) as total_rows";
         $this->limit($start, $no_rows);
 
@@ -150,16 +203,80 @@ class QueryBuilder
 
     public function insert(array $data) : QueryBuilder
     {
+        $this->queryType = 'insert';
+
         return $this;
     }
 
     public function update(array $data) : QueryBuilder
     {
+        $this->queryType = 'update';
+
+        // Validate update data
+        foreach ($data as $column => $value) {
+
+            if (! in_array($column, $this->columns)) {
+                throw new \Exception("The $column column doesn't exist in the valid columns array");
+            }
+
+            $this->updateData[$column] = $value;
+        }
+
         return $this;
+    }
+
+    protected function getUpdateStatement()
+    {
+        $processed_data = $this->processData($this->updateData);
+        $array_keys = $processed_data['keys'];
+        $array_values = $processed_data['values'];
+
+        $update_string = "UPDATE " . $this->table . " \n\t". "SET ";
+        $array_length = sizeof($array_keys);
+
+        for ($i = 0; $i < $array_length; $i++) {
+            $array_key = $array_keys[$i];
+
+            $update_string .= $array_key . " = " . $this->whereColumnTitle($array_key, $i);
+
+            if ($i !== $array_length - 1) {
+                $update_string .= ', ';
+            }
+        }
+
+        return $update_string . "\n\t";
+    }
+
+    protected function processData(array $data) : array
+    {
+        $array_values = array_values($data);
+        $array_keys_string = '';
+        $array_length = sizeof($data);
+        $array_keys = [];
+
+        for ($i = 0; $i < $array_length; $i++) {
+            $array_key = array_keys($data)[$i];
+            $key_string = str_replace(':', '', $array_key);
+            $array_keys[] = $key_string;
+            $array_keys_string .= $key_string;
+
+            if ($i !== $array_length - 1) {
+                $array_keys_string .= ', ';
+            }
+        }
+
+        return [
+            'keys' => $array_keys,
+            'values' => $array_values,
+            'keys_string' => $array_keys_string,
+            'values_string' => "'" . implode("', '", $array_values) . "'"
+        ];
     }
 
     public function delete(string $field, $identifier) : QueryBuilder
     {
+        $this->queryType = 'delete';
+
         return $this;
     }
 
