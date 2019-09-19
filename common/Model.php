@@ -204,8 +204,6 @@ class Model
         self::$queryBuilder->update($data);
         $statement = self::$pdo->prepare(self::$queryBuilder);
 
-        // dd(self::$queryBuilder->buildParams(), (string) self::$queryBuilder);
-
         try {
             $statement->execute(self::$queryBuilder->buildParams());
 
