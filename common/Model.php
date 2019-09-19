@@ -41,7 +41,7 @@ class Model
     {
         // initialize the QueryBuilder object
         if (is_null(self::$queryBuilder)) {
-            self::$queryBuilder = new QueryBuilder(static::$table, static::class);
+            self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
         }
 
         // initialize PDO object
@@ -198,44 +198,16 @@ class Model
         return false;
     }
 
-    protected static function getUpdateString(array $data)
-    {
-        $processed_data = self::processData($data);
-        $array_keys = $processed_data['keys'];
-        $array_values = $processed_data['values'];
-
-        $update_string = '';
-        $array_length = sizeof($array_keys);
-
-        for ($i = 0; $i < $array_length; $i++) {
-            $array_key = $array_keys[$i];
-
-            $update_string .= $array_key . " = '" . $array_values[$i] . "'";
-
-            if ($i !== $array_length - 1) {
-                $update_string .= ', ';
-            }
-        }
-
-        return $update_string;
-    }
-
     // TODO: Update method to use the QueryBuilder class
-    protected static function update(int $id, array $data = []) : bool
+    protected static function update(array $data = []) : bool
     {
-        $update_string = self::getUpdateString($data);
-        $table = static::$table;
+        self::$queryBuilder->update($data);
+        $statement = self::$pdo->prepare(self::$queryBuilder);
 
-        $statement = self::$pdo->prepare("
-            UPDATE $table
-            SET $update_string
-            WHERE id = :id
-        ");
+        // dd(self::$queryBuilder->buildParams(), (string) self::$queryBuilder);
 
         try {
-            $statement->execute([
-                ':id' => $id
-            ]);
+            $statement->execute(self::$queryBuilder->buildParams());
 
             return true;
         } catch (PDOException $exception) {
@@ -286,6 +258,7 @@ class Model
         return is_array($row) ? $row : [];
     }
 
+    // TODO: Remove processData method from Model (exists in QueryBuilder)
     protected static function processData(array $data) : array
     {
         $array_values = array_values($data);

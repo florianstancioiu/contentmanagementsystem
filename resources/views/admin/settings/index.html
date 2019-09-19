@@ -28,16 +28,16 @@
                             <td>{{ setting.title }}</td>
                             <td>
                                 {% if setting.type == 'text' %}
-                                    <input type="text" name="{{ setting.title }}" value="{{ setting.value }}" />
+                                    <input type="text" name="setting[{{ setting.title }}]" value="{{ setting.value }}" />
                                 {% elseif setting.type == 'number' %}
-                                    <input type="number" name="{{ setting.title }}" value="{{ setting.value }}" />
+                                    <input type="number" name="setting[{{ setting.title }}]" value="{{ setting.value }}" />
                                 {% elseif setting.type == 'textarea' %}
-                                    <textarea name="{{ setting.title }}" id="" cols="30" rows="10">{{ setting.value }}</textarea>
+                                    <textarea name="setting[{{ setting.title }}]" id="" cols="30" rows="10">{{ setting.value }}</textarea>
                                 {% elseif setting.type == 'image' %}
                                     <img src="{{ storage_url(setting.value) }}" alt="" />
-                                    <input type="file" name="{{ setting.title }}" />
+                                    <input type="file" name="setting[{{ setting.title }}]" />
                                 {% elseif setting.type == 'checkbox' %}
-                                    <input type="checkbox" name="{{ setting.title }}" {{ setting.value == '1' ? 'checked' : '' }} />
+                                    <input type="checkbox" name="setting[{{ setting.title }}]" {{ setting.value == '1' ? 'checked' : '' }} />
                                 {% endif %}
                             </td>
                             <td>
