@@ -18,7 +18,7 @@ class File
 
     public static function storeImage(string $name, string $destination = '', bool $generate_file_name = true) : string
     {
-        $file = $_FILES[$name];
+        $file = isset($_FILES[$name]) ? $_FILES[$name] : null;
 
         // make sure the file exists
         if (! is_array($file)) {
