@@ -37,6 +37,19 @@ class File
         return isset($_FILES[$name]) ? $_FILES[$name] : [];
     }
 
+    public static function remove(string $name, bool $full_path = false) : bool
+    {
+        if (! $full_path) {
+            $name = STORAGE_PATH . DS . $name;
+        }
+
+        if (! file_exists($name)) {
+            return false;;
+        }
+
+        return (bool) unlink($name);
+    }
+
     // TODO: Throw erors if the file upload is not successful
     public static function storeImage(string $name, string $destination = '', bool $generate_file_name = true) : string
     {
@@ -85,12 +98,13 @@ class File
         return '';
     }
 
+    // TODO: Set the appropriate file extension
     public static function getImageExtension(array $file) : string
     {
         $file_type = $file['type'];
         $default_type = self::$default_image_type;
 
-        // make sure the file is an image
+        // See if the file is an image
         if (strpos($file_type, 'image') !== 0) {
             return $default_type;
         }

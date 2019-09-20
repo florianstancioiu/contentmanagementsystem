@@ -37,6 +37,22 @@ class SettingsController extends Controller
         // Save images on the filesystem
         // TODO: Remove existing file after storing the new one on the filesystem
         foreach ($images['name'] as $title => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            // Remove existing image from storage
+            $existing_image = Setting::select('value')
+                ::where('title', '=', $title)
+                ::first();
+
+            // dd($existing_image, (int) is_file($existing_image['value']));
+
+            if (isset($existing_image['value'])) {
+                File::remove($existing_image['value']);
+            }
+
+            // Store the (new) image on the filesystem
             $image_name = File::storeImage("setting.$title", 'settings');
 
             Setting::where('title', '=', $title)

@@ -14,7 +14,7 @@ use \PDO;
 // TODO: Implement created_at datetime column
 // TODO: Mark and handle boolean fields
 // TODO: Add accessors and mutators methods
-// TODO: Return objects instead of plain php arrays
+// TODO: Return objects because it's more convenient to handle objects !!!
 // TODO: Create an artificial array key for every row to generate the url automatically without giving me headaches (see accessors above)
 // TODO: Add filters (where statements)
 // TODO: 1 - Rewrite the whole effing thing because I need filters and I need to return objects for every single method (great)
@@ -40,6 +40,7 @@ class Model
     protected static $resetQueryMethods = [
         'get',
         'find',
+        'first',
         'update',
         'insert',
         'delete',
@@ -118,6 +119,21 @@ class Model
         }
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected static function first() : array
+    {
+        self::$queryBuilder->select(self::$columns);
+        self::$queryBuilder->limit(0, 1);
+        
+        try {
+            $statement = self::$pdo->prepare(self::$queryBuilder);
+            $statement->execute(self::$queryBuilder->buildParams());
+        } catch (PDOException $exception) {
+            dd($exception->getMessage());
+        }
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     protected static function select() : Model
@@ -214,13 +230,12 @@ class Model
         return false;
     }
 
-    // TODO: Update method to use the QueryBuilder class
     protected static function update(array $data = []) : bool
     {
         self::$queryBuilder->update($data);
-        $statement = self::$pdo->prepare(self::$queryBuilder);
 
         try {
+            $statement = self::$pdo->prepare(self::$queryBuilder);
             $statement->execute(self::$queryBuilder->buildParams());
 
             return true;

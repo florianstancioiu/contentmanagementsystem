@@ -11,6 +11,8 @@ class QueryBuilder
 
     protected $modelClass = "";
 
+    protected $allColumns = [];
+
     protected $columns = [];
 
     protected $insertData = [];
@@ -53,7 +55,7 @@ class QueryBuilder
     public function __construct(string $table, array $columns, string $modelClass)
     {
         $this->table = $table;
-        $this->columns = $columns;
+        $this->allColumns = $columns;
         $this->modelClass = $modelClass;
 
         return $this;
@@ -90,8 +92,19 @@ class QueryBuilder
         }
     }
 
+    protected function getColumns()
+    {
+        if (sizeof($this->columns) === 0) {
+            $this->columns = $this->allColumns;
+        }
+
+        return $this->columns;
+    }
+
     protected function getSelectStatement() : string
     {
+        $this->getColumns();
+
         return "SELECT " . implode(', ', $this->columns) . "\n";
     }
 
@@ -135,13 +148,6 @@ class QueryBuilder
         return $where_stmnt;
     }
 
-    public function whereColumnTitle(string $column, int $key = 0) : string
-    {
-        $column = (int) strpos($column, ':') === 0 ? substr($column, 0) : $column;
-
-        return $key > 0 ? ":$column" . "_" . $key : ":$column";
-    }
-
     protected function getLimitStatement() : string
     {
         $limit_stmnt = "";
@@ -158,6 +164,13 @@ class QueryBuilder
     protected function getOrderStatement() : string
     {
         return "";
+    }
+
+    public function whereColumnTitle(string $column, int $key = 0) : string
+    {
+        $column = (int) strpos($column, ':') === 0 ? substr($column, 0) : $column;
+
+        return $key > 0 ? ":$column" . "_" . $key : ":$column";
     }
 
     // TODO: Take in account the table name of each column ...
@@ -186,19 +199,20 @@ class QueryBuilder
     {
         $this->queryType = 'select';
         $this->columns = array_merge($this->columns, $columns);
+        $this->columns = array_unique($this->columns);
 
         return $this;
     }
 
+    // TODO: Implement selectRaw method
+    // TODO: Use selectRaw method
+    // TODO: Use the WHERE SQL statement to count the total number of rows
     public function paginate(int $no_rows = 15, int $start = 0) : QueryBuilder
     {
         $this->queryType = 'select';
-        $table = $this->table;
-        // TODO: Implement selectRaw method
-        // TODO: Use selectRaw method
-        // TODO: Use the WHERE SQL statement to count the total number of rows
+        $this->columns = $this->getColumns();
         $where_stmnt = $this->getWhereStatement();
-        $this->columns[] = "(SELECT COUNT(*) FROM $table $where_stmnt LIMIT 1) as total_rows";
+        $this->columns[] = "(SELECT COUNT(*) FROM $this->table $where_stmnt LIMIT 1) as total_rows";
         $this->limit($start, $no_rows);
 
         return $this;
@@ -221,7 +235,7 @@ class QueryBuilder
             $column = $data_keys[$i];
             $value = $data[$column];
 
-            if (! in_array($column, $this->columns)) {
+            if (! in_array($column, $this->allColumns)) {
                 throw new \Exception("The $column column doesn't exist in the valid columns array");
             }
 
@@ -350,6 +364,7 @@ class QueryBuilder
         return $this;
     }
 
+    // TODO: Check the naming logic for this method because I messed it up
     public function limit(int $no_rows, int $start) : QueryBuilder
     {
         $this->limit = [
