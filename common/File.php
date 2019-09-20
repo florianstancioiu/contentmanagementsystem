@@ -16,21 +16,44 @@ class File
         'gif',
     ];
 
+    protected static function getFile(string $name) : array
+    {
+        $part_of_an_array = strpos($name, '.') > 0;
+        $names_array = $part_of_an_array ? explode('.', $name) : [];
+
+        if ($part_of_an_array) {
+            $first_name = $names_array[0];
+            $second_name = $names_array[1];
+
+            return [
+                'name' => $_FILES[$first_name]['name'][$second_name],
+                'type' => $_FILES[$first_name]['type'][$second_name],
+                'tmp_name' => $_FILES[$first_name]['tmp_name'][$second_name],
+                'error' => $_FILES[$first_name]['error'][$second_name],
+                'size' => $_FILES[$first_name]['size'][$second_name],
+            ];
+        }
+
+        return isset($_FILES[$name]) ? $_FILES[$name] : [];
+    }
+
+    // TODO: Throw erors if the file upload is not successful
     public static function storeImage(string $name, string $destination = '', bool $generate_file_name = true) : string
     {
-        $file = isset($_FILES[$name]) ? $_FILES[$name] : null;
+        // Build the $file variable if the file is part of an array
+        $file = self::getFile($name);
 
-        // make sure the file exists
-        if (! is_array($file)) {
+        // Check if the file exists
+        if (sizeof($file) === 0) {
             return '';
         }
 
-        // make sure the file is an image
+        // Check if the file is an image
         if (strpos($file['type'], 'image') !== 0) {
             return '';
         }
 
-        $destination = $destination === '' ? static::$image_destination : '';
+        $destination = $destination === '' ? static::$image_destination : $destination;
         $temp_file_name = $file['tmp_name'];
         $file_name = basename($file['name']);
         $error = $file['error'];

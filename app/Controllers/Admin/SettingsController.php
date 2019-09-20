@@ -27,7 +27,7 @@ class SettingsController extends Controller
     protected function update()
     {
         $settings = request('setting');
-        $images = isset($_FILES['setting']) && sizeof($_FILES['setting']) > 0 ? $_FILES['setting']['name'] : [];
+        $images = isset($_FILES['setting']) && sizeof($_FILES['setting']) > 0 ? $_FILES['setting'] : [];
 
         foreach ($settings as $title => $setting) {
             Setting::where('title', '=', $title)
@@ -35,13 +35,13 @@ class SettingsController extends Controller
         }
 
         // Save images on the filesystem
-        /*
-        foreach ($images as $title => $value) {
-            $image_name = File::storeImage($title, 'settings');
+        // TODO: Remove existing file after storing the new one on the filesystem
+        foreach ($images['name'] as $title => $value) {
+            $image_name = File::storeImage("setting.$title", 'settings');
+
             Setting::where('title', '=', $title)
                 ::update(['value' => $image_name]);
         }
-        */
 
         return redirect('admin/settings');
     }
