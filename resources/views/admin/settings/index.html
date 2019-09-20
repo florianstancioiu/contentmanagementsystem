@@ -37,7 +37,8 @@
                                     <img src="{{ storage_url(setting.value) }}" alt="" />
                                     <input type="file" name="setting[{{ setting.title }}]" />
                                 {% elseif setting.type == 'checkbox' %}
-                                    <input type="checkbox" name="setting[{{ setting.title }}]" {{ setting.value == '1' ? 'checked' : '' }} />
+                                    <input type="checkbox" name="setting[{{ setting.title }}]" class="hidden" value="0" checked />
+                                    <input type="checkbox" name="setting[{{ setting.title }}]" value="1" {{ setting.value == '1' ? 'checked' : '' }} />
                                 {% endif %}
                             </td>
                             <td>

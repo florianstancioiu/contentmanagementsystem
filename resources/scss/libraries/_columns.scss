@@ -12,7 +12,6 @@ body {
   display: inline-block;
   clear: both;
   width: 100%;
-  // margin: 0 -20px;
 }
 
 .col-1,
@@ -28,7 +27,6 @@ body {
 .col-11,
 .col-12 {
   float: left;
-  // padding: 0 10px;
 }
 
 .col-offset-1,
@@ -179,4 +177,8 @@ body {
 
 .align-right {
   text-align: right;
+}
+
+.hidden {
+    display: none;
 }
