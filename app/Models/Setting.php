@@ -15,6 +15,7 @@ class Setting extends Model
         'title',
         'value',
         'is_restricted',
+        'order_number',
         'created_at',
         'updated_at',
         'deleted_at'

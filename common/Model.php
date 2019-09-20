@@ -37,6 +37,15 @@ class Model
 
     protected static $searchColumns = [];
 
+    protected static $resetQueryMethods = [
+        'get',
+        'find',
+        'update',
+        'insert',
+        'delete',
+        'paginate'
+    ];
+
     public function __construct()
     {
         // initialize the QueryBuilder object
@@ -58,15 +67,22 @@ class Model
             self::$columns = self::$modelObject::$columns;
         }
 
-        // check existence of $table property
+        // Check existence of $table property
         if (empty(static::$table)) {
             throw new Exception('Set the static $table property');
         }
 
-        // call the right static method
+        // Call the right static method
         if (method_exists(static::class, $title)) {
-            return static::$title(... $params);
+            $method_result = static::$title(... $params);
         }
+
+        // Reset the QueryBuilder object
+        if (in_array($title, self::$resetQueryMethods)) {
+            self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
+        }
+
+        return $method_result;
     }
 
     public static function getColumns() : array
@@ -281,6 +297,11 @@ class Model
             'keys_string' => $array_keys_string,
             'values_string' => "'" . implode("', '", $array_values) . "'"
         ];
+    }
+
+    protected function resetQueryBuilder()
+    {
+        self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
     }
 
     // TODO: Update method to use the QueryBuilder class

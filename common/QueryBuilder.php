@@ -125,9 +125,10 @@ class QueryBuilder
             $operator = $clause['operator'];
             $value = $clause['value'];
             $connect_operator = $clause['connect_operator'];
-            $column_title = $this->whereColumnTitle($column, (int) $key);
+            $column_value = $this->whereColumnTitle($column, (int) $key);
+            $column_title = substr($column_value, 1);
             $where_stmnt .= $key > 1 ? "\t " : "";
-            $where_stmnt .= "$column $operator $column_title";
+            $where_stmnt .= "$column_title $operator $column_value";
             $where_stmnt .= $key < $no_where_clauses - 1 ? " $connect_operator \n" : " \n";
         }
 
@@ -136,6 +137,8 @@ class QueryBuilder
 
     public function whereColumnTitle(string $column, int $key = 0) : string
     {
+        $column = (int) strpos($column, ':') === 0 ? substr($column, 0) : $column;
+
         return $key > 0 ? ":$column" . "_" . $key : ":$column";
     }
 
@@ -170,8 +173,8 @@ class QueryBuilder
         $update_data_keys = array_keys($this->updateData);
 
         for ($i = 0; $i < sizeof($this->updateData); $i++) {
-            $key = $update_data_keys[$i];
-            $value = $this->updateData[$key];
+            $key = strpos($update_data_keys[$i], ':') === 0 ? substr($update_data_keys[$i], 1) : $update_data_keys[$i];
+            $value = $this->updateData[$update_data_keys[$i]];
             $column_title = $this->whereColumnTitle($key, $i);
             $params[$column_title] = $value;
         }
@@ -213,13 +216,17 @@ class QueryBuilder
         $this->queryType = 'update';
 
         // Validate update data
-        foreach ($data as $column => $value) {
+        $data_keys = array_keys($data);
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $column = $data_keys[$i];
+            $value = $data[$column];
 
             if (! in_array($column, $this->columns)) {
                 throw new \Exception("The $column column doesn't exist in the valid columns array");
             }
 
-            $this->updateData[$column] = $value;
+            $column_title = $this->whereColumnTitle($column, $i);
+            $this->updateData[$column_title] = $value;
         }
 
         return $this;

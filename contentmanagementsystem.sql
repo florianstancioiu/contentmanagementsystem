@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 17, 2019 at 11:15 AM
+-- Generation Time: Sep 20, 2019 at 08:19 AM
 -- Server version: 5.7.27-0ubuntu0.18.04.1
 -- PHP Version: 7.3.7-2+ubuntu18.04.1+deb.sury.org+1
 
@@ -234,12 +234,34 @@ INSERT INTO `posts` (`id`, `title`, `slug`, `lang`, `content`, `description`, `u
 
 CREATE TABLE `settings` (
   `id` int(11) NOT NULL,
+  `type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'text | number | textarea | image | checkbox',
   `display_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_restricted` int(11) NOT NULL DEFAULT '0',
+  `order_number` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `type`, `display_title`, `title`, `value`, `is_restricted`, `order_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'text', 'Site Title', 'site-title', 'Victor CMS', 1, 1, '2019-09-18 08:34:00', NULL, NULL),
+(2, 'image', 'Logo', 'logo', '', 1, 2, '2019-09-18 08:34:00', NULL, NULL),
+(3, 'image', 'Site Icon', 'site-icon', '', 1, 3, '2019-09-18 08:34:00', NULL, NULL),
+(4, 'textarea', 'Tagline', 'tagline', 'A test to try my PHP skills', 1, 4, '2019-09-18 08:34:00', NULL, NULL),
+(5, 'text', 'Language', 'language', 'klingon', 1, 6, '2019-09-18 08:34:00', NULL, NULL),
+(6, 'checkbox', 'Don\'t Index Website', 'dont-index-website', 'on', 1, 7, '2019-09-18 08:34:00', NULL, NULL),
+(7, 'checkbox', 'Enable comments', 'enable-comments', 'on', 1, 8, '2019-09-18 08:34:00', NULL, NULL),
+(8, 'number', 'Comments Pagination Limit', 'comments-pagination-limit', '19', 1, 9, '2019-09-18 08:34:00', NULL, NULL),
+(9, 'number', 'Default Pagination Limit', 'pagination-limit', '12', 1, 10, '2019-09-18 08:34:00', NULL, NULL),
+(10, 'text', 'Date Format', 'date-format', 'aaa', 1, 11, '2019-09-18 08:34:00', NULL, NULL),
+(11, 'text', 'Time Format', 'time-format', 'bbbb', 1, 12, '2019-09-18 08:34:00', NULL, NULL),
+(12, 'text', 'Admin Email', 'admin-email', 'florinvictorstancioiu@gmail.com', 1, 5, '2019-09-20 08:16:24', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -291,7 +313,10 @@ INSERT INTO `trees` (`id`, `title`, `slug`, `introduction`, `description`, `imag
 (25, '46 asdasdasd', 'fghhg45ggregre', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
 (26, 'as asdasdasd', '42432hgfhgfhsdfsdfds', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
 (27, 'as asdasdasd', '42432hgfhgfh554ghdgfdg', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
-(28, 'as asdasdasd', '42432hgfhgfh5435ghfghgfhfgh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL);
+(28, 'as asdasdasd', '42432hgfhgfh5435ghfghgfhfgh', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(30, 'as asdasdasd aaaa', '42432hgfhgfh5435ghfghgfhfgh1', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(31, 'as asdasdasd aaaa', '424____', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL),
+(32, 'as asdasdasd aaaa', '424____dfdsfsd', 'asdasd', 'dfsgdfgf', 'images/242y241024QBQx5boSp5v22vGiXoeteelPg6ps7l.png', 0, 0, 'dfgfdg', 'dfgdfg', 'dfgdfg', 'dfgfdg', 123, 345, 234, 1, '2019-09-06 13:50:44', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -530,13 +555,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `trees`
 --
 ALTER TABLE `trees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
