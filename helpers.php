@@ -1,5 +1,7 @@
 <?php
 
+use App\DbLayers\Setting;
+
 if (! defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
@@ -284,6 +286,19 @@ if (! function_exists('pagination_url')) {
         $route = sizeof($filters) > 0 ? route() . "?" : route();
 
         return url($route . http_build_query($filters));
+    }
+}
+
+// TODO: Update the DbLayer class to make the function work
+if (! function_exists('setting')) {
+    function setting(string $value) : string {
+        $setting = Setting
+            ::where('title', '=', $value)
+            ::get();
+
+        $setting = isset($setting[0]) ? $setting[0] : "";
+
+        return isset($setting['value']) ? $setting['value'] : "";
     }
 }
 

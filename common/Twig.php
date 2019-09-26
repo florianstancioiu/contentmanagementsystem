@@ -3,7 +3,6 @@
 // TODO: Create laravel-mix like function to handle timestamped files
 // TODO: Create translation function to handle language translations
 // TODO: Create csrf_token function and check for it on POST routes
-
 $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
 $twig_environment = new \Twig\Environment($loader, [
     'debug' => true,
@@ -12,7 +11,7 @@ $twig_environment = new \Twig\Environment($loader, [
     'cache' => base_dir('public' . DS . 'templatecache'),
 ]);
 
-// register active_route function
+// Register active_route function
 $function = new \Twig\TwigFunction('active_route', function ($value) {
     $route = route();
 
@@ -30,7 +29,7 @@ $function = new \Twig\TwigFunction('active_route', function ($value) {
 });
 $twig_environment->addFunction($function);
 
-// register url function
+// Register url function
 $function = new \Twig\TwigFunction('url', function ($value = '/') {
     $base_url = $GLOBALS['base_url'];
 
@@ -43,13 +42,19 @@ $function = new \Twig\TwigFunction('url', function ($value = '/') {
 });
 $twig_environment->addFunction($function);
 
-// register request function
+// Register request function
 $function = new \Twig\TwigFunction('request', function ($value = "") {
     return request($value);
 });
 $twig_environment->addFunction($function);
 
-// register storage_url function
+// Register setting function
+$function = new \Twig\TwigFunction('setting', function ($value = "") {
+    return setting($value);
+});
+$twig_environment->addFunction($function);
+
+// Register storage_url function
 $function = new \Twig\TwigFunction('storage_url', function ($value) {
     $base_url = $GLOBALS['base_url'];
 
