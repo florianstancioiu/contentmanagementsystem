@@ -25,7 +25,7 @@ class User extends DbLayer
         'deleted_at'
     ];
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function signin()
     {
         $statement = self::$pdo->prepare('SELECT id, first_name, last_name, email, password, created_at from users where email = :email');
@@ -57,7 +57,7 @@ class User extends DbLayer
         ]);
     }
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     public static function emailExistsInDatabase() : bool
     {
         try {
@@ -74,7 +74,7 @@ class User extends DbLayer
         return (bool) is_object($data) && $data->email === post('email');
     }
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function signup()
     {
         if (self::emailExistsInDatabase()) {

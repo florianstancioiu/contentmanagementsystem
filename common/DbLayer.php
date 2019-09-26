@@ -3,7 +3,7 @@
 namespace Common;
 
 use Common\Database;
-use Common\QueryBuilder;
+use Common\SQLStatement;
 use \Exception;
 use \PDOException;
 use \PDO;
@@ -18,7 +18,7 @@ use \PDO;
 // TODO: Create an artificial array key for every row to generate the url automatically without giving me headaches (see accessors above)
 // TODO: Add filters (where statements)
 // TODO: 1 - Rewrite the whole effing thing because I need filters and I need to return objects for every single method (great)
-// TODO: 1.1 - Use the QueryBuilder class to generate the PDO strings
+// TODO: 1.1 - Use the SQLStatement class to generate the PDO strings
 // TODO: Force a default $identifier field (corelate it with has_slug TODO note)
 // TODO: Write unit tests for this class
 class DbLayer
@@ -49,9 +49,9 @@ class DbLayer
 
     public function __construct()
     {
-        // initialize the QueryBuilder object
+        // initialize the SQLStatement object
         if (is_null(self::$queryBuilder)) {
-            self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
+            self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
         }
 
         // initialize PDO object
@@ -78,9 +78,13 @@ class DbLayer
             $method_result = static::$title(... $params);
         }
 
-        // Reset the QueryBuilder object
+        // Reset the SQLStatement object
         if (in_array($title, self::$resetQueryMethods)) {
-            self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
+            $class = static::class;
+            self::$modelObject = new $class;
+            self::$columns = self::$modelObject::$columns;
+
+            self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
         }
 
         return $method_result;
@@ -101,7 +105,7 @@ class DbLayer
         return dd(self::getSql());
     }
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function get(array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
@@ -124,16 +128,17 @@ class DbLayer
     protected static function first() : array
     {
         self::$queryBuilder->select(self::$columns);
-        self::$queryBuilder->limit(0, 1);
 
         try {
             $statement = self::$pdo->prepare(self::$queryBuilder);
             $statement->execute(self::$queryBuilder->buildParams());
+
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        return [];
     }
 
     protected static function select() : DbLayer
@@ -208,7 +213,7 @@ class DbLayer
         return $rows;
     }
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function store(array $data = []) : bool
     {
         $processed_data = self::processData($data);
@@ -248,7 +253,7 @@ class DbLayer
 
     // TODO: Simplify method
     // TODO: Make the method dynamic, so it can work with multiple tables
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function find($identifier, array $columns = []) : array
     {
         if (sizeof($columns) === 0) {
@@ -287,7 +292,7 @@ class DbLayer
         return is_array($row) ? $row : [];
     }
 
-    // TODO: Remove processData method from DbLayer (exists in QueryBuilder)
+    // TODO: Remove processData method from DbLayer (exists in SQLStatement)
     protected static function processData(array $data) : array
     {
         $array_values = array_values($data);
@@ -314,12 +319,12 @@ class DbLayer
         ];
     }
 
-    protected function resetQueryBuilder()
+    protected function resetSQLStatement()
     {
-        self::$queryBuilder = new QueryBuilder(static::$table, static::$columns, static::class);
+        self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
     }
 
-    // TODO: Update method to use the QueryBuilder class
+    // TODO: Update method to use the SQLStatement class
     protected static function destroy(int $id) : bool
     {
         try {

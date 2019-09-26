@@ -2,10 +2,9 @@
 
 namespace Common;
 
-// TODO: Grab a shovel and dig deep because you yourself wanted to create a CMS from scratch aaaand you've just hit rock bottom
 // TODO: Create the freaking query builder and use this class to generate the base DbLayer class
 // TODO: Write unit tests for this class
-class QueryBuilder
+class SQLStatement
 {
     protected $table = "";
 
@@ -195,7 +194,7 @@ class QueryBuilder
         return $params;
     }
 
-    public function select(array $columns) : QueryBuilder
+    public function select(array $columns) : SQLStatement
     {
         $this->queryType = 'select';
         $this->columns = array_merge($this->columns, $columns);
@@ -207,7 +206,7 @@ class QueryBuilder
     // TODO: Implement selectRaw method
     // TODO: Use selectRaw method
     // TODO: Use the WHERE SQL statement to count the total number of rows
-    public function paginate(int $no_rows = 15, int $start = 0) : QueryBuilder
+    public function paginate(int $no_rows = 15, int $start = 0) : SQLStatement
     {
         $this->queryType = 'select';
         $this->columns = $this->getColumns();
@@ -218,14 +217,14 @@ class QueryBuilder
         return $this;
     }
 
-    public function insert(array $data) : QueryBuilder
+    public function insert(array $data) : SQLStatement
     {
         $this->queryType = 'insert';
 
         return $this;
     }
 
-    public function update(array $data) : QueryBuilder
+    public function update(array $data) : SQLStatement
     {
         $this->queryType = 'update';
 
@@ -294,29 +293,29 @@ class QueryBuilder
         ];
     }
 
-    public function delete(string $field, $identifier) : QueryBuilder
+    public function delete(string $field, $identifier) : SQLStatement
     {
         $this->queryType = 'delete';
 
         return $this;
     }
 
-    public function join() : QueryBuilder
+    public function join() : SQLStatement
     {
         return $this;
     }
 
-    public function leftJoin() : QueryBuilder
+    public function leftJoin() : SQLStatement
     {
         return $this;
     }
 
-    public function rightJoin() : QueryBuilder
+    public function rightJoin() : SQLStatement
     {
         return $this;
     }
 
-    public function selectRaw($data) : QueryBuilder
+    public function selectRaw($data) : SQLStatement
     {
         // append the data don't rewrite it so that it can be reused
 
@@ -326,7 +325,7 @@ class QueryBuilder
     // TODO: Build all where statements through whereFilters to group the conditions easier
     // TODO: Move $connect_operator to the whereFilter method
     // TODO: Remove the $like_structure string, create a separate method for it
-    public function where(string $column, string $operator, $value, string $connect_operator) : QueryBuilder
+    public function where(string $column, string $operator, $value, string $connect_operator) : SQLStatement
     {
         $this->whereClauses[] = [
             'column' => $column,
@@ -345,14 +344,14 @@ class QueryBuilder
     }
 
     // TODO: Implement whereRaw method
-    public function whereRaw($filters) : QueryBuilder
+    public function whereRaw($filters) : SQLStatement
     {
         // append the data don't rewrite it so that it can be reused
 
         return $this;
     }
 
-    public function orderBy() : QueryBuilder
+    public function orderBy() : SQLStatement
     {
         // append the data don't rewrite it so that it can be reused
         foreach (func_get_args() as $column) {
@@ -365,7 +364,7 @@ class QueryBuilder
     }
 
     // TODO: Check the naming logic for this method because I messed it up
-    public function limit(int $no_rows, int $start) : QueryBuilder
+    public function limit(int $no_rows, int $start) : SQLStatement
     {
         $this->limit = [
             'start' => $start,
@@ -376,25 +375,25 @@ class QueryBuilder
     }
 
     // Aggregate function
-    public function count($fields) : QueryBuilder
+    public function count($fields) : SQLStatement
     {
         return $this;
     }
 
     // Aggregate function
-    public function sum($fields) : QueryBuilder
+    public function sum($fields) : SQLStatement
     {
         return $this;
     }
 
     // Aggregate function
-    public function max($fields) : QueryBuilder
+    public function max($fields) : SQLStatement
     {
         return $this;
     }
 
     // Aggregate function
-    public function min($fields) : QueryBuilder
+    public function min($fields) : SQLStatement
     {
         return $this;
     }
