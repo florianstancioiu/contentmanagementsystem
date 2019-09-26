@@ -21,7 +21,7 @@ use \PDO;
 // TODO: 1.1 - Use the QueryBuilder class to generate the PDO strings
 // TODO: Force a default $identifier field (corelate it with has_slug TODO note)
 // TODO: Write unit tests for this class
-class Model
+class DbLayer
 {
     protected static $modelObject = null;
 
@@ -125,7 +125,7 @@ class Model
     {
         self::$queryBuilder->select(self::$columns);
         self::$queryBuilder->limit(0, 1);
-        
+
         try {
             $statement = self::$pdo->prepare(self::$queryBuilder);
             $statement->execute(self::$queryBuilder->buildParams());

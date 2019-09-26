@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\DbLayers;
 
-use Common\Model;
+use Common\DbLayer;
 
-class Vegetable extends Model
+class Tree extends DbLayer
 {
-    protected static $table = 'vegetables';
+    protected static $table = 'trees';
 
     protected static $searchColumns = [
         'title',
@@ -18,6 +18,8 @@ class Vegetable extends Model
         'title',
         'slug',
         'image',
+        'has_fruits',
+        'fruit_title',
         'colour',
         'growth_location',
         'ripe_season',
@@ -27,6 +29,7 @@ class Vegetable extends Model
         'has_flowers',
         'introduction',
         'description',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at'

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\DbLayers;
 
-use Common\Model;
+use Common\DbLayer;
 use \PDOException;
 
-class User extends Model
+class User extends DbLayer
 {
     protected static $table = 'users';
 
