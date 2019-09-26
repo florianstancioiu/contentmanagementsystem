@@ -3,7 +3,7 @@
 namespace App\Controllers\Client;
 
 use Common\Controller;
-use App\Models\Tree;
+use App\DbLayers\Tree;
 
 class TreesController extends Controller
 {

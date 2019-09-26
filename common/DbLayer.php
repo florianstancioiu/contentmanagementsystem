@@ -136,7 +136,7 @@ class DbLayer
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    protected static function select() : Model
+    protected static function select() : DbLayer
     {
         $existing_columns = static::getColumns();
         $valid_columns = [];
@@ -153,7 +153,7 @@ class DbLayer
         return self::$modelObject;
     }
 
-    protected static function where(string $column, string $operator, $value, string $connect_operator = 'AND') : Model
+    protected static function where(string $column, string $operator, $value, string $connect_operator = 'AND') : DbLayer
     {
         // Validate the $operator variable
         $valid_operators = [
@@ -287,7 +287,7 @@ class DbLayer
         return is_array($row) ? $row : [];
     }
 
-    // TODO: Remove processData method from Model (exists in QueryBuilder)
+    // TODO: Remove processData method from DbLayer (exists in QueryBuilder)
     protected static function processData(array $data) : array
     {
         $array_values = array_values($data);

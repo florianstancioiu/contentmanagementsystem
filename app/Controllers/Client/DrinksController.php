@@ -3,7 +3,7 @@
 namespace App\Controllers\Client;
 
 use Common\Controller;
-use App\Models\Drink;
+use App\DbLayers\Drink;
 
 class DrinksController extends Controller
 {

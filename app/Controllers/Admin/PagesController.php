@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Common\Controller;
-use App\Models\Page;
+use App\DbLayers\Page;
 use \Exception;
 
 class PagesController extends Controller

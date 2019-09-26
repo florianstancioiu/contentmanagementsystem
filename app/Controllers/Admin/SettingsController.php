@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Common\Controller;
-use App\Models\Setting;
+use App\DbLayers\Setting;
 use Common\File;
 
 class SettingsController extends Controller
