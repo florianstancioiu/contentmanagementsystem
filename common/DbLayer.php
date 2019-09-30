@@ -25,7 +25,7 @@ class DbLayer
 {
     protected static $modelObject = null;
 
-    protected static $queryBuilder = null;
+    protected static $sqlStatement = null;
 
     protected static $table = '';
 
@@ -47,14 +47,16 @@ class DbLayer
         'paginate'
     ];
 
-    public function __construct()
+    public function __construct(string $table = '', array $columns = [])
     {
-        // initialize the SQLStatement object
-        if (is_null(self::$queryBuilder)) {
-            self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
+        // Initialize SQLStatement object
+        if ($table !== '') {
+            self::$sqlStatement = new SQLStatement($table, $columns);
+        } else {
+            self::$sqlStatement = new SQLStatement(static::$table, static::$columns);
         }
 
-        // initialize PDO object
+        // Initialize PDO object
         if (is_null(self::$pdo)) {
             self::$pdo = (new Database())->pdo;
         }
@@ -84,7 +86,7 @@ class DbLayer
             self::$modelObject = new $class;
             self::$columns = self::$modelObject::$columns;
 
-            self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
+            self::$sqlStatement = new SQLStatement(static::$table, static::$columns);
         }
 
         return $method_result;
@@ -97,7 +99,7 @@ class DbLayer
 
     protected static function getSql() : string
     {
-        return (string) self::$queryBuilder;
+        return (string) self::$sqlStatement;
     }
 
     protected static function dd() : string
@@ -127,11 +129,11 @@ class DbLayer
 
     protected static function first() : array
     {
-        self::$queryBuilder->select(self::$columns);
+        self::$sqlStatement->select(self::$columns);
 
         try {
-            $statement = self::$pdo->prepare(self::$queryBuilder);
-            $statement->execute(self::$queryBuilder->buildParams());
+            $statement = self::$pdo->prepare(self::$sqlStatement);
+            $statement->execute(self::$sqlStatement->buildParams());
 
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $exception) {
@@ -153,7 +155,7 @@ class DbLayer
         }
 
         self::$columns = $valid_columns;
-        self::$queryBuilder->select(self::$columns);
+        self::$sqlStatement->select(self::$columns);
 
         return self::$modelObject;
     }
@@ -173,7 +175,7 @@ class DbLayer
         $connect_operator = strtoupper($connect_operator);
         $connect_operator = in_array($connect_operator, $valid_connect_operators) ? $connect_operator : "AND";
 
-        self::$queryBuilder->where($column, $operator, $value, $connect_operator);
+        self::$sqlStatement->where($column, $operator, $value, $connect_operator);
 
         return self::$modelObject;
     }
@@ -185,21 +187,21 @@ class DbLayer
             $start = (int) $_GET['page'];
         }
 
-        self::$queryBuilder->select(self::$columns);
+        self::$sqlStatement->select(self::$columns);
 
         // Inject search columns automatically
         $search_keyword = isset($_GET['search_keyword']) ? $_GET['search_keyword'] : null;
         if ($search_keyword) {
             foreach (static::$searchColumns as $column) {
-                self::$queryBuilder->where($column, 'LIKE', "%$search_keyword%", "OR");
+                self::$sqlStatement->where($column, 'LIKE', "%$search_keyword%", "OR");
             }
         }
 
-        self::$queryBuilder->paginate($no_rows, (int) $start * $no_rows);
+        self::$sqlStatement->paginate($no_rows, (int) $start * $no_rows);
 
         try {
-            $statement = self::$pdo->prepare(self::$queryBuilder);
-            $statement->execute(self::$queryBuilder->buildParams());
+            $statement = self::$pdo->prepare(self::$sqlStatement);
+            $statement->execute(self::$sqlStatement->buildParams());
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
@@ -237,11 +239,11 @@ class DbLayer
 
     protected static function update(array $data = []) : bool
     {
-        self::$queryBuilder->update($data);
+        self::$sqlStatement->update($data);
 
         try {
-            $statement = self::$pdo->prepare(self::$queryBuilder);
-            $statement->execute(self::$queryBuilder->buildParams());
+            $statement = self::$pdo->prepare(self::$sqlStatement);
+            $statement->execute(self::$sqlStatement->buildParams());
 
             return true;
         } catch (PDOException $exception) {
@@ -321,7 +323,7 @@ class DbLayer
 
     protected function resetSQLStatement()
     {
-        self::$queryBuilder = new SQLStatement(static::$table, static::$columns, static::class);
+        self::$sqlStatement = new SQLStatement(static::$table, static::$columns, static::class);
     }
 
     // TODO: Update method to use the SQLStatement class
