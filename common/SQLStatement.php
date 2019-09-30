@@ -8,8 +8,6 @@ class SQLStatement
 {
     protected $table = "";
 
-    protected $modelClass = "";
-
     protected $allColumns = [];
 
     protected $columns = [];
@@ -51,11 +49,10 @@ class SQLStatement
         'delete'
     ];
 
-    public function __construct(string $table, array $columns, string $modelClass)
+    public function __construct(string $table, array $columns)
     {
         $this->table = $table;
         $this->allColumns = $columns;
-        $this->modelClass = $modelClass;
 
         return $this;
     }
