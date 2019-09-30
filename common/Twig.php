@@ -1,16 +1,12 @@
 <?php
 
+use \App\DbLayers\Setting;
+
 // TODO: Create laravel-mix like function to handle timestamped files
 // TODO: Create translation function to handle language translations
 // TODO: Create csrf_token function and check for it on POST routes
-$loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
-$twig_environment = new \Twig\Environment($loader, [
-    'debug' => true,
-    'autoload' => true,
-    // NOTE: it's a good idea to give up the twig cache
-    'cache' => base_dir('public' . DS . 'templatecache'),
-]);
 
+$twig_environment = get_twig_environment();
 // Register active_route function
 $function = new \Twig\TwigFunction('active_route', function ($value) {
     $route = route();
@@ -50,7 +46,15 @@ $twig_environment->addFunction($function);
 
 // Register setting function
 $function = new \Twig\TwigFunction('setting', function ($value = "") {
-    return setting($value);
+    $setting = Setting()
+        ::where('title', '=', $value)
+        ::first();
+
+        return 'cake';
+
+    $setting = isset($setting[0]) ? $setting[0] : "";
+
+    return isset($setting['value']) ? $setting['value'] : "";
 });
 $twig_environment->addFunction($function);
 

@@ -18,6 +18,10 @@
         "psr-4": {
             "App\\": "app/",
             "Common\\": "common/"
-        }
+        },
+        "files" : [
+            "common/Helpers.php",
+            "common/Twig.php"
+        ]
     }
 }

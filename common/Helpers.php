@@ -7,15 +7,15 @@ if (! defined('DS')) {
 }
 
 if (! defined('BASE_PATH')) {
-    define('BASE_PATH', __DIR__);
+    define('BASE_PATH', dirname(__DIR__));
 }
 
 if (! defined('STORAGE_PATH')) {
-    define('STORAGE_PATH', __DIR__ . DS . 'storage');
+    define('STORAGE_PATH', BASE_PATH . DS . 'storage');
 }
 
 if (! defined('PUBLIC_PATH')) {
-    define('PUBLIC_PATH', __DIR__ . DS . 'public');
+    define('PUBLIC_PATH', BASE_PATH . DS . 'public');
 }
 
 if (! function_exists('route')) {
@@ -37,7 +37,7 @@ if (! function_exists('view')) {
      * @throws \Twig\Error\SyntaxError
      */
     function view(string $template_name, array $data = []) {
-        $twig_environment = $GLOBALS['twig_environment'];
+        $twig_environment = get_twig_environment();
         $template_name = str_replace('.html', '', $template_name);
         $template_name = $template_name . '.html';
 
@@ -289,16 +289,74 @@ if (! function_exists('pagination_url')) {
     }
 }
 
-// TODO: Update the DbLayer class to make the function work
-if (! function_exists('setting')) {
-    function setting(string $value) : string {
-        $setting = Setting
-            ::where('title', '=', $value)
-            ::get();
+if (! function_exists('create_storage_symlink')) {
+    function create_storage_symlink() {
+        $storage_symlink = PUBLIC_PATH . DS . 'storage';
+        // dd($storage_symlink);
 
-        $setting = isset($setting[0]) ? $setting[0] : "";
+        if (! file_exists($storage_symlink)) {
+            symlink(STORAGE_PATH, $storage_symlink);
+        }
+    }
+}
 
-        return isset($setting['value']) ? $setting['value'] : "";
+if (! function_exists('get_twig_environment')) {
+    function get_twig_environment() {
+        if (! empty($_SESSION['twig_environment'])) {
+            return $_SESSION['twig_environment'];
+        }
+
+        $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
+        $_SESSION['twig_environment'] = new \Twig\Environment($loader, [
+            'debug' => true,
+            'autoload' => true,
+            // NOTE: it's a good idea to give up the twig cache
+            'cache' => base_dir('public' . DS . 'templatecache'),
+        ]);
+
+        return $_SESSION['twig_environment'];
+    }
+}
+
+if (! function_exists('register_routes')) {
+    function register_routes() {
+        // Require the routes
+        $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
+            require_once base_dir() . DS . 'routes.php';
+        });
+
+        // Fetch method and URI from somewhere
+        $httpMethod = $_SERVER['REQUEST_METHOD'];
+        $uri = $_SERVER['REQUEST_URI'];
+
+        // Strip query string (?foo=bar) and decode URI
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $uri = rawurldecode($uri);
+
+        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+        switch ($routeInfo[0]) {
+            case FastRoute\Dispatcher::NOT_FOUND:
+                break;
+            case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                $allowedMethods = $routeInfo[1];
+                break;
+            case FastRoute\Dispatcher::FOUND:
+                $handler = $routeInfo[1];
+                $vars = $routeInfo[2];
+
+                // make the anonymous functions work
+                if (is_object($handler)) {
+                    call_user_func($handler, $vars);
+                }
+
+                // make the classes work
+                list($class, $method) = explode("@", $handler, 2);
+                call_user_func_array(array(new $class, $method), $vars);
+
+                break;
+        }
     }
 }
 
