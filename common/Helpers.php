@@ -40,8 +40,7 @@ if (! function_exists('view')) {
         $twig_environment = get_twig_environment();
         $template_name = str_replace('.html', '', $template_name);
         $template_name = $template_name . '.html';
-
-        $template = ($twig_environment->load($template_name));
+        $template = $twig_environment->load($template_name);
 
         // retrieve env data for blade views
         $env_data = read_json_file(base_dir() . DS . '.env');
@@ -302,19 +301,19 @@ if (! function_exists('create_storage_symlink')) {
 
 if (! function_exists('get_twig_environment')) {
     function get_twig_environment() {
-        if (! empty($_SESSION['twig_environment'])) {
-            return $_SESSION['twig_environment'];
+        if (! empty($GLOBALS['twig_environment'])) {
+            return $GLOBALS['twig_environment'];
         }
 
         $loader = new \Twig\Loader\FilesystemLoader(base_dir('resources' . DS . 'views'));
-        $_SESSION['twig_environment'] = new \Twig\Environment($loader, [
+        $GLOBALS['twig_environment'] = new \Twig\Environment($loader, [
             'debug' => true,
             'autoload' => true,
             // NOTE: it's a good idea to give up the twig cache
             'cache' => base_dir('public' . DS . 'templatecache'),
         ]);
 
-        return $_SESSION['twig_environment'];
+        return $GLOBALS['twig_environment'];
     }
 }
 
@@ -335,16 +334,19 @@ if (! function_exists('register_routes')) {
         }
         $uri = rawurldecode($uri);
 
-        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-        switch ($routeInfo[0]) {
+        $route_info = $dispatcher->dispatch($httpMethod, $uri);
+
+        switch ($route_info[0]) {
             case FastRoute\Dispatcher::NOT_FOUND:
                 break;
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                $allowedMethods = $routeInfo[1];
+                $allowedMethods = $route_info[1];
                 break;
             case FastRoute\Dispatcher::FOUND:
-                $handler = $routeInfo[1];
-                $vars = $routeInfo[2];
+                $handler = $route_info[1];
+                $vars = $route_info[2];
+
+
 
                 // make the anonymous functions work
                 if (is_object($handler)) {
@@ -353,10 +355,21 @@ if (! function_exists('register_routes')) {
 
                 // make the classes work
                 list($class, $method) = explode("@", $handler, 2);
-                call_user_func_array(array(new $class, $method), $vars);
+
+                try {
+                    call_user_func_array(array(new $class, $method), $vars);
+                } catch (\Exception $e) {
+                    dd($e->getMessage());
+                }
 
                 break;
         }
+    }
+}
+
+if (! function_exists('init_twig_extensions')) {
+    function init_twig_extensions() {
+        (new \Common\Twig());
     }
 }
 
