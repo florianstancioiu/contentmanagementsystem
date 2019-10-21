@@ -64,7 +64,7 @@ class DbLayer
 
     public static function __callStatic(string $title, $params)
     {
-        if (is_null(self::$modelObject)) {
+        if (is_null(self::$modelObject) || static::class !== get_class(self::$modelObject)) {
             $class = static::class;
             self::$modelObject = new $class;
             self::$columns = self::$modelObject::$columns;
@@ -134,8 +134,9 @@ class DbLayer
         try {
             $statement = self::$pdo->prepare(self::$sqlStatement);
             $statement->execute(self::$sqlStatement->buildParams());
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
+            return is_array($results) && sizeof($results) > 0 ? $results[0] : [];
         } catch (PDOException $exception) {
             dd($exception->getMessage());
         }
