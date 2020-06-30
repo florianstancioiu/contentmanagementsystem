@@ -15,9 +15,13 @@
 
         {{ include('client/partials/header.html') }}
 
-        {% block content %}
+        <div class="col-10 col-offset-1 general-content">
 
-        {% endblock %}
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
 
         {{ include('client/partials/footer.html') }}
 
