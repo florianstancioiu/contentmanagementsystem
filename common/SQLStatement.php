@@ -2,7 +2,7 @@
 
 namespace Common;
 
-// TODO: Create the freaking query builder and use this class to generate the base DbLayer class
+// TODO: Create the freaking query builder and use this class to generate the base Model class
 // TODO: Write unit tests for this class
 class SQLStatement
 {

@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use Common\File;
 use Common\Controller;
-use App\DbLayers\Tree;
+use App\Models\Tree;
 use \Exception;
 
 class TreesController extends Controller

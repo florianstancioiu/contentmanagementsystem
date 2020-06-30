@@ -21,7 +21,7 @@ use \PDO;
 // TODO: 1.1 - Use the SQLStatement class to generate the PDO strings
 // TODO: Force a default $identifier field (corelate it with has_slug TODO note)
 // TODO: Write unit tests for this class
-class DbLayer
+class Model
 {
     protected static $modelObject = null;
 
@@ -127,6 +127,7 @@ class DbLayer
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // TODO: Apply limit 1 restriction on the query to avoid fetching extra rows
     protected static function first() : array
     {
         self::$sqlStatement->select(self::$columns);
@@ -144,7 +145,7 @@ class DbLayer
         return [];
     }
 
-    protected static function select() : DbLayer
+    protected static function select() : Model
     {
         $existing_columns = static::getColumns();
         $valid_columns = [];
@@ -161,7 +162,7 @@ class DbLayer
         return self::$modelObject;
     }
 
-    protected static function where(string $column, string $operator, $value, string $connect_operator = 'AND') : DbLayer
+    protected static function where(string $column, string $operator, $value, string $connect_operator = 'AND') : Model
     {
         // Validate the $operator variable
         $valid_operators = [
@@ -295,7 +296,7 @@ class DbLayer
         return is_array($row) ? $row : [];
     }
 
-    // TODO: Remove processData method from DbLayer (exists in SQLStatement)
+    // TODO: Remove processData method from Model (exists in SQLStatement)
     protected static function processData(array $data) : array
     {
         $array_values = array_values($data);

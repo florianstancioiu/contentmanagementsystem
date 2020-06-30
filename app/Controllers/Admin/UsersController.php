@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Common\Controller;
-use App\DbLayers\User;
+use App\Models\User;
 use \Exception;
 
 class UsersController extends Controller

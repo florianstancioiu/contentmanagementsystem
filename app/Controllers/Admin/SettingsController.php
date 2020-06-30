@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Common\Controller;
-use App\DbLayers\Setting;
+use App\Models\Setting;
 use Common\File;
 
 class SettingsController extends Controller
@@ -46,9 +46,8 @@ class SettingsController extends Controller
                 ::where('title', '=', $title)
                 ::first();
 
-            // dd($existing_image, (int) is_file($existing_image['value']));
-
-            if (isset($existing_image['value'])) {
+            // Remove existing image
+            if (isset($existing_image['value']) && file_exists(base_url() . $existing_image['value'])) {
                 File::remove($existing_image['value']);
             }
 

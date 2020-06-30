@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use Common\Controller;
-use App\DbLayers\Post;
+use App\Models\Post;
 use \Exception;
 
 class PostsController extends Controller

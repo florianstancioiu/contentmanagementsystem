@@ -3,7 +3,7 @@
 namespace Common;
 
 use \PDOException;
-use App\DbLayers\User;
+use App\Models\User;
 
 // TODO: Refactor class
 // TODO: Move SQL queries to User model

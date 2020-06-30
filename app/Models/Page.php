@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DbLayers;
+namespace App\Models;
 
-use Common\DbLayer;
+use Common\Model;
 
-class Page extends DbLayer
+class Page extends Model
 {
     protected static $table = 'pages';
 

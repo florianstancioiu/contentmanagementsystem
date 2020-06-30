@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use Common\File;
 use Common\Controller;
-use App\DbLayers\Vegetable;
+use App\Models\Vegetable;
 use \Exception;
 
 class VegetablesController extends Controller

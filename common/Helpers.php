@@ -1,6 +1,6 @@
 <?php
 
-use App\DbLayers\Setting;
+use App\Models\Setting;
 
 if (! defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -291,10 +291,12 @@ if (! function_exists('pagination_url')) {
 if (! function_exists('create_storage_symlink')) {
     function create_storage_symlink() {
         $storage_symlink = PUBLIC_PATH . DS . 'storage';
-        // dd($storage_symlink);
+        //dd($storage_symlink);
 
         if (! file_exists($storage_symlink)) {
             symlink(STORAGE_PATH, $storage_symlink);
+        } else {
+            dd('testing');
         }
     }
 }

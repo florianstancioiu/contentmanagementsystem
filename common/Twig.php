@@ -2,7 +2,7 @@
 
 namespace Common;
 
-use \App\DbLayers\Setting;
+use \App\Models\Setting;
 
 // TODO: Create laravel-mix like function to handle timestamped files
 // TODO: Create translation function to handle language translations
