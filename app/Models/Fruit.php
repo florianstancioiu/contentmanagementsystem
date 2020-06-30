@@ -18,9 +18,11 @@ class Fruit extends Model
         'title',
         'slug',
         'image',
+        /*
         'user_id',
         'created_at',
         'updated_at',
         'deleted_at'
+        */
     ];
 }
