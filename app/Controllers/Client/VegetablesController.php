@@ -3,7 +3,7 @@
 namespace App\Controllers\Client;
 
 use Common\Controller;
-use App\DbLayers\Vegetable;
+use App\Models\Vegetable;
 
 class VegetablesController extends Controller
 {
